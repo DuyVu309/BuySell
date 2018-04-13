@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ln_register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/img_back"
+            style="@style/NavIconStyle"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="null"
+            android:src="@drawable/ic_delete" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/small"
+            android:paddingRight="@dimen/large"
+            android:text="@string/name_register"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title_text_size" />
+    </LinearLayout>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/pading_normal"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <RadioButton
+            android:id="@+id/rbtn_nguoi_mua"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="@string/nguoi_mua_hang" />
+
+        <RadioButton
+            android:id="@+id/rbtn_nguoi_ban_hang"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/nguoi_ban_hang" />
+
+    </RadioGroup>
+
+    <ScrollView
+        android:id="@+id/layout_register_buy"
+        android:layout_width="match_parent"
+        android:scrollbars="none"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/pading_normal"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pading_large"
+                android:text="@string/full_name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+
+            <EditText
+                android:id="@+id/edt_full_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:id="@+id/tv_waring_fullname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pading_small"
+                android:text="@string/warning_full_name"
+                android:textColor="@color/red"
+                android:textSize="@dimen/small_text_size"
+                android:visibility="invisible" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pading_normal"
+                android:text="@string/email_adress"
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+
+            <EditText
+                android:id="@+id/edt_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:id="@+id/tv_waring_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pading_small"
+                android:text="@string/email_khong_hop_le"
+                android:textColor="@color/red"
+                android:textSize="@dimen/small_text_size"
+                android:visibility="invisible" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pading_normal"
+                android:text="@string/mat_khau"
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true">
+
+                <EditText
+                    android:id="@+id/edt_password_buy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_warning_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pading_small"
+                android:text="@string/notifi_password"
+                android:textColor="@color/red"
+                android:textSize="@dimen/small_text_size"
+                android:visibility="invisible" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pading_normal"
+                android:text="@string/xac_nhan_mat_khau"
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true">
+
+                <EditText
+                    android:id="@+id/edt_confirm_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_warning_confirm_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pading_small"
+                android:text="@string/notifi_confirm_password"
+                android:textColor="@color/red"
+                android:textSize="@dimen/small_text_size"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btn_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_very_large"
+                android:background="@drawable/bg_when_enable"
+                android:enabled="false"
+                android:text="@string/dang_ki"
+                android:textColor="@color/grey_divider" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/layout_register_sell"
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/pading_normal"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pading_normal"
+                android:text="@string/ten_doanh_nghiep"
+                android:textColor="@color/black"
+                android:textSize="@dimen/normal" />
+
+            <EditText
+                android:id="@+id/edt_ten_doanhnghiep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/black"
+                android:textSize="@dimen/normal" />
+
+            <TextView
+                android:id="@+id/tv_warning_doanhnghiep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pading_small"
+                android:text="@string/vui_long_nhap_ten_doanh_nghiep"
+                android:textColor="@color/red"
+                android:textSize="@dimen/small_text_size"
+                android:visibility="invisible" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pading_normal"
+                android:text="@string/dia_chi_email"
+                android:textColor="@color/black"
+                android:textSize="@dimen/normal" />
+
+            <EditText
+                android:id="@+id/edt_email_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/black"
+                android:textSize="@dimen/normal" />
+
+            <TextView
+                android:id="@+id/tv_warning_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pading_small"
+                android:text="@string/email_khong_hop_le"
+                android:textColor="@color/red"
+                android:textSize="@dimen/small_text_size"
+                android:visibility="invisible" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pading_normal"
+                android:text="@string/mat_khau"
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edt_password_business"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:textSize="@dimen/normal" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_notifi_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/small"
+                android:text="@string/notifi_password"
+                android:textColor="@color/red"
+                android:textSize="@dimen/small_text_size"
+                android:visibility="invisible" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pading_normal"
+                android:text="@string/xac_nhan_mat_khau"
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edt_confirm_password_business"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:textSize="@dimen/normal" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_notifi_confirm_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/small"
+                android:text="@string/notifi_confirm_password"
+                android:textColor="@color/red"
+                android:textSize="@dimen/small_text_size"
+                android:visibility="invisible" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pading_normal"
+                android:text="Số điện thoại"
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edit_phone_standard_vietnam"
+                    android:text="+84"
+                    android:textSize="@dimen/default_text_size"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/edt_number_phone"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:textSize="@dimen/default_text_size"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:textColor="@color/black" />
+
+                <Button
+                    android:id="@+id/btn_send_code"
+                    android:text="Gửi mã"
+                    android:layout_marginLeft="@dimen/pading_small"
+                    android:layout_marginRight="@dimen/pading_small"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/small_text_size"
+                    android:background="@drawable/bg_button_signin_after"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp" />
+
+                <Button
+                    android:id="@+id/btn_resend_code"
+                    android:text="@string/gui_lai_ma"
+                    android:visibility="gone"
+                    android:textSize="@dimen/small_text_size"
+                    android:layout_marginLeft="@dimen/pading_small"
+                    android:layout_marginRight="@dimen/pading_small"
+                    android:textColor="@color/white"
+                    android:background="@drawable/bg_button_signin_after"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp" />
+
+                <Button
+                    android:id="@+id/btn_vevify_code"
+                    android:text="Xác nhận"
+                    android:enabled="false"
+                    android:textSize="@dimen/small_text_size"
+                    android:layout_marginRight="@dimen/pading_small"
+                    android:textColor="@color/white"
+                    android:background="@drawable/bg_button_signin_after"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp" />
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edt_code"
+                android:gravity="center"
+                android:textColor="@color/red"
+                android:clickable="false"
+                android:enabled="false"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btn_register_business"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_very_large"
+                android:background="@drawable/bg_when_enable"
+                android:enabled="false"
+                android:text="@string/register"
+                android:textColor="@color/grey_divider" />
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

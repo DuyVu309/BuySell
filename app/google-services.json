@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "504692627507",
+    "firebase_url": "https://banhangonline-7058d.firebaseio.com",
+    "project_id": "banhangonline-7058d",
+    "storage_bucket": "banhangonline-7058d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:504692627507:android:0b7c1b94b2b1cbed",
+        "android_client_info": {
+          "package_name": "com.example.user.banhangonline"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "504692627507-lfilrlat32kt5i361pnikdqev98khe7q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.user.banhangonline",
+            "certificate_hash": "544a93943a5fbc9ff2239c2d1a11cc2457546fac"
+          }
+        },
+        {
+          "client_id": "504692627507-3gtnks0840ff5u86bag4e003kojvtv1t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2tEC2cg9vMvHTJjJoICC7wQiYAczUi0E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "504692627507-3gtnks0840ff5u86bag4e003kojvtv1t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

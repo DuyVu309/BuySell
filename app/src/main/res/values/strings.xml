@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Buy - Sell</string>
+    <string name="name_register">Đăng ký</string>
+    <string name="error_and_check">Đã xảy ra lỗi, vui lòng kiểm tra lại</string>
+    <string name="no_internet">Không có kết nối mạng, vui lòng kiểm tra lại</string>
+    <string name="sign_in">Sign in</string>
+    <string name="forgot">Forgot?</string>
+    <string name="new_to_buy_sell">New to Buy-Sell ?</string>
+
+    <string name="email">Email</string>
+    <string name="email_adress">Email Adress</string>
+    <string name="email_avaliable_or_er">Email không hợp lệ hoặc đã tồn tại</string>
+    <string name="email_avaliable_or_fail">Email không hợp lệ hoặc sai mật khẩu</string>
+    <string name="dia_chi_email">Địa chỉ email</string>
+    <string name="email_khong_hop_le">Email không hợp lệ</string>
+    <string name="message_lay_mat_khau">Nhập Email cần thiết lập mật khẩu - Gmail Google (Chúng tôi sẽ gửi đường dẫn tới email ) </string>
+
+    <string name="password">Password</string>
+    <string name="mat_khau">Mật khẩu</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="notifi_password">Mật khẩu phải lớn hơn hoặc bằng 6 kí tự</string>
+    <string name="notifi_confirm_password">Mật khẩu không trùng khớp</string>
+
+    <string name="nguoi_mua_hang">Người mua hàng</string>
+    <string name="nguoi_ban_hang">Người bán hàng</string>
+    <string name="full_name">Full Name</string>
+    <string name="thanh_cong">Thành công</string>
+    <string name="dang_ki">Đăng kí</string>
+    <string name="vui_long_nhap_ten_doanh_nghiep">Vui lòng nhập tên doanh nghiệp</string>
+    <string name="register">Register</string>
+    <string name="ten_doanh_nghiep">Tên doanh nghiệp</string>
+    <string name="xac_nhan_mat_khau">Xác nhận mật khẩu</string>
+    <string name="warning_full_name">Tên phải lớn hơn 8 ký tự</string>
+    <string name="sdt_khong_hop_le">Số điện thoại không hợp lệ</string>
+    <string name="gui_lai_ma">Gửi lại</string>
+    <string name="xac_nhan_ma">Xác nhận</string>
+    <string name="thiet_lap_mat_khau">Thiết lập lại mật khẩu</string>
+
+
+</resources>
