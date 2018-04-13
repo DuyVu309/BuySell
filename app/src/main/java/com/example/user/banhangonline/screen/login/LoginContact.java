@@ -12,7 +12,7 @@ public interface LoginContact {
     }
 
     interface Presenter extends IBasePresenter<View> {
-        void signInWithEmailPassword(String number, String email, String password);
+        void signInWithEmailPassword(String email, String password);
     }
 
 }

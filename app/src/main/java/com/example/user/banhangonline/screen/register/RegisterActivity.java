@@ -470,39 +470,37 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
                 public void run() {
                     mDataBase.child(keyAccount).push().setValue(new Account(keyAccountBuy,
                              edtFullName.getText().toString().trim(),
-                             edtmailBuy.getText().toString().trim(),
                              null))
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                mAuth.createUserWithEmailAndPassword(edtmailBuy.getText().toString().trim(), edtPasswordBuy.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (task.isSuccessful()) {
-                                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                            intent.putExtra(KeyUntils.keyEmailRegister, edtmailBuy.getText().toString().trim());
-                                            intent.putExtra(KeyUntils.keyPasswordRegister, edtPasswordBuy.getText().toString().trim());
-                                            startActivity(intent);
-                                            dismissDialog();
-                                            showSnackbar(getResources().getString(R.string.error_and_check));
+                             .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                 @Override
+                                 public void onComplete(@NonNull Task<Void> task) {
+                                     if (task.isSuccessful()) {
+                                         mAuth.createUserWithEmailAndPassword(edtmailBuy.getText().toString().trim(), edtPasswordBuy.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                             @Override
+                                             public void onComplete(@NonNull Task<AuthResult> task) {
+                                                 if (task.isSuccessful()) {
+                                                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                                     intent.putExtra(KeyUntils.keyEmailRegister, edtmailBuy.getText().toString().trim());
+                                                     intent.putExtra(KeyUntils.keyPasswordRegister, edtPasswordBuy.getText().toString().trim());
+                                                     startActivity(intent);
+                                                     finish();
+                                                     dismissDialog();
+                                                     showSnackbar(getResources().getString(R.string.error_and_check));
 
-                                        } else {
-                                            showSnackbar(getResources().getString(R.string.error_and_check));
-                                            dismissDialog();
-                                        }
-                                    }
-                                });
-                            } else {
-                                showSnackbar(getResources().getString(R.string.error_and_check));
-                            }
-                        }
-                    });
+                                                 } else {
+                                                     showSnackbar(getResources().getString(R.string.error_and_check));
+                                                     dismissDialog();
+                                                 }
+                                             }
+                                         });
+                                     } else {
+                                         showSnackbar(getResources().getString(R.string.error_and_check));
+                                     }
+                                 }
+                             });
 
                 }
             }, 1000);
-
-
         } else {
             showNoInternet();
         }
@@ -516,9 +514,8 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
     @Override
     public void registerSellSuccess() {
         if (NetworkUtils.isConnected(this)) {
-            mDataBase.child(keyAccount).setValue(new Account(keyAccountSell,
+            mDataBase.child(keyAccount).push().setValue(new Account(keyAccountSell,
                      edtTenDoanhNghiep.getText().toString().trim(),
-                     edtEmailRegisterSell.getText().toString().trim(),
                      mPresenter.getPhoneNumber())).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
@@ -533,6 +530,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
                                     intent.putExtra(KeyUntils.keyPasswordRegister, edtPasswordSell.getText().toString().trim());
                                     dismissDialog();
                                     startActivity(intent);
+                                    finish();
                                 } else {
                                     showSnackbar(getResources().getString(R.string.email_avaliable_or_er));
                                     dismissDialog();

@@ -1,16 +1,20 @@
 package com.example.user.banhangonline.model;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class Account {
 
     private String ID;
     private String name;
-    private String email;
     private String phoneNumber;
 
-    public Account(String AcountID, String Name, String Email, String PhoneNumber) {
+    public Account() {
+    }
+
+    public Account(String AcountID, String Name, String PhoneNumber) {
         this.ID = AcountID;
         this.name = Name;
-        this.email = Email;
         this.phoneNumber = PhoneNumber;
     }
 
@@ -28,14 +32,6 @@ public class Account {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPhoneNumber() {

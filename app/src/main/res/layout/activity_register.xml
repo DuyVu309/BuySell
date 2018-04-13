@@ -73,6 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/pading_large"
                 android:text="@string/full_name"
+                android:maxLines="1"
                 android:textColor="@color/black"
                 android:textSize="@dimen/default_text_size" />
 

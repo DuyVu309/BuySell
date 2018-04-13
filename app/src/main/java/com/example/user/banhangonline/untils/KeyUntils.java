@@ -56,6 +56,9 @@ public class KeyUntils {
     public static final String keytuiSachNu = "parttuiSachNu";
     public static final String keyphuKienNu = "partphuKienNu";
     public static final String keybeNu = "partbeNu";
+    //end key part
+
+    public static final String keyIsLogin = "keyIsLogin";
 
 
 }

@@ -34,10 +34,9 @@ public class LoginPresenter extends BasePresenter implements LoginContact.Presen
     }
 
     @Override
-    public void signInWithEmailPassword(String number, String email, String password) {
+    public void signInWithEmailPassword( String email, String password) {
         if (!isViewAttached()) return;
-        if (number.matches("\\d+(?:\\.\\d+)?")
-                 && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        if (android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
                  && password.length() >= 6) {
             mView.signInSuccess();
         } else {

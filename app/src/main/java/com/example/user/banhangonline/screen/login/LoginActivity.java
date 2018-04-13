@@ -6,14 +6,18 @@ import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
+import com.example.user.banhangonline.interactor.prefer.PreferManager;
+import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.screen.forgot.ForgotActivity;
 import com.example.user.banhangonline.screen.home.HomeActivity;
 import com.example.user.banhangonline.screen.register.RegisterActivity;
@@ -21,11 +25,16 @@ import com.example.user.banhangonline.untils.KeyUntils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static com.example.user.banhangonline.untils.KeyUntils.keyAccount;
 
 public class LoginActivity extends BaseActivity implements LoginContact.View {
 
@@ -50,6 +59,9 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
     @BindView(R.id.tv_warning)
     TextView tvWarning;
 
+    @BindView(R.id.cb_login)
+    CheckBox cbLogin;
+
     private boolean isAvaialbeUser = false;
     private boolean isAvaialbePassword = false;
     private String email, password;
@@ -58,24 +70,35 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        if (PreferManager.getIsLogin(this)) {
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            finish();
+        }
         unbinder = ButterKnife.bind(this);
         mPresenter = new LoginPresenter();
         mPresenter.attachView(this);
         mPresenter.onCreate();
 
         isAvailableUserPassword();
+        isLogin();
         email = getIntent().getStringExtra(KeyUntils.keyEmailRegister);
         password = getIntent().getStringExtra(KeyUntils.keyPasswordRegister);
         if (email != null && password != null) {
             edtEmail.setText(email);
             edtPassword.setText(password);
         }
-
     }
 
+    private void isLogin() {
+        if (PreferManager.getIsLogin(this)) {
+            cbLogin.setChecked(true);
+
+        } else {
+            cbLogin.setChecked(false);
+        }
+    }
 
     private void isAvailableUserPassword() {
-
         edtEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -150,9 +173,9 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
 
     @OnClick(R.id.btn_sign_in)
     public void onClickSignIn() {
+        showDialog();
         if (mPresenter != null) {
-            mPresenter.signInWithEmailPassword("0123456789",
-                     edtEmail.getText().toString().trim(),
+            mPresenter.signInWithEmailPassword(edtEmail.getText().toString().trim(),
                      edtPassword.getText().toString().trim());
         }
     }
@@ -171,16 +194,15 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
 
     @Override
     public void signInSuccess() {
-        showDialog();
         mAuth.signInWithEmailAndPassword(edtEmail.getText().toString().trim(),
                  edtPassword.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    dismissDialog();
-                    runAnimationStartActivity(lnLogin);
+                    PreferManager.setIsLogin(LoginActivity.this, cbLogin.isChecked());
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                     finish();
+                    dismissDialog();
                 } else {
                     tvWarning.setVisibility(View.VISIBLE);
                     runAnimationStartActivity(tvWarning);
