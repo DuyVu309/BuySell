@@ -58,15 +58,9 @@ public class LoaderActivity extends AppCompatActivity {
         smoothProgress(100, 400, new Runnable() {
             @Override
             public void run() {
-                if (PreferManager.getIsLogin(LoaderActivity.this)) {
-                    Intent intent = new Intent(LoaderActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Intent intent = new Intent(LoaderActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+                Intent intent = new Intent(LoaderActivity.this, HomeActivity.class);
+                startActivity(intent);
+                finish();
 
             }
         });

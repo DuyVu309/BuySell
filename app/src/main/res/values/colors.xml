@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="app_color">#000000</color>
+    <color name="app_color">#4c9fff</color>
     <color name="transparent">#00000000</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
@@ -11,6 +11,7 @@
     <color name="grey">#F2F2F2</color>
     <color name="red">#ff4040</color>
     <color name="grey_divider">#c3c3c3</color>
+    <color name="greyish_divider">#ebebeb</color>
     <color name="md_grey_600">#757575</color>
 
 

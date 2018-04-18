@@ -2,6 +2,7 @@
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:openDrawer="start">
@@ -24,8 +25,8 @@
                 android:padding="@dimen/pading_small"
                 app:layout_scrollFlags="scroll|enterAlways">
 
-                <ImageButton
-                    android:id="@+id/btn_drawer"
+                <ImageView
+                    android:id="@+id/img_drawer"
                     style="@style/NavIconStyle"
                     android:src="@drawable/ic_nav_drawer" />
 
@@ -38,12 +39,6 @@
                     android:text="@string/app_name"
                     android:textColor="@color/white"
                     android:textSize="@dimen/title_text_size" />
-
-                <ImageView
-                    android:id="@+id/img_search"
-                    style="@style/NavIconStyle"
-                    android:layout_marginRight="@dimen/pading_small"
-                    android:src="@drawable/ic_search" />
 
                 <ImageView
                     android:id="@+id/img_sell"
@@ -68,18 +63,28 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/pading_small"
+                    android:layout_marginLeft="@dimen/pading_small"
+                    android:layout_marginRight="@dimen/pading_small"
                     app:cardCornerRadius="3dp"
                     app:cardElevation="1dp">
 
                     <EditText
                         android:id="@+id/edt_search"
+                        android:paddingLeft="@dimen/pading_normal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/transparent"
-                        android:drawableLeft="@drawable/ic_search"
-                        android:drawablePadding="@dimen/pading_normal"
                         android:hint="Tìm kiếm"
+                        android:inputType="textFilter"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/default_text_size" />
+
+                    <ImageView
+                        android:id="@+id/img_search"
+                        style="@style/NavIconStyle"
+                        android:layout_gravity="right"
+                        android:src="@drawable/ic_search" />
                 </android.support.v7.widget.CardView>
             </LinearLayout>
 
@@ -101,5 +106,7 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
     </android.support.design.widget.CoordinatorLayout>
+
+    <include layout="@layout/open_drawer_home" />
 
 </android.support.v4.widget.DrawerLayout>

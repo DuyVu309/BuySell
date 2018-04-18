@@ -23,11 +23,12 @@
 
     <string name="nguoi_mua_hang">Người mua hàng</string>
     <string name="nguoi_ban_hang">Người bán hàng</string>
-    <string name="full_name">Full Name</string>
+    <string name="full_name">Tên đầy đủ</string>
     <string name="thanh_cong">Thành công</string>
     <string name="dang_ki">Đăng kí</string>
+    <string name="dang_nhap">Đăng nhập</string>
     <string name="vui_long_nhap_ten_doanh_nghiep">Vui lòng nhập tên doanh nghiệp</string>
-    <string name="register">Register</string>
+    <string name="register">Đăng kí</string>
     <string name="ten_doanh_nghiep">Tên doanh nghiệp</string>
     <string name="xac_nhan_mat_khau">Xác nhận mật khẩu</string>
     <string name="warning_full_name">Tên phải lớn hơn 8 ký tự</string>
@@ -35,6 +36,18 @@
     <string name="gui_lai_ma">Gửi lại</string>
     <string name="xac_nhan_ma">Xác nhận</string>
     <string name="thiet_lap_mat_khau">Thiết lập lại mật khẩu</string>
+    <string name="xac_nhan">Xác nhận</string>
+    <string name="dang_bai">ĐĂNG BÀI</string>
+    <string name="huy">Hủy</string>
+    <string name="message_not_acccount">Bạn chưa đăng nhập \n để mua(bán) hàng</string>
+
+    //sell
+    <string name="tao_bai_dang">Tạo bài đăng</string>
+    <string name="nhap_thong_tin">Nhập thông tin sản phẩm của bạn</string>
+    <string name="them_anh">Thêm ảnh</string>
+    <string name="loai">Loại</string>
+    <string name="muc">Mục</string>
+    <string name="message_huy_bai_viet">Bạn có chắc chắn muốn hủy bài không?</string>
 
 
 </resources>

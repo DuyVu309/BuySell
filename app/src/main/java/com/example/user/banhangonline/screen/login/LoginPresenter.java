@@ -3,19 +3,56 @@ package com.example.user.banhangonline.screen.login;
 import android.util.Log;
 
 import com.example.user.banhangonline.base.BasePresenter;
+import com.example.user.banhangonline.model.Account;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
+import static com.example.user.banhangonline.untils.KeyUntils.keyAccount;
+import static com.example.user.banhangonline.untils.KeyUntils.keyID;
+import static com.example.user.banhangonline.untils.KeyUntils.keyName;
+import static com.example.user.banhangonline.untils.KeyUntils.keyPhone;
 
 public class LoginPresenter extends BasePresenter implements LoginContact.Presenter {
 
     private LoginContact.View mView;
+    private String idBuySell;
+    private String name;
+    private String phoneNumber;
+
+    public String getIdBuySell() {
+        return idBuySell;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setIdBuySell(String idBuySell) {
+        this.idBuySell = idBuySell;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     @Override
     public void onCreate() {
-        Log.d("TAG", "OK");
+        Log.d("TAG", "onCreate Login");
     }
 
     @Override
     public void onDestroy() {
-        Log.d("TAG", "ERROR");
+        Log.d("TAG", "onDestroy Login");
     }
 
     @Override
@@ -34,7 +71,7 @@ public class LoginPresenter extends BasePresenter implements LoginContact.Presen
     }
 
     @Override
-    public void signInWithEmailPassword( String email, String password) {
+    public void signInWithEmailPassword(String email, String password) {
         if (!isViewAttached()) return;
         if (android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
                  && password.length() >= 6) {
@@ -43,4 +80,5 @@ public class LoginPresenter extends BasePresenter implements LoginContact.Presen
             mView.signInError();
         }
     }
+
 }

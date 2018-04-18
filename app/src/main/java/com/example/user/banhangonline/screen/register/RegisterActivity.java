@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
 import com.example.user.banhangonline.model.Account;
+import com.example.user.banhangonline.screen.home.HomeActivity;
 import com.example.user.banhangonline.screen.login.LoginActivity;
 import com.example.user.banhangonline.untils.KeyUntils;
 import com.example.user.banhangonline.untils.NetworkUtils;
@@ -463,14 +464,16 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
 
     @Override
     public void registerBuySuccess() {
+        final String email = edtmailBuy.getText().toString().trim();
+        final String[] key = email.split("\\.");
         showDialog();
         if (NetworkUtils.isConnected(this)) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mDataBase.child(keyAccount).push().setValue(new Account(keyAccountBuy,
+                    mDataBase.child(keyAccount).child(key[0]).setValue(new Account(keyAccountBuy,
                              edtFullName.getText().toString().trim(),
-                             null))
+                             "Chưa có số điện tho"))
                              .addOnCompleteListener(new OnCompleteListener<Void>() {
                                  @Override
                                  public void onComplete(@NonNull Task<Void> task) {
@@ -513,8 +516,11 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
 
     @Override
     public void registerSellSuccess() {
+        String email = edtEmailRegisterSell.getText().toString().trim();
+        final String[] key = email.split("\\.");
         if (NetworkUtils.isConnected(this)) {
-            mDataBase.child(keyAccount).push().setValue(new Account(keyAccountSell,
+
+            mDataBase.child(keyAccount).child(key[0]).setValue(new Account(keyAccountSell,
                      edtTenDoanhNghiep.getText().toString().trim(),
                      mPresenter.getPhoneNumber())).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -619,7 +625,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
     @OnClick(R.id.img_back)
     public void onBackActivity() {
         if (NetworkUtils.isConnected(this)) {
-            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+            startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
             finish();
         } else {
             showNoInternet();

@@ -17,18 +17,19 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.example.user.banhangonline.R;
-import com.example.user.banhangonline.screen.home.HomeActivity;
+import com.example.user.banhangonline.screen.login.LoginActivity;
 import com.example.user.banhangonline.untils.DialogUntils;
 import com.example.user.banhangonline.widget.dialog.DialogOk;
+import com.example.user.banhangonline.widget.dialog.DialogPositiveNegative;
 import com.example.user.banhangonline.widget.dialog.DialogProgress;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class BaseActivity extends AppCompatActivity {
     protected FirebaseAuth mAuth;
     protected DatabaseReference mDataBase;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +69,6 @@ public class BaseActivity extends AppCompatActivity {
     //end progress dialog
 
     //dialog with one button
-
     protected void showOkDialog(String title, String message, DialogOk.OkDialogListener listener) {
         if (!isFinishing()) {
             DialogUntils.showOkDialog(this, title, message, listener);
@@ -83,6 +83,19 @@ public class BaseActivity extends AppCompatActivity {
                     dialog.dismiss();
                 }
             });
+        }
+    }
+
+    // dialog with positive and negative
+    protected void showConfirmDialog(String message, DialogPositiveNegative.IPositiveNegativeDialogListener lisenter) {
+        if (!isFinishing()) {
+            DialogUntils.showConfirmDialogDefault(this, getResources().getString(R.string.app_name), message, lisenter);
+        }
+    }
+
+    protected void showConfirmDialog(String tittle, String message, String textPositive, String textNegaTtive, DialogPositiveNegative.IPositiveNegativeDialogListener lisenter) {
+        if (!isFinishing()) {
+            DialogUntils.showConfirmDialog(this, tittle, message, textPositive, textNegaTtive, lisenter);
         }
     }
 
@@ -113,7 +126,7 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void logoutUser() {
         mAuth.signOut();
-        Intent i = new Intent(this, HomeActivity.class);
+        Intent i = new Intent(this, LoginActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
     }

@@ -10,9 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.user.banhangonline.R;
-import com.example.user.banhangonline.model.Categories;
 import com.example.user.banhangonline.model.Part;
-import com.example.user.banhangonline.model.Pay;
 
 import java.util.List;
 

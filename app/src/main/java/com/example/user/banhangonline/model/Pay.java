@@ -1,34 +1,34 @@
 package com.example.user.banhangonline.model;
 
 public class Pay {
-    private String IDCategory;
-    private String IDPay;
+    private String idCategory;
+    private String idPay;
     private String titlePay;
     private String imgLink;
     private Integer total;
 
-    public Pay(String IDCategory, String IDPay, String titlePay, String imgLink, Integer total) {
-        this.IDCategory = IDCategory;
-        this.IDPay = IDPay;
+    public Pay(String idCategory, String idPart, String titlePay, String imgLink, Integer total) {
+        this.idCategory = idCategory;
+        this.idPay = idPart;
         this.titlePay = titlePay;
         this.imgLink = imgLink;
         this.total = total;
     }
 
-    public String getIDCategory() {
-        return IDCategory;
+    public String getIdCategory() {
+        return idCategory;
     }
 
-    public void setIDCategory(String IDCategory) {
-        this.IDCategory = IDCategory;
+    public void setIdCategory(String idCategory) {
+        this.idCategory = idCategory;
     }
 
-    public String getIDPay() {
-        return IDPay;
+    public String getIdPay() {
+        return idPay;
     }
 
-    public void setIDPay(String IDPay) {
-        this.IDPay = IDPay;
+    public void setIdPay(String idPay) {
+        this.idPay = idPay;
     }
 
     public String getTitlePay() {

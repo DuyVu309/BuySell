@@ -5,8 +5,6 @@ public class TextUntils {
 
     public static final String myPham = "Mỹ phẩm";
 
-    public static final String thoiTrang = "Thời Trang";
-
     public static final String thoiTrangNam = "Thời trang nam";
     public static final String giayNam = "Giày nam";
     public static final String tuiSachNam = "Túi sách nam";

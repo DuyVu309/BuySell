@@ -5,25 +5,22 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class Account {
 
-    private String ID;
+    private String id;
     private String name;
     private String phoneNumber;
 
-    public Account() {
-    }
-
-    public Account(String AcountID, String Name, String PhoneNumber) {
-        this.ID = AcountID;
-        this.name = Name;
-        this.phoneNumber = PhoneNumber;
+    public Account(String id, String name, String phoneNumber) {
+        this.id = id;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getID() {
-        return ID;
+        return id;
     }
 
     public void setID(String ID) {
-        this.ID = ID;
+        this.id = ID;
     }
 
     public String getName() {

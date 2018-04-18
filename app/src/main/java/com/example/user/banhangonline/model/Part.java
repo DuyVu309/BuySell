@@ -1,6 +1,5 @@
 package com.example.user.banhangonline.model;
 
-import android.graphics.drawable.Drawable;
 
 public class Part {
     private String IDCategory;
@@ -14,6 +13,7 @@ public class Part {
         this.url = url;
         this.title = title;
     }
+
 
     public String getIDCategory() {
         return IDCategory;

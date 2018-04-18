@@ -43,15 +43,6 @@
             android:textSize="@dimen/normal" />
     </android.support.design.widget.TextInputLayout>
 
-    <CheckBox
-        android:id="@+id/cb_login"
-        android:textColor="@color/black"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/pading_normal"
-        android:checked="false"
-        android:text="Đăng nhập 1 lần" />
-
     <TextView
         android:id="@+id/tv_notifi_password"
         android:layout_width="wrap_content"

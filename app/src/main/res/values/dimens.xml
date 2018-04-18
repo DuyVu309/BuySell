@@ -13,6 +13,7 @@
     <dimen name="btn_ok_width">100dp</dimen>
 
     <dimen name="nav_bar_height">42dp</dimen>
+    <dimen name="nav_bar_height_small">36dp</dimen>
     <dimen name="nav_bar_icon_padding">6dp</dimen>
 
     <dimen name="pading_very_large">64dp</dimen>
@@ -20,4 +21,6 @@
     <dimen name="pading_normal">16dp</dimen>
     <dimen name="pading_small">8dp</dimen>
     <dimen name="width_toolbar">62dp</dimen>
+
+    <dimen name="height_btn_small">32dp</dimen>
 </resources>

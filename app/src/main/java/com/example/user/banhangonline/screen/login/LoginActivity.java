@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
@@ -22,6 +23,7 @@ import com.example.user.banhangonline.screen.forgot.ForgotActivity;
 import com.example.user.banhangonline.screen.home.HomeActivity;
 import com.example.user.banhangonline.screen.register.RegisterActivity;
 import com.example.user.banhangonline.untils.KeyUntils;
+import com.example.user.banhangonline.untils.NetworkUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -35,11 +37,16 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.example.user.banhangonline.untils.KeyUntils.keyAccount;
+import static com.example.user.banhangonline.untils.KeyUntils.keyAccountEmail;
+import static com.example.user.banhangonline.untils.KeyUntils.keyAccountID;
+import static com.example.user.banhangonline.untils.KeyUntils.keyAccountName;
+import static com.example.user.banhangonline.untils.KeyUntils.keyAccountPhone;
+import static com.example.user.banhangonline.untils.KeyUntils.keyID;
+import static com.example.user.banhangonline.untils.KeyUntils.keyName;
+import static com.example.user.banhangonline.untils.KeyUntils.keyPhone;
 
 public class LoginActivity extends BaseActivity implements LoginContact.View {
 
-    private LoginPresenter mPresenter;
-    private Unbinder unbinder;
 
     @BindView(R.id.ln_login)
     LinearLayout lnLogin;
@@ -59,42 +66,29 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
     @BindView(R.id.tv_warning)
     TextView tvWarning;
 
-    @BindView(R.id.cb_login)
-    CheckBox cbLogin;
+    private LoginPresenter mPresenter;
+    private Unbinder unbinder;
 
     private boolean isAvaialbeUser = false;
     private boolean isAvaialbePassword = false;
     private String email, password;
+    private String idBuySell, name, phoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        if (PreferManager.getIsLogin(this)) {
-            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-            finish();
-        }
         unbinder = ButterKnife.bind(this);
         mPresenter = new LoginPresenter();
         mPresenter.attachView(this);
         mPresenter.onCreate();
 
         isAvailableUserPassword();
-        isLogin();
         email = getIntent().getStringExtra(KeyUntils.keyEmailRegister);
         password = getIntent().getStringExtra(KeyUntils.keyPasswordRegister);
         if (email != null && password != null) {
             edtEmail.setText(email);
             edtPassword.setText(password);
-        }
-    }
-
-    private void isLogin() {
-        if (PreferManager.getIsLogin(this)) {
-            cbLogin.setChecked(true);
-
-        } else {
-            cbLogin.setChecked(false);
         }
     }
 
@@ -173,10 +167,14 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
 
     @OnClick(R.id.btn_sign_in)
     public void onClickSignIn() {
-        showDialog();
-        if (mPresenter != null) {
-            mPresenter.signInWithEmailPassword(edtEmail.getText().toString().trim(),
-                     edtPassword.getText().toString().trim());
+        if (NetworkUtils.isConnected(this)) {
+            showDialog();
+            if (mPresenter != null) {
+                mPresenter.signInWithEmailPassword(edtEmail.getText().toString().trim(),
+                         edtPassword.getText().toString().trim());
+            }
+        } else {
+            showNoInternet();
         }
     }
 
@@ -194,22 +192,63 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
 
     @Override
     public void signInSuccess() {
-        mAuth.signInWithEmailAndPassword(edtEmail.getText().toString().trim(),
-                 edtPassword.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    PreferManager.setIsLogin(LoginActivity.this, cbLogin.isChecked());
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                    finish();
-                    dismissDialog();
-                } else {
-                    tvWarning.setVisibility(View.VISIBLE);
-                    runAnimationStartActivity(tvWarning);
-                    dismissDialog();
+        final String email = edtEmail.getText().toString().trim();
+        final String[] key = email.split("\\.");
+
+        if (key != null) {
+            mAuth.signInWithEmailAndPassword(email, edtPassword.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        mDataBase.child(keyAccount).child(key[0]).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()) {
+                                    idBuySell = dataSnapshot.child(keyID).getValue(String.class);
+                                    name = dataSnapshot.child(keyName).getValue(String.class);
+                                    phoneNumber = dataSnapshot.child(keyPhone).getValue(String.class);
+
+
+                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                    if (email != null && idBuySell != null && name != null && phoneNumber != null) {
+                                        intent.putExtra(keyAccountID, idBuySell);
+                                        intent.putExtra(keyAccountEmail, email);
+                                        intent.putExtra(keyAccountName, name);
+                                        intent.putExtra(keyAccountPhone, phoneNumber);
+                                        startActivity(intent);
+                                        PreferManager.setIsLogin(LoginActivity.this, true);
+                                        finish();
+                                        dismissDialog();
+                                    } else {
+                                        showSnackbar(getResources().getString(R.string.error_and_check));
+                                        dismissDialog();
+                                    }
+                                } else {
+                                    showSnackbar(getResources().getString(R.string.error_and_check));
+                                    dismissDialog();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+                        });
+
+
+                    } else {
+                        tvWarning.setVisibility(View.VISIBLE);
+                        runAnimationStartActivity(tvWarning);
+                        dismissDialog();
+                    }
                 }
-            }
-        });
+            });
+
+
+        } else {
+            showSnackbar(getResources().getString(R.string.error_and_check));
+            dismissDialog();
+        }
+
     }
 
     @Override

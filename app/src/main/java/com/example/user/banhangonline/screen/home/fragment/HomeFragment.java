@@ -1,6 +1,8 @@
 package com.example.user.banhangonline.screen.home.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,10 +12,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.example.user.banhangonline.R;
+import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.Part;
 import com.example.user.banhangonline.screen.home.adapter.HomeAdapter;
+import com.example.user.banhangonline.screen.login.LoginActivity;
+import com.example.user.banhangonline.screen.register.RegisterActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +45,6 @@ import static com.example.user.banhangonline.untils.KeyUntils.keythoiTrangNam;
 import static com.example.user.banhangonline.untils.KeyUntils.keythoiTrangNu;
 import static com.example.user.banhangonline.untils.KeyUntils.keytuiSachNam;
 import static com.example.user.banhangonline.untils.KeyUntils.keytuiSachNu;
-import static com.example.user.banhangonline.untils.KeyUntils.titleDoAn;
 import static com.example.user.banhangonline.untils.TextUntils.doAnVat;
 import static com.example.user.banhangonline.untils.TextUntils.doChoiChoBe;
 import static com.example.user.banhangonline.untils.TextUntils.doDienTu;
@@ -52,7 +58,6 @@ import static com.example.user.banhangonline.untils.TextUntils.phuKien;
 import static com.example.user.banhangonline.untils.TextUntils.phuKienNam;
 import static com.example.user.banhangonline.untils.TextUntils.phuKienNu;
 import static com.example.user.banhangonline.untils.TextUntils.sachVo;
-import static com.example.user.banhangonline.untils.TextUntils.thoiTrang;
 import static com.example.user.banhangonline.untils.TextUntils.thoiTrangBeGai;
 import static com.example.user.banhangonline.untils.TextUntils.thoiTrangBeNam;
 import static com.example.user.banhangonline.untils.TextUntils.thoiTrangNam;
@@ -60,16 +65,31 @@ import static com.example.user.banhangonline.untils.TextUntils.thoiTrangNu;
 import static com.example.user.banhangonline.untils.TextUntils.tuiSachNam;
 import static com.example.user.banhangonline.untils.TextUntils.tuiSachNu;
 
-public class HomeFragment extends Fragment implements HomeAdapter.IAdapterListener {
+public class HomeFragment extends Fragment implements HomeAdapter.IAdapterListener, View.OnClickListener {
 
 
     private List<Part> mList;
     HomeAdapter adapter;
     RecyclerView recyclerView;
+    LinearLayout lnHasAccount;
+    Button btnDangKy, btnDangNhap;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        lnHasAccount = (LinearLayout) view.findViewById(R.id.ln_has_account);
+        btnDangKy = (Button) view.findViewById(R.id.btn_dangki);
+        btnDangNhap = (Button) view.findViewById(R.id.btn_dangnhap);
+        if (PreferManager.getIsLogin(getActivity())) {
+            lnHasAccount.setVisibility(View.GONE);
+        } else {
+            lnHasAccount.setVisibility(View.VISIBLE);
+        }
+
+        btnDangKy.setOnClickListener(this);
+        btnDangNhap.setOnClickListener(this);
+
         recyclerView = (RecyclerView) view.findViewById(R.id.recycerview);
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
         manager.setOrientation(GridLayoutManager.VERTICAL);
@@ -113,5 +133,17 @@ public class HomeFragment extends Fragment implements HomeAdapter.IAdapterListen
     @Override
     public void onClickItemPay() {
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_dangki:
+                startActivity(new Intent(getActivity(), RegisterActivity.class));
+                break;
+            case R.id.btn_dangnhap:
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+                break;
+        }
     }
 }
