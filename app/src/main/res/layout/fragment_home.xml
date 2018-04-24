@@ -14,9 +14,9 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_marginTop="@dimen/pading_normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pading_normal"
             android:gravity="center"
             android:text="@string/message_not_acccount"
             android:textColor="@color/black"
@@ -42,7 +42,7 @@
                     android:id="@+id/btn_dangki"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
+                    android:background="@drawable/bg_button_click_white"
                     android:gravity="center"
                     android:text="@string/dang_ki"
                     android:textColor="@color/blue"
@@ -63,7 +63,7 @@
                     android:id="@+id/btn_dangnhap"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
+                    android:background="@drawable/bg_button_click_white"
                     android:gravity="center"
                     android:text="@string/dang_nhap"
                     android:textColor="@color/blue"
@@ -82,6 +82,7 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:numColumns="auto_fit"
-        android:padding="@dimen/pading_normal" />
+        android:padding="@dimen/pading_small"
+        android:paddingTop="@dimen/pading_normal" />
 
 </LinearLayout>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -35,7 +35,7 @@
             android:layout_marginRight="@dimen/pading_normal"
             android:background="@color/transparent"
             android:text="@string/dang_bai"
-            android:textColor="@color/white"
+            android:textColor="@drawable/bg_change_colorbackground_blue"
             android:textSize="@dimen/default_text_size" />
 
 
@@ -61,6 +61,28 @@
             android:text="Duy Vũ"
             android:textColor="@color/black"
             android:textSize="@dimen/title_text_size" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/pading_normal"
+            android:layout_marginRight="@dimen/pading_normal"
+            app:cardCornerRadius="@dimen/card_corner_radius_normal">
+
+            <Button
+                android:id="@+id/tv_add_image"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/btn_ok_height"
+                android:background="@color/blue_window"
+                android:drawableLeft="@drawable/ic_add_image"
+                android:drawablePadding="@dimen/pading_small"
+                android:padding="@dimen/pading_small"
+                android:text="@string/them_anh"
+                android:textAllCaps="false"
+                android:textColor="@drawable/bg_change_colorbackground_blue"
+                android:textSize="@dimen/small_text_size" />
+
+        </android.support.v7.widget.CardView>
 
     </LinearLayout>
 
@@ -105,7 +127,7 @@
             android:layout_marginRight="@dimen/pading_normal"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="invisible">
 
             <TextView
                 android:id="@+id/spiner_part"
@@ -129,31 +151,33 @@
         android:id="@+id/edt_thongtin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/pading_small"
         android:backgroundTint="@color/transparent"
-        android:hint="@string/nhap_thong_tin"
-        android:paddingLeft="@dimen/pading_normal"
+        android:drawablePadding="@dimen/pading_normal"
+        android:drawableRight="@drawable/ic_delete_text"
+        android:hint="@string/nhap_tieu_de"
+        android:singleLine="true"
         android:textColor="@color/md_grey_600"
         android:textColorHint="@color/grey_divider"
         android:textSize="@dimen/default_text_size" />
 
-    <ImageView
-        android:id="@+id/img_hinhanh"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:layout_margin="@dimen/pading_normal"
-        android:scaleType="centerCrop"
-        android:src="@drawable/bg_doanvat" />
-
-    <TextView
-        android:id="@+id/tv_add_image"
+    <EditText
+        android:id="@+id/edt_mota"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/pading_normal"
-        android:drawableLeft="@drawable/ic_add_image"
-        android:drawablePadding="@dimen/pading_small"
-        android:padding="@dimen/pading_small"
-        android:text="@string/them_anh"
+        android:layout_marginRight="@dimen/pading_small"
+        android:backgroundTint="@color/transparent"
+        android:drawablePadding="@dimen/pading_normal"
+        android:drawableRight="@drawable/ic_delete_text"
+        android:hint="@string/nhap_mota"
         android:textColor="@color/md_grey_600"
+        android:textColorHint="@color/grey_divider"
         android:textSize="@dimen/default_text_size" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycerview_list_bitmap"
+        android:layout_width="match_parent"
+        android:layout_height="240dp" />
+
 
 </LinearLayout>

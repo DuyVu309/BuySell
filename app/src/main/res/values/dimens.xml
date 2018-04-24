@@ -11,10 +11,13 @@
 
     <dimen name="large_text_size">32sp</dimen>
     <dimen name="btn_ok_width">100dp</dimen>
+    <dimen name="btn_ok_width_change">50dp</dimen>
+    <dimen name="btn_ok_height">30dp</dimen>
 
     <dimen name="nav_bar_height">42dp</dimen>
-    <dimen name="nav_bar_height_small">36dp</dimen>
+    <dimen name="nav_bar_height_small">32dp</dimen>
     <dimen name="nav_bar_icon_padding">6dp</dimen>
+    <dimen name="pading_color_click">21dp</dimen>
 
     <dimen name="pading_very_large">64dp</dimen>
     <dimen name="pading_large">32dp</dimen>
@@ -23,4 +26,12 @@
     <dimen name="width_toolbar">62dp</dimen>
 
     <dimen name="height_btn_small">32dp</dimen>
+
+    <!--views-->
+    <dimen name="circle_border_radius">3dp</dimen>
+    <dimen name="default_square_border_radius">1dp</dimen>
+    <dimen name="line_spacing_normal">8dp</dimen>
+    <dimen name="card_corner_radius_normal">5dp</dimen>
+    <dimen name="card_elevation_normal">1dp</dimen>
+    <dimen name="layout_dot">8dp</dimen>
 </resources>

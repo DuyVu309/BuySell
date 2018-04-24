@@ -14,48 +14,9 @@
         android:layout_height="wrap_content"
         android:text="Start" />
 
-    <Button
-        android:id="@+id/btn_mVerifyButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Verify" />
 
-    <Button
-        android:id="@+id/btn_mResendButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Resend" />
-
-    <Button
-        android:id="@+id/btn_mSignOutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Signout" />
-
-    <TextView
-        android:id="@+id/tv_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/tv_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycerview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/edt_number_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <EditText
-        android:id="@+id/edt_verify"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 </LinearLayout>

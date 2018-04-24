@@ -17,6 +17,7 @@ import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
 import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.screen.home.adapter.HomePagerAdapter;
+import com.example.user.banhangonline.screen.myAccount.MyAccountActivity;
 import com.example.user.banhangonline.screen.sell.SellActivity;
 import com.example.user.banhangonline.widget.dialog.DialogPositiveNegative;
 
@@ -93,7 +94,6 @@ public class HomeActivity extends BaseActivity implements
         unbinder = ButterKnife.bind(this);
         mPresenter = new HomePresenter();
         mPresenter.onCreate();
-        mPresenter.setContext(this);
         mPresenter.attachView(this);
         getInfomationAccount();
         initFontTitle();
@@ -103,18 +103,22 @@ public class HomeActivity extends BaseActivity implements
     }
 
     private void getInfomationAccount() {
-        String idBuySell = getIntent().getStringExtra(keyAccountID);
-        String email = getIntent().getStringExtra(keyAccountEmail);
-        String name = getIntent().getStringExtra(keyAccountName);
-        String phoneNumber = getIntent().getStringExtra(keyAccountPhone);
+        String idBuySell = PreferManager.getIDBuySell(this);
+        String email = PreferManager.getEmailID(this);
+        String name = PreferManager.getNameAccount(this);
+        String phoneNumber = PreferManager.getPhoneNumber(this);
 
-        if (idBuySell != null) {
-            if (idBuySell.equals(keyAccountBuy)) {
-                imgSell.setVisibility(View.GONE);
-            }
+        if (!PreferManager.getIsLogin(this)) {
+            imgSell.setVisibility(View.GONE);
+        } else {
+            if (idBuySell != null) {
+                if (idBuySell.equals(keyAccountBuy)) {
+                    imgSell.setVisibility(View.GONE);
+                }
 
-            if (idBuySell.equals(keyAccountSell)) {
-                imgSell.setVisibility(View.VISIBLE);
+                if (idBuySell.equals(keyAccountSell)) {
+                    imgSell.setVisibility(View.VISIBLE);
+                }
             }
         }
 
@@ -138,16 +142,6 @@ public class HomeActivity extends BaseActivity implements
         tvTitle.setTypeface(typeface);
     }
 
-    @Override
-    public void loadPaySuccess() {
-
-    }
-
-    @Override
-    public void loadPayError() {
-
-    }
-
     @OnClick(R.id.img_drawer)
     public void onClickOpenDrawer() {
         drawerLayout.openDrawer(lnOpenDrawer);
@@ -164,7 +158,18 @@ public class HomeActivity extends BaseActivity implements
     }
 
     @OnClick(R.id.img_search)
-    public void searchEnything(){
+    public void searchEnything() {
+
+    }
+
+    @OnClick(R.id.ln_account)
+    public void onClickAccount() {
+        if (PreferManager.getIDBuySell(this) != null) {
+            if (PreferManager.getIDBuySell(this).equals(keyAccountSell)) {
+                startActivity(new Intent(HomeActivity.this, MyAccountActivity.class));
+                finish();
+            }
+        }
 
     }
 
@@ -209,6 +214,11 @@ public class HomeActivity extends BaseActivity implements
             @Override
             public void onClickAnswerPositive(DialogPositiveNegative dialog) {
                 PreferManager.setIsLogin(HomeActivity.this, false);
+                PreferManager.setIDBuySell(HomeActivity.this, null);
+                PreferManager.setEmail(HomeActivity.this, null);
+                PreferManager.setEmailID(HomeActivity.this, null);
+                PreferManager.setNameAccount(HomeActivity.this, null);
+                PreferManager.setPhoneNumber(HomeActivity.this, null);
                 logoutUser();
             }
 
@@ -234,4 +244,5 @@ public class HomeActivity extends BaseActivity implements
         unbinder = null;
         super.onDestroy();
     }
+
 }

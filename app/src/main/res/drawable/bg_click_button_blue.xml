@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="false" android:state_pressed="false">
+        <shape android:innerRadiusRatio="1" android:shape="rectangle">
+            <solid android:color="@color/blue" />
+            <corners android:radius="@dimen/pading_color_click" />
+        </shape>
+    </item>
+
+    <!-- button pressed -->
+    <item android:state_focused="false" android:state_pressed="true">
+        <shape android:innerRadiusRatio="1" android:shape="rectangle">
+            <solid android:color="@color/blue_window" />
+            <corners android:radius="@dimen/pading_color_click" />
+        </shape>
+    </item>
+</selector>

@@ -99,8 +99,10 @@ public class RegisPresenter extends BasePresenter implements RegisterContact.Pre
 
     @Override
     public void registerBuy(String name, String email, String password, String confirmpassword) {
+        if (!isViewAttached()) return;
         if (name.toString().trim().length() > 0
                  && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+                 && email.endsWith(".com")
                  && password.length() >= 6
                  && confirmpassword.equals(password)) {
             mView.registerBuySuccess();
@@ -111,8 +113,10 @@ public class RegisPresenter extends BasePresenter implements RegisterContact.Pre
 
     @Override
     public void registerSell(String name, String email, String password, String confirmPassword) {
+        if (!isViewAttached()) return;
         if (name.toString().trim().length() > 0
                  && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+                 && email.endsWith(".com")
                  && password.length() >= 6
                  && confirmPassword.equals(password)
                  && phone.length() > 8) {
@@ -124,6 +128,7 @@ public class RegisPresenter extends BasePresenter implements RegisterContact.Pre
 
     @Override
     public void startPhoneNumberVerification(String phoneNumber) {
+        if (!isViewAttached()) return;
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                  phoneNumber,
                  60,
@@ -134,6 +139,7 @@ public class RegisPresenter extends BasePresenter implements RegisterContact.Pre
 
     @Override
     public void resendVerificationCode(String phoneNumber) {
+        if (!isViewAttached()) return;
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                  phoneNumber,
                  60,
@@ -145,6 +151,7 @@ public class RegisPresenter extends BasePresenter implements RegisterContact.Pre
 
     @Override
     public void verifyPhoneNumberWithCode(String code) {
+        if (!isViewAttached()) return;
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
         signInWithPhoneAuthCredential(credential);
     }

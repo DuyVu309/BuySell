@@ -11,12 +11,20 @@ import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.example.user.banhangonline.R;
 
 public class DialogProgress extends Dialog {
+    private String text;
+
     public DialogProgress(@NonNull Context context) {
         super(context, R.style.FullscreenDialog);
+    }
+
+    public DialogProgress(@NonNull Context context,String text) {
+        super(context, R.style.FullscreenDialog);
+        this.text = text;
     }
 
     @Override
@@ -31,6 +39,8 @@ public class DialogProgress extends Dialog {
         }
         setContentView(R.layout.dialog_progress);
         FrameLayout frameLayout = (FrameLayout) findViewById(R.id.frm_container);
+        TextView tvMessage = (TextView) findViewById(R.id.tv_percent);
+        tvMessage.setText(text);
         Animation fadeIn = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in);
         frameLayout.startAnimation(fadeIn);
     }

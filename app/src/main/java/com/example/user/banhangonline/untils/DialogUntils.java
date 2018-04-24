@@ -1,6 +1,5 @@
 package com.example.user.banhangonline.untils;
 
-import android.app.Dialog;
 import android.content.Context;
 
 import com.example.user.banhangonline.R;
@@ -12,6 +11,12 @@ public class DialogUntils {
 
     public static DialogProgress showProgressDialog(Context context) {
         DialogProgress dialogProgress = new DialogProgress(context);
+        dialogProgress.show();
+        return dialogProgress;
+    }
+
+    public static DialogProgress showProgressDialogMessage(Context context, String message) {
+        DialogProgress dialogProgress = new DialogProgress(context, message);
         dialogProgress.show();
         return dialogProgress;
     }

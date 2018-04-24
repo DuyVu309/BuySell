@@ -19,16 +19,21 @@ import android.widget.EditText;
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.screen.login.LoginActivity;
 import com.example.user.banhangonline.untils.DialogUntils;
+import com.example.user.banhangonline.untils.NetworkUtils;
 import com.example.user.banhangonline.widget.dialog.DialogOk;
 import com.example.user.banhangonline.widget.dialog.DialogPositiveNegative;
 import com.example.user.banhangonline.widget.dialog.DialogProgress;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class BaseActivity extends AppCompatActivity {
     protected FirebaseAuth mAuth;
     protected DatabaseReference mDataBase;
+    protected FirebaseStorage mStorage;
+    protected StorageReference mStorageReferrence;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,8 +46,11 @@ public class BaseActivity extends AppCompatActivity {
                 getWindow().setStatusBarColor(getResources().getColor(R.color.blue_window));
             }
         }
+
         mAuth = FirebaseAuth.getInstance();
         mDataBase = FirebaseDatabase.getInstance().getReference();
+        mStorage = FirebaseStorage.getInstance();
+        mStorageReferrence = mStorage.getReferenceFromUrl("gs://banhangonline-7058d.appspot.com");
     }
 
     public boolean isTransparentStatusBar() {
@@ -63,6 +71,13 @@ public class BaseActivity extends AppCompatActivity {
         if (!isFinishing() && mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
             mProgressDialog = null;
+        }
+    }
+
+    protected void showDialogMessage(String message) {
+        if (!isFinishing()) {
+            dismissDialog();
+            mProgressDialog = DialogUntils.showProgressDialogMessage(this, message);
         }
     }
 
@@ -106,6 +121,11 @@ public class BaseActivity extends AppCompatActivity {
             InputMethodManager ipm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
             ipm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+
+        if(getCurrentFocus()!=null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
     }
 
     @Override
@@ -125,10 +145,15 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void logoutUser() {
-        mAuth.signOut();
-        Intent i = new Intent(this, LoginActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(i);
+        if (NetworkUtils.isConnected(this)) {
+            mAuth.signOut();
+            Intent i = new Intent(this, LoginActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+        } else {
+            showNoInternet();
+        }
+
     }
 
     protected void runAnimationStartActivity(View view) {

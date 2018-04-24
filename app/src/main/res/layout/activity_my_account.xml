@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/pading_small">
+
+        <ImageView
+            android:id="@+id/img_arrow_back"
+            style="@style/NavIconStyle"
+            android:background="@drawable/bg_click_button_blue"
+            android:src="@drawable/ic_arrow_back" />
+
+        <TextView
+            android:id="@+id/tv_title_buy_sell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:text="@string/don_hang_cua_ban"
+            android:textColor="@color/white"
+            android:textSize="@dimen/default_text_size" />
+
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycerview_my_account"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

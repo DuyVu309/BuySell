@@ -1,6 +1,5 @@
 package com.example.user.banhangonline.screen.home;
 
-import android.content.Context;
 
 import com.example.user.banhangonline.base.BasePresenter;
 import com.example.user.banhangonline.model.Categories;
@@ -31,7 +30,6 @@ import static com.example.user.banhangonline.untils.KeyUntils.titleThoiTrang;
 
 public class HomePresenter extends BasePresenter implements HomeContact.Presenter {
 
-    private Context context;
     private HomeContact.View mView;
     private List<Categories> listCategories;
     private List<Pay> listPays;
@@ -42,10 +40,6 @@ public class HomePresenter extends BasePresenter implements HomeContact.Presente
 
     public List<Pay> getListPays() {
         return listPays;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
     }
 
     private void initCategories() {
@@ -85,7 +79,7 @@ public class HomePresenter extends BasePresenter implements HomeContact.Presente
 
     @Override
     public boolean isViewAttached() {
-        return false;
+        return mView != null;
     }
 
     @Override

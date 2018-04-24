@@ -76,7 +76,7 @@
             android:layout_marginLeft="@dimen/pading_small"
             android:layout_weight="1"
             android:background="@drawable/bg_button_signin_before"
-            android:clickable="false"
+            android:enabled="false"
             android:text="@string/sign_in"
             android:textColor="@color/grey_divider" />
     </LinearLayout>

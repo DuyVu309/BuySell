@@ -473,7 +473,9 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
                 public void run() {
                     mDataBase.child(keyAccount).child(key[0]).setValue(new Account(keyAccountBuy,
                              edtFullName.getText().toString().trim(),
-                             "Chưa có số điện tho"))
+                             "Chưa có số điện thoại",
+                             "",
+                             ""))
                              .addOnCompleteListener(new OnCompleteListener<Void>() {
                                  @Override
                                  public void onComplete(@NonNull Task<Void> task) {
@@ -522,7 +524,9 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
 
             mDataBase.child(keyAccount).child(key[0]).setValue(new Account(keyAccountSell,
                      edtTenDoanhNghiep.getText().toString().trim(),
-                     mPresenter.getPhoneNumber())).addOnCompleteListener(new OnCompleteListener<Void>() {
+                     mPresenter.getPhoneNumber(),
+                     "",
+                     "")).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {

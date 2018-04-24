@@ -9,6 +9,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/ln_account"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:background="@drawable/bg_account"
@@ -28,7 +29,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/pading_normal"
-            android:text="Ha thi thanh van"
             android:textColor="@color/white"
             android:textSize="@dimen/default_text_size" />
     </LinearLayout>
@@ -89,13 +89,13 @@
 
     <TextView
         android:id="@+id/tv_dang_xuat"
-        android:visibility="gone"
-        android:textColor="@color/md_grey_600"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/pading_very_large"
         android:padding="@dimen/pading_small"
         android:text="Đăng xuất"
-        android:textSize="@dimen/default_text_size" />
+        android:textColor="@color/md_grey_600"
+        android:textSize="@dimen/default_text_size"
+        android:visibility="gone" />
 
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.example.user.banhangonline.screen.home.fragment;
+package com.example.user.banhangonline.screen.home.fragment.home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -65,7 +65,8 @@ import static com.example.user.banhangonline.untils.TextUntils.thoiTrangNu;
 import static com.example.user.banhangonline.untils.TextUntils.tuiSachNam;
 import static com.example.user.banhangonline.untils.TextUntils.tuiSachNu;
 
-public class HomeFragment extends Fragment implements HomeAdapter.IAdapterListener, View.OnClickListener {
+public class HomeFragment extends Fragment implements HomeAdapter.IAdapterListener,
+         View.OnClickListener {
 
 
     private List<Part> mList;
@@ -140,9 +141,11 @@ public class HomeFragment extends Fragment implements HomeAdapter.IAdapterListen
         switch (view.getId()) {
             case R.id.btn_dangki:
                 startActivity(new Intent(getActivity(), RegisterActivity.class));
+                getActivity().finish();
                 break;
             case R.id.btn_dangnhap:
                 startActivity(new Intent(getActivity(), LoginActivity.class));
+                getActivity().finish();
                 break;
         }
     }

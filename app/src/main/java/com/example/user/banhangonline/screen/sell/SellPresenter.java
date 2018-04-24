@@ -1,19 +1,28 @@
 package com.example.user.banhangonline.screen.sell;
 
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.user.banhangonline.base.BasePresenter;
+import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.Categories;
 import com.example.user.banhangonline.model.Part;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.example.user.banhangonline.model.SanPham;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-import static com.example.user.banhangonline.untils.KeyUntils.keyCategory;
 import static com.example.user.banhangonline.untils.KeyUntils.keyDoNguNoiY;
 import static com.example.user.banhangonline.untils.KeyUntils.keyIdCateCongNghe;
 import static com.example.user.banhangonline.untils.KeyUntils.keyIdCateDoAn;
@@ -24,6 +33,7 @@ import static com.example.user.banhangonline.untils.KeyUntils.keyIdCateKhac;
 import static com.example.user.banhangonline.untils.KeyUntils.keyIdCateMyPham;
 import static com.example.user.banhangonline.untils.KeyUntils.keyIdCatePhuKien;
 import static com.example.user.banhangonline.untils.KeyUntils.keyIdCateThoiTrang;
+import static com.example.user.banhangonline.untils.KeyUntils.keySanPham;
 import static com.example.user.banhangonline.untils.KeyUntils.keybeNam;
 import static com.example.user.banhangonline.untils.KeyUntils.keybeNu;
 import static com.example.user.banhangonline.untils.KeyUntils.keygiayNam;
@@ -60,6 +70,10 @@ public class SellPresenter extends BasePresenter implements SellContact.Presente
     private SellContact.View mView;
     private List<Object> listCategories;
     private List<Object> listPart;
+    private List<File> listFiles;
+    private List<String> listImages;
+    private List<String> listNameImages;
+    private String idCate, titleCate, idPart, titlePart;
 
     public List<Object> getListCategory() {
         listCategories.add(new Categories(keyIdCateDoAn, titleDoAn));
@@ -94,10 +108,61 @@ public class SellPresenter extends BasePresenter implements SellContact.Presente
         return listPart != null ? listPart : null;
     }
 
+    public List<File> getListFiles() {
+        return listFiles;
+    }
+
+    public void setListFiles(List<File> listFiles) {
+        this.listFiles = listFiles;
+    }
+
+    public List<String> getListImages() {
+        return listImages;
+    }
+
+    public List<String> getListNameImages() {
+        return listNameImages;
+    }
+
+    public String getIdCate() {
+        return idCate;
+    }
+
+    public void setIdCate(String idCate) {
+        this.idCate = idCate;
+    }
+
+    public String getTitleCate() {
+        return titleCate;
+    }
+
+    public void setTitleCate(String titleCate) {
+        this.titleCate = titleCate;
+    }
+
+    public String getIdPart() {
+        return idPart;
+    }
+
+    public void setIdPart(String idPart) {
+        this.idPart = idPart;
+    }
+
+    public String getTitlePart() {
+        return titlePart;
+    }
+
+    public void setTitlePart(String titlePart) {
+        this.titlePart = titlePart;
+    }
+
     @Override
     public void onCreate() {
         listCategories = new ArrayList<>();
         listPart = new ArrayList<>();
+        listFiles = new ArrayList<>();
+        listImages = new ArrayList<>();
+        listNameImages = new ArrayList<>();
     }
 
     @Override
@@ -117,6 +182,60 @@ public class SellPresenter extends BasePresenter implements SellContact.Presente
 
     @Override
     public boolean isViewAttached() {
-        return false;
+        return mView != null;
+    }
+
+    @Override
+    public void upLoadSanPhamToFirebase(DatabaseReference database, SanPham sanPham) {
+        if (!isViewAttached()) {
+            return;
+        }
+        database.child(keySanPham).push().setValue(sanPham).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    mView.upLoadToFirebaseSuccess();
+                } else {
+                    mView.upLoadToFirebaseError();
+
+                }
+            }
+        });
+    }
+
+    @Override
+    public void upLoadFileImageToStorage(StorageReference storageReference, String nameImage) {
+        if (!isViewAttached()) {
+            return;
+        }
+        for (int i = 0; i < listFiles.size(); i++) {
+            Uri file = Uri.fromFile(new File(listFiles.get(i).toString()));
+            String date = String.valueOf(Calendar.getInstance().getTimeInMillis());
+            listNameImages.add(nameImage + date);
+            StorageReference riversRef = storageReference.child("images/" + listNameImages.get(i));
+            UploadTask uploadTask = riversRef.putFile(file);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    mView.upLoadImagErrror();
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    String downloadUrl = taskSnapshot.getDownloadUrl().toString();
+                    listImages.add(downloadUrl);
+                    if (listImages.size() == listFiles.size()) {
+                        mView.upLoadImagesSuccess(listNameImages);
+                    }
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                    int x = (int) Math.round(progress);
+                    mView.displayPercent(x + "%...");
+                }
+            });
+        }
     }
 }

@@ -43,6 +43,7 @@ public class ForgotPresenter extends BasePresenter implements ForgotContact.Pres
 
     @Override
     public void sendPasswordResetEmail(String email) {
+        if (!isViewAttached()) return;
         if (firebaseAuth != null) {
             firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override

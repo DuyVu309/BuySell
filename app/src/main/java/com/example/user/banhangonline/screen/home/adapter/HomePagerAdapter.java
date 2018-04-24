@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.example.user.banhangonline.screen.home.fragment.HomeFragment;
-import com.example.user.banhangonline.screen.home.fragment.PayFragment;
+import com.example.user.banhangonline.screen.home.fragment.home.HomeFragment;
+import com.example.user.banhangonline.screen.home.fragment.pay.PayFragment;
 
 import com.example.user.banhangonline.model.Categories;
 

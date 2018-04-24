@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".screen.library.LibraryActivity">
+
+    <LinearLayout
+        android:padding="@dimen/pading_small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/img_back"
+            style="@style/NavIconStyle"
+            android:src="@drawable/ic_arrow_back" />
+
+        <TextView
+            android:id="@+id/tv_total_selected"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/pading_small"
+            android:text="@string/chon_anh"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/default_text_size" />
+
+        <Button
+            android:id="@+id/btn_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:text="@string/xong"
+            android:enabled="false"
+            android:textColor="@drawable/bg_change_colorbackground_blue"
+            android:textSize="@dimen/default_text_size"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <com.afollestad.dragselectrecyclerview.DragSelectRecyclerView
+        android:id="@+id/recycerview_library"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

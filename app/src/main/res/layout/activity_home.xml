@@ -28,6 +28,7 @@
                 <ImageView
                     android:id="@+id/img_drawer"
                     style="@style/NavIconStyle"
+                    android:background="@drawable/bg_click_button_blue"
                     android:src="@drawable/ic_nav_drawer" />
 
                 <TextView
@@ -44,12 +45,14 @@
                     android:id="@+id/img_sell"
                     style="@style/NavIconStyle"
                     android:layout_marginRight="@dimen/pading_small"
+                    android:background="@drawable/bg_click_button_blue"
                     android:src="@drawable/ic_sell" />
 
                 <ImageView
                     android:id="@+id/img_cart"
                     style="@style/NavIconStyle"
                     android:layout_marginRight="@dimen/pading_small"
+                    android:background="@drawable/bg_click_button_blue"
                     android:src="@drawable/ic_cart" />
             </LinearLayout>
 
@@ -71,12 +74,12 @@
 
                     <EditText
                         android:id="@+id/edt_search"
-                        android:paddingLeft="@dimen/pading_normal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/transparent"
                         android:hint="Tìm kiếm"
                         android:inputType="textFilter"
+                        android:paddingLeft="@dimen/pading_normal"
                         android:textColor="@color/black"
                         android:textSize="@dimen/default_text_size" />
 

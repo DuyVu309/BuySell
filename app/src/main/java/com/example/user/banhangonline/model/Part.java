@@ -1,7 +1,9 @@
 package com.example.user.banhangonline.model;
 
 
-public class Part {
+import java.io.Serializable;
+
+public class Part implements Serializable{
     private String IDCategory;
     private String IDPay;
     private int url;

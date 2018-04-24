@@ -155,11 +155,11 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
 
     private void isClickAble() {
         if (isAvaialbeUser && isAvaialbePassword) {
-            btnSignIn.setClickable(true);
+            btnSignIn.setEnabled(true);
             btnSignIn.setBackground(getResources().getDrawable(R.drawable.bg_button_signin_after));
             btnSignIn.setTextColor(getResources().getColor(R.color.white));
         } else {
-            btnSignIn.setClickable(false);
+            btnSignIn.setEnabled(false);
             btnSignIn.setBackground(getResources().getDrawable(R.drawable.bg_button_signin_before));
             btnSignIn.setTextColor(getResources().getColor(R.color.blue));
         }
@@ -211,12 +211,13 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
 
                                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                     if (email != null && idBuySell != null && name != null && phoneNumber != null) {
-                                        intent.putExtra(keyAccountID, idBuySell);
-                                        intent.putExtra(keyAccountEmail, email);
-                                        intent.putExtra(keyAccountName, name);
-                                        intent.putExtra(keyAccountPhone, phoneNumber);
-                                        startActivity(intent);
                                         PreferManager.setIsLogin(LoginActivity.this, true);
+                                        PreferManager.setIDBuySell(LoginActivity.this, idBuySell);
+                                        PreferManager.setEmail(LoginActivity.this, email);
+                                        PreferManager.setEmailID(LoginActivity.this, key[0]);
+                                        PreferManager.setNameAccount(LoginActivity.this, name);
+                                        PreferManager.setPhoneNumber(LoginActivity.this, phoneNumber);
+                                        startActivity(intent);
                                         finish();
                                         dismissDialog();
                                     } else {

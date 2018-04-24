@@ -43,11 +43,25 @@
 
     //sell
     <string name="tao_bai_dang">Tạo bài đăng</string>
-    <string name="nhap_thong_tin">Nhập thông tin sản phẩm của bạn</string>
+    <string name="nhap_tieu_de">Nhập tiêu đề tìm kiếm (nhỏ hơn 255 ký tự)</string>
+    <string name="nhap_mota">Mô tả sản phẩm</string>
     <string name="them_anh">Thêm ảnh</string>
     <string name="loai">Loại</string>
     <string name="muc">Mục</string>
     <string name="message_huy_bai_viet">Bạn có chắc chắn muốn hủy bài không?</string>
+    <string name="khong_cho_phep_truy_cap_may_anh">Chưa cho phép truy cập vào máy ảnh</string>
+    <string name="chon_anh">Chọn ảnh</string>
+    <string name="xong">XONG</string>
+    <string name="chon_hang_muc">Chọn hạng mục</string>
+    <string name="chua_nhap_du_lieu">Chưa nhập đủ dữ liệu</string>
+    <string name="tieu_de_qua_lon">Tiêu đề có dữ liệu quá lớn</string>
+    <string name="sua">Sửa</string>
+    <string name="xoa">Xóa</string>
+    <string name="don_hang_cua_ban">Đơn hàng của bạn</string>
+
+    <string name="error">Đã có lỗi xảy ra</string>
+    <string name="ma">Mã</string>
+    <string name="luu">Lưu</string>
 
 
 </resources>
