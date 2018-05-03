@@ -6,18 +6,19 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
 import com.example.user.banhangonline.interactor.prefer.PreferManager;
+import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.screen.home.adapter.HomePagerAdapter;
-import com.example.user.banhangonline.screen.myAccount.MyAccountActivity;
+import com.example.user.banhangonline.screen.mySanPham.MySanPhamActivity;
 import com.example.user.banhangonline.screen.sell.SellActivity;
 import com.example.user.banhangonline.widget.dialog.DialogPositiveNegative;
 
@@ -27,10 +28,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.example.user.banhangonline.untils.KeyUntils.keyAccountBuy;
-import static com.example.user.banhangonline.untils.KeyUntils.keyAccountEmail;
-import static com.example.user.banhangonline.untils.KeyUntils.keyAccountID;
-import static com.example.user.banhangonline.untils.KeyUntils.keyAccountName;
-import static com.example.user.banhangonline.untils.KeyUntils.keyAccountPhone;
 import static com.example.user.banhangonline.untils.KeyUntils.keyAccountSell;
 
 public class HomeActivity extends BaseActivity implements
@@ -76,6 +73,9 @@ public class HomeActivity extends BaseActivity implements
     @BindView(R.id.tv_my_account)
     TextView tvMyAccount;
 
+    @BindView(R.id.ln_my_account)
+    LinearLayout lnMyAccount;
+
     @BindView(R.id.tv_dang_xuat)
     TextView tvDangXuat;
 
@@ -94,15 +94,18 @@ public class HomeActivity extends BaseActivity implements
         unbinder = ButterKnife.bind(this);
         mPresenter = new HomePresenter();
         mPresenter.onCreate();
+        mPresenter.setContext(this);
         mPresenter.attachView(this);
         getInfomationAccount();
         initFontTitle();
 
         viewPager.setAdapter(new HomePagerAdapter(this, getSupportFragmentManager(), mPresenter.getListCategories()));
         tableLayout.setupWithViewPager(viewPager);
+        mPresenter.getInfomationAccount(mDataBase);
     }
 
     private void getInfomationAccount() {
+        tvTrangChu.setSelected(true);
         String idBuySell = PreferManager.getIDBuySell(this);
         String email = PreferManager.getEmailID(this);
         String name = PreferManager.getNameAccount(this);
@@ -164,13 +167,11 @@ public class HomeActivity extends BaseActivity implements
 
     @OnClick(R.id.ln_account)
     public void onClickAccount() {
-        if (PreferManager.getIDBuySell(this) != null) {
-            if (PreferManager.getIDBuySell(this).equals(keyAccountSell)) {
-                startActivity(new Intent(HomeActivity.this, MyAccountActivity.class));
-                finish();
+        if (PreferManager.getIsLogin(this)) {
+            if (PreferManager.getEmailID(this) != null) {
+                startActivity(new Intent(HomeActivity.this, MySanPhamActivity.class));
             }
         }
-
     }
 
     @OnClick(R.id.tv_trang_chu)
@@ -199,34 +200,59 @@ public class HomeActivity extends BaseActivity implements
         tvMyAccount.setSelected(true);
         tvMyAccount.setBackgroundColor(getResources().getColor(R.color.greyish_divider));
         disableSelected(tvTrangChu, tvNotify, tvSetting);
-        if (tvDangXuat.getVisibility() == View.GONE) {
-            tvDangXuat.setVisibility(View.VISIBLE);
+        if (lnMyAccount.getVisibility() == View.GONE) {
+            lnMyAccount.setVisibility(View.VISIBLE);
             tvMyAccount.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_face, 0, R.drawable.ic_expand_less, 0);
         } else {
-            tvDangXuat.setVisibility(View.GONE);
+            lnMyAccount.setVisibility(View.GONE);
             tvMyAccount.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_face, 0, R.drawable.ic_expand_more, 0);
+        }
+    }
+
+    @OnClick(R.id.tv_trang_ca_nhan)
+    public void onTrangCaNhan() {
+        if (PreferManager.getIsLogin(this)) {
+            if (PreferManager.getEmailID(this) != null) {
+                startActivity(new Intent(HomeActivity.this, MySanPhamActivity.class));
+            }
+        } else {
+            showSnackbar("Chưa đăng nhập");
+            showConfirmDialog("Bạn có đăng nhập (đăng kí) không?", new DialogPositiveNegative.IPositiveNegativeDialogListener() {
+                @Override
+                public void onClickAnswerPositive(DialogPositiveNegative dialog) {
+                    PreferManager.setIsLogin(HomeActivity.this, false);
+                    PreferManager.setIDBuySell(HomeActivity.this, null);
+                    PreferManager.setEmail(HomeActivity.this, null);
+                    PreferManager.setEmailID(HomeActivity.this, null);
+                    PreferManager.setNameAccount(HomeActivity.this, null);
+                    PreferManager.setPhoneNumber(HomeActivity.this, null);
+                    logoutUser();
+                }
+
+                @Override
+                public void onClickAnswerNegative(DialogPositiveNegative dialog) {
+                    dialog.dismiss();
+                }
+            });
         }
     }
 
     @OnClick(R.id.tv_dang_xuat)
     public void onClickDangXuat() {
-        showConfirmDialog("Bạn có chắc chắn muốn đăng xuất hay không?", new DialogPositiveNegative.IPositiveNegativeDialogListener() {
-            @Override
-            public void onClickAnswerPositive(DialogPositiveNegative dialog) {
-                PreferManager.setIsLogin(HomeActivity.this, false);
-                PreferManager.setIDBuySell(HomeActivity.this, null);
-                PreferManager.setEmail(HomeActivity.this, null);
-                PreferManager.setEmailID(HomeActivity.this, null);
-                PreferManager.setNameAccount(HomeActivity.this, null);
-                PreferManager.setPhoneNumber(HomeActivity.this, null);
-                logoutUser();
-            }
+        if (PreferManager.getIsLogin(this)) {
+            showConfirmDialog("Bạn có chắc chắn muốn đăng xuất hay không?", new DialogPositiveNegative.IPositiveNegativeDialogListener() {
+                @Override
+                public void onClickAnswerPositive(DialogPositiveNegative dialog) {
+                    logoutUser();
+                }
 
-            @Override
-            public void onClickAnswerNegative(DialogPositiveNegative dialog) {
-                dialog.dismiss();
-            }
-        });
+                @Override
+                public void onClickAnswerNegative(DialogPositiveNegative dialog) {
+                    dialog.dismiss();
+                }
+            });
+        }
+
     }
 
     private void disableSelected(View... views) {
@@ -245,4 +271,14 @@ public class HomeActivity extends BaseActivity implements
         super.onDestroy();
     }
 
+    @Override
+    public void getInfoSuccess(Account account) {
+        imgAccount.setClipToOutline(true);
+        Glide.with(this).load(account.getUrlAvt()).error(R.drawable.ic_account).into(imgAccount);
+    }
+
+    @Override
+    public void getInfoError() {
+
+    }
 }

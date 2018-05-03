@@ -1,13 +1,22 @@
 package com.example.user.banhangonline.screen.home;
 
 
+import android.content.Context;
+
 import com.example.user.banhangonline.base.BasePresenter;
+import com.example.user.banhangonline.interactor.prefer.PreferManager;
+import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.model.Categories;
 import com.example.user.banhangonline.model.Pay;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.user.banhangonline.untils.KeyUntils.keyAccount;
 import static com.example.user.banhangonline.untils.KeyUntils.keyIdCateCongNghe;
 import static com.example.user.banhangonline.untils.KeyUntils.keyIdCateDoAn;
 import static com.example.user.banhangonline.untils.KeyUntils.keyIdCateDoChoi;
@@ -30,6 +39,7 @@ import static com.example.user.banhangonline.untils.KeyUntils.titleThoiTrang;
 
 public class HomePresenter extends BasePresenter implements HomeContact.Presenter {
 
+    private Context context;
     private HomeContact.View mView;
     private List<Categories> listCategories;
     private List<Pay> listPays;
@@ -53,6 +63,11 @@ public class HomePresenter extends BasePresenter implements HomeContact.Presente
         listCategories.add(new Categories(keyIdCateHocTap, titleGiaHocTap));
         listCategories.add(new Categories(keyIdCateDoChoi, titleDochoi));
         listCategories.add(new Categories(keyIdCateKhac, titleKhac));
+    }
+
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     @Override
@@ -80,6 +95,27 @@ public class HomePresenter extends BasePresenter implements HomeContact.Presente
     @Override
     public boolean isViewAttached() {
         return mView != null;
+    }
+
+    @Override
+    public void getInfomationAccount(DatabaseReference databaseReference) {
+        databaseReference.child(keyAccount).child(PreferManager.getEmailID(context)).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Account account = dataSnapshot.getValue(Account.class);
+                if (account != null) {
+                    if (mView != null) {
+                        mView.getInfoSuccess(account);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                mView.getInfoError();
+            }
+        });
+
     }
 
     @Override

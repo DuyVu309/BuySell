@@ -1,35 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <LinearLayout
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blue"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/pading_small">
+        android:background="@color/white">
 
-        <ImageView
-            android:id="@+id/img_arrow_back"
-            style="@style/NavIconStyle"
-            android:background="@drawable/bg_click_button_blue"
-            android:src="@drawable/ic_arrow_back" />
-
-        <TextView
-            android:id="@+id/tv_title_buy_sell"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingLeft="10dp"
-            android:text="@string/don_hang_cua_ban"
-            android:textColor="@color/white"
-            android:textSize="@dimen/default_text_size" />
+            android:background="@color/blue"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/pading_small"
+            app:layout_scrollFlags="scroll|enterAlways">
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/img_arrow_back"
+                style="@style/NavIconStyle"
+                android:background="@drawable/bg_click_button_blue"
+                android:src="@drawable/ic_arrow_back" />
+
+            <TextView
+                android:id="@+id/tv_title_buy_sell"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:text="@string/don_hang_cua_ban"
+                android:textColor="@color/white"
+                android:textSize="@dimen/default_text_size" />
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_back_activity"
+                android:text="@string/luu"
+                android:textColor="@color/white"
+                android:visibility="gone"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentScrim="@color/blue"
+            app:layout_collapseMode="parallax"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_scrollFlags="scroll|enterAlways">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_scrollFlags="scroll|enterAlways">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp">
+
+
+                        <ImageView
+                            android:id="@+id/img_my_account"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:scaleType="centerCrop" />
+
+                        <TextView
+                            android:id="@+id/tv_choose_lanscape"
+                            style="@style/change_image"
+                            android:layout_gravity="right|bottom" />
+
+                        <ProgressBar
+                            android:id="@+id/pb_load_lanscape"
+                            android:layout_width="@dimen/nav_bar_height_small"
+                            android:layout_height="@dimen/nav_bar_height_small"
+                            android:layout_gravity="center"
+                            android:visibility="gone"
+                            android:indeterminateTint="@color/blue" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="150dp"
+                        android:background="@color/white">
+
+                        <ImageView
+                            android:id="@+id/img_avt"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="2dp"
+                            android:scaleType="centerCrop" />
+
+                        <TextView
+                            android:id="@+id/tv_choose_avt"
+                            style="@style/change_image"
+                            android:layout_gravity="right|bottom" />
+
+                        <ProgressBar
+                            android:id="@+id/pb_load_avt"
+                            android:visibility="gone"
+                            android:layout_width="@dimen/nav_bar_height_small"
+                            android:layout_height="@dimen/nav_bar_height_small"
+                            android:layout_gravity="center"
+                            android:indeterminateTint="@color/blue" />
+                    </FrameLayout>
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_account_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/pading_small"
+                    android:backgroundTint="@color/transparent"
+                    android:enabled="false"
+                    android:text="Vũ Đình Duy"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/title_text_size" />
+
+                <TextView
+                    android:id="@+id/tv_account_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/pading_small"
+                    android:backgroundTint="@color/transparent"
+                    android:drawableLeft="@drawable/ic_phone_black"
+                    android:drawablePadding="@dimen/pading_small"
+                    android:enabled="false"
+                    android:gravity="center_vertical"
+                    android:text="0163 747 9760"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/small_text_size" />
+
+                <TextView
+                    android:id="@+id/tv_account_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/pading_small"
+                    android:backgroundTint="@color/transparent"
+                    android:drawableLeft="@drawable/ic_place_black"
+                    android:drawablePadding="@dimen/pading_small"
+                    android:ellipsize="end"
+                    android:enabled="false"
+                    android:maxLines="2"
+                    android:text="Cẩm Vũ, Cẩm Giàng, Hải Dương"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/default_text_size" />
+
+                <Button
+                    android:id="@+id/btn_change_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/pading_normal"
+                    android:background="@color/greyish_white"
+                    android:enabled="false"
+                    android:padding="@dimen/pading_normal"
+                    android:text="@string/chinh_sua_chi_tiet"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/small_text_size" />
+            </LinearLayout>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycerview_my_account"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</LinearLayout>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+</android.support.design.widget.CoordinatorLayout>

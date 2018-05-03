@@ -12,17 +12,23 @@ public class Account {
     private String id;
     private String name;
     private String phoneNumber;
-    private String urlImage;
+    private String urlAvt;
+    private String nameAvt;
+    private String urlLanscape;
+    private String nameLans;
     private String address;
 
     public Account() {
     }
 
-    public Account(String id, String name, String phoneNumber, String urlImage, String address) {
+    public Account(String id, String name, String phoneNumber, String urlAvt, String nameAvt, String urlLanscape, String nameLans, String address) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.urlImage = urlImage;
+        this.urlAvt = urlAvt;
+        this.nameAvt = nameAvt;
+        this.urlLanscape = urlLanscape;
+        this.nameLans = nameLans;
         this.address = address;
     }
 
@@ -50,12 +56,36 @@ public class Account {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getUrlImage() {
-        return urlImage;
+    public String getUrlAvt() {
+        return urlAvt;
     }
 
-    public void setUrlImage(String urlImage) {
-        this.urlImage = urlImage;
+    public void setUrlAvt(String urlAvt) {
+        this.urlAvt = urlAvt;
+    }
+
+    public String getNameAvt() {
+        return nameAvt;
+    }
+
+    public void setNameAvt(String nameAvt) {
+        this.nameAvt = nameAvt;
+    }
+
+    public String getUrlLanscape() {
+        return urlLanscape;
+    }
+
+    public void setUrlLanscape(String urlLanscape) {
+        this.urlLanscape = urlLanscape;
+    }
+
+    public String getNameLans() {
+        return nameLans;
+    }
+
+    public void setNameLans(String nameLans) {
+        this.nameLans = nameLans;
     }
 
     public String getAddress() {

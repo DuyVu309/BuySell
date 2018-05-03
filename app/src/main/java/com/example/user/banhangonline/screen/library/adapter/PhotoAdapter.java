@@ -88,7 +88,7 @@ public class PhotoAdapter extends DragSelectRecyclerViewAdapter<DragSelectRecycl
 
     public class PhotoHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.img_library)
-        SquareImageView image;
+        ImageView image;
 
         @BindView(R.id.check)
         ImageView check;

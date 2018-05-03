@@ -1,10 +1,8 @@
 package com.example.user.banhangonline.screen.changeSanpham;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,7 +12,7 @@ import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
 import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.SanPham;
-import com.example.user.banhangonline.screen.myAccount.MyAccountActivity;
+import com.example.user.banhangonline.screen.mySanPham.MySanPhamActivity;
 import com.example.user.banhangonline.screen.sell.adapter.ImageAdapter;
 
 import java.io.File;
@@ -98,7 +96,7 @@ public class ChangeSanPhamActivity extends BaseActivity implements ChangeSanPham
 
     @OnClick(R.id.img_arrow_back)
     public void backActivity() {
-        startActivity(new Intent(ChangeSanPhamActivity.this, MyAccountActivity.class));
+        startActivity(new Intent(ChangeSanPhamActivity.this, MySanPhamActivity.class));
         finish();
     }
 
@@ -130,7 +128,7 @@ public class ChangeSanPhamActivity extends BaseActivity implements ChangeSanPham
     @Override
     public void updateSanPhamSuccess() {
         showSnackbar(getString(R.string.thanh_cong));
-        startActivity(new Intent(ChangeSanPhamActivity.this, MyAccountActivity.class));
+        startActivity(new Intent(ChangeSanPhamActivity.this, MySanPhamActivity.class));
         finish();
     }
 

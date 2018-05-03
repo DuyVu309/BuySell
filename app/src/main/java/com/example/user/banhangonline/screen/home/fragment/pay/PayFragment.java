@@ -13,14 +13,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.model.Categories;
 import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.screen.detail.SanPhamDetailActivity;
 import com.example.user.banhangonline.screen.home.fragment.adapter.SanPhamAdapter;
+import com.example.user.banhangonline.untils.DialogUntils;
+import com.example.user.banhangonline.widget.dialog.DialogProgress;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Collections;
+import java.util.Comparator;
 
 import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartDetail;
 
@@ -32,7 +38,6 @@ public class PayFragment extends Fragment implements PayContact.View {
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     private SanPhamAdapter mAdapter;
     private PayPresenter mPresenter;
-    GridLayoutManager manager;
 
     public static PayFragment newInstance(Categories categories) {
         PayFragment fragment = new PayFragment();
@@ -58,9 +63,7 @@ public class PayFragment extends Fragment implements PayContact.View {
         mPresenter.attachView(this);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycerview);
         rotateLoading = (ProgressBar) view.findViewById(R.id.rotate_loading);
-        manager = new GridLayoutManager(getActivity(), 2);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         if (categories != null) {
             initAdapter();
         }
@@ -68,8 +71,9 @@ public class PayFragment extends Fragment implements PayContact.View {
     }
 
     private void initAdapter() {
+        mPresenter.loadSanPhamFromFirebase(mDatabase, categories.getId());
 
-        mAdapter = new SanPhamAdapter(getActivity(), mPresenter.getSanPhamList(), new SanPhamAdapter.ISelectPayAdapter() {
+        mAdapter = new SanPhamAdapter(recyclerView, getActivity(), mPresenter.getSanPhamList(), new SanPhamAdapter.ISelectPayAdapter() {
             @Override
             public void onSelectedSanPham(SanPham sanPham) {
                 Intent intent = new Intent(getActivity(), SanPhamDetailActivity.class);
@@ -80,13 +84,36 @@ public class PayFragment extends Fragment implements PayContact.View {
 
         recyclerView.setAdapter(mAdapter);
 
-        mPresenter.loadSanPhamFromFirebase(mDatabase, categories.getId());
+//        mAdapter.setmOnLoadMore(new SanPhamAdapter.OnLoadMoreListener() {
+//            @Override
+//            public void onLoadMore() {
+//                rotateLoading.setVisibility(View.VISIBLE);
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        rotateLoading.setVisibility(View.GONE);
+//                        int position = mPresenter.getPosition();
+//                        if (mPresenter.getSanPhamList().size() > position) {
+//                            mPresenter.setPosition(position + 10);
+//                        }
+//                        mPresenter.loadMoreSanPham(mDatabase, categories.getId());
+//                        mAdapter.setLoaded();
+//                    }
+//                }, 1000);
+//            }
+//        });
     }
 
 
     @Override
     public void loadSanPhamSuccess() {
         if (mAdapter != null) {
+            Collections.sort(mPresenter.getSanPhamList(), new Comparator<SanPham>() {
+                @Override
+                public int compare(SanPham sanPham, SanPham t1) {
+                    return sanPham.getTime().compareTo(t1.getTime());
+                }
+            });
             mAdapter.notifyDataSetChanged();
         }
     }

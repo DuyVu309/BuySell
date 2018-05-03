@@ -473,9 +473,12 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
                 public void run() {
                     mDataBase.child(keyAccount).child(key[0]).setValue(new Account(keyAccountBuy,
                              edtFullName.getText().toString().trim(),
-                             "Chưa có số điện thoại",
+                             getString(R.string.dont_phone_number),
                              "",
-                             ""))
+                             "",
+                             "",
+                             "",
+                             getString(R.string.dont_address)))
                              .addOnCompleteListener(new OnCompleteListener<Void>() {
                                  @Override
                                  public void onComplete(@NonNull Task<Void> task) {
@@ -526,7 +529,10 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
                      edtTenDoanhNghiep.getText().toString().trim(),
                      mPresenter.getPhoneNumber(),
                      "",
-                     "")).addOnCompleteListener(new OnCompleteListener<Void>() {
+                     "",
+                     "",
+                     "",
+                     getString(R.string.dont_address))).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {

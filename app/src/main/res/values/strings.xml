@@ -1,4 +1,6 @@
 <resources>
+    <string name="API_KEY">AIzaSyDCUDjlQqJRaapcRmtdb2l7uTQh4J2oK8Q</string>
+
     <string name="app_name">Buy - Sell</string>
     <string name="name_register">Đăng ký</string>
     <string name="error_and_check">Đã xảy ra lỗi, vui lòng kiểm tra lại</string>
@@ -25,7 +27,6 @@
     <string name="nguoi_ban_hang">Người bán hàng</string>
     <string name="full_name">Tên đầy đủ</string>
     <string name="thanh_cong">Thành công</string>
-    <string name="dang_ki">Đăng kí</string>
     <string name="dang_nhap">Đăng nhập</string>
     <string name="vui_long_nhap_ten_doanh_nghiep">Vui lòng nhập tên doanh nghiệp</string>
     <string name="register">Đăng kí</string>
@@ -49,7 +50,7 @@
     <string name="loai">Loại</string>
     <string name="muc">Mục</string>
     <string name="message_huy_bai_viet">Bạn có chắc chắn muốn hủy bài không?</string>
-    <string name="khong_cho_phep_truy_cap_may_anh">Chưa cho phép truy cập vào máy ảnh</string>
+    <string name="khong_cho_phep_truy_cap_may_anh">Chưa cho phép truy cập vào thư mục ảnh</string>
     <string name="chon_anh">Chọn ảnh</string>
     <string name="xong">XONG</string>
     <string name="chon_hang_muc">Chọn hạng mục</string>
@@ -62,6 +63,23 @@
     <string name="error">Đã có lỗi xảy ra</string>
     <string name="ma">Mã</string>
     <string name="luu">Lưu</string>
+    <string name="mua_hang">Mua hàng</string>
+    <string name="dang_xuat">Đăng xuất</string>
+    <string name="tai_khoan_cua_toi">Tài khoản của tôi</string>
+    <string name="cai_dat">Cài đặt</string>
+    <string name="thong_bao">Thông báo</string>
+    <string name="trang_chu">Trang chủ</string>
+    <string name="trang_ca_nhan">Trang cá nhân</string>
+    <string name="chinh_sua">Chỉnh sửa</string>
+    <string name="dia_chi">Địa chỉ</string>
+    <string name="dang_ki">Đăng kí</string>
+    <string name="chinh_sua_chi_tiet">CHỈNH SỬA CHI TIẾT</string>
+    <string name="dont_phone_number">Chưa có số điện thoại</string>
+    <string name="dont_address">Chưa có địa chỉ</string>
+    <string name="cap_nhat_thanh_cong">Cập nhật thành công</string>
+    <string name="khong_the_cap_nhat">Không thể cập nhật</string>
+    <string name="error_retry">Xảy ra lỗi, thử lại</string>
+    <string name="title_activity_maps_sell">Map</string>
 
 
 </resources>

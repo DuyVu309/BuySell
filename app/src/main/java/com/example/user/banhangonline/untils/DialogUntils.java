@@ -3,6 +3,7 @@ package com.example.user.banhangonline.untils;
 import android.content.Context;
 
 import com.example.user.banhangonline.R;
+import com.example.user.banhangonline.widget.dialog.DialogChangeAccount;
 import com.example.user.banhangonline.widget.dialog.DialogOk;
 import com.example.user.banhangonline.widget.dialog.DialogPositiveNegative;
 import com.example.user.banhangonline.widget.dialog.DialogProgress;
@@ -37,6 +38,13 @@ public class DialogUntils {
         DialogPositiveNegative dialog = new DialogPositiveNegative(context, title, message, textPositive, textNegative);
         dialog.setOnIPositiveNegativeDialogListener(listener);
         dialog.show();
+    }
+
+    public static void showChangeInfoDialog(Context context, String name, String phone, String address, DialogChangeAccount.IOnClickDoneChange lisenter){
+        DialogChangeAccount dialogChangeAccount = new DialogChangeAccount(context, name, phone, address);
+        dialogChangeAccount.setmLisenter(lisenter);
+        dialogChangeAccount.show();
+
     }
 
 }

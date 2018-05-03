@@ -1,13 +1,12 @@
 package com.example.user.banhangonline.screen.home.fragment.home;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +20,12 @@ import com.example.user.banhangonline.model.Part;
 import com.example.user.banhangonline.screen.home.adapter.HomeAdapter;
 import com.example.user.banhangonline.screen.login.LoginActivity;
 import com.example.user.banhangonline.screen.register.RegisterActivity;
+import com.example.user.banhangonline.screen.sanpham.SanPhamActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.user.banhangonline.untils.KeyPreferUntils.keyIdSanPham;
 import static com.example.user.banhangonline.untils.KeyUntils.keyDoNguNoiY;
 import static com.example.user.banhangonline.untils.KeyUntils.keyIdCateCongNghe;
 import static com.example.user.banhangonline.untils.KeyUntils.keyIdCateDoAn;
@@ -67,7 +68,6 @@ import static com.example.user.banhangonline.untils.TextUntils.tuiSachNu;
 
 public class HomeFragment extends Fragment implements HomeAdapter.IAdapterListener,
          View.OnClickListener {
-
 
     private List<Part> mList;
     HomeAdapter adapter;
@@ -132,8 +132,12 @@ public class HomeFragment extends Fragment implements HomeAdapter.IAdapterListen
     }
 
     @Override
-    public void onClickItemPay() {
-
+    public void onClickItemPay(Part part) {
+        if (part != null) {
+            Intent intent = new Intent(getActivity(), SanPhamActivity.class);
+            intent.putExtra(keyIdSanPham, part);
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+        }
     }
 
     @Override

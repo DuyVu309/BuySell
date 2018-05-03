@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.model.Part;
+import com.example.user.banhangonline.model.Pay;
 
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             imgPay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onClickItemPay();
+                    mListener.onClickItemPay(mlist.get(getAdapterPosition()));
                 }
             });
         }
@@ -82,6 +83,6 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public interface IAdapterListener {
-        void onClickItemPay();
+        void onClickItemPay(Part part);
     }
 }

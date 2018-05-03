@@ -1,9 +1,12 @@
 package com.example.user.banhangonline.model;
 
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.io.Serializable;
 
-public class Part implements Serializable{
+@IgnoreExtraProperties
+public class Part implements Serializable {
     private String IDCategory;
     private String IDPay;
     private int url;
@@ -15,7 +18,6 @@ public class Part implements Serializable{
         this.url = url;
         this.title = title;
     }
-
 
     public String getIDCategory() {
         return IDCategory;

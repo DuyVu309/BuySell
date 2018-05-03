@@ -16,6 +16,7 @@ public class KeyPreferUntils {
     public static final String keyTitleCategory = "keyTitleCategory";
     public static final String keyIDPart = "keyIDPart";
     public static final String keyTitlePart = "keyTitlePart";
+    public static final String keyIdSanPham = "keyIdSanPham";
 
     //key start activity
     public static final String keyStartSP = "keyStartSP";

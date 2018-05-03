@@ -28,7 +28,6 @@
                 <ImageView
                     android:id="@+id/img_drawer"
                     style="@style/NavIconStyle"
-                    android:background="@drawable/bg_click_button_blue"
                     android:src="@drawable/ic_nav_drawer" />
 
                 <TextView

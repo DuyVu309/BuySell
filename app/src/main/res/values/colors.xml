@@ -3,7 +3,9 @@
     <color name="app_color">#4c9fff</color>
     <color name="transparent">#00000000</color>
     <color name="black">#000000</color>
-    <color name="white">#ffffff</color>
+    <color name="white">#fffcfc</color>
+    <color name="greyish_white">#b3ffffff</color>
+
     <color name="yellow">#ffe100</color>
     <color name="orange">#ffb953</color>
     <color name="blue">#0077ff</color>

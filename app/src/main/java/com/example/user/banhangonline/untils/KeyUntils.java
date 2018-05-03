@@ -9,11 +9,6 @@ public class KeyUntils {
     public static final String keyAccountBuy = "Tài khoản mua";
     public static final String keyAccountSell = "Tài khoản bán";
 
-    public static final String keyAccountID = "Account ID";
-    public static final String keyAccountName = "Account Name";
-    public static final String keyAccountEmail = "Account Email";
-    public static final String keyAccountPhone = "Account Phone";
-
     public static final String keyID = "id";
     public static final String keyName = "name";
     public static final String keyPhone = "phoneNumber";

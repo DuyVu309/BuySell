@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -22,17 +23,35 @@ import butterknife.ButterKnife;
 
 public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final int VIEW_TYPE_SANPHAM = 1;
     private Context context;
     private List<SanPham> mList;
     private ISelectPayAdapter mListener;
 
     boolean isLoading;
 
+    private OnLoadMoreListener mOnLoadMore;
 
-    public SanPhamAdapter(Context context, List<SanPham> mList, ISelectPayAdapter mListener) {
+    public void setmOnLoadMore(OnLoadMoreListener mOnLoadMore) {
+        this.mOnLoadMore = mOnLoadMore;
+    }
+
+    public SanPhamAdapter(RecyclerView recyclerView, Context context, List<SanPham> mList, ISelectPayAdapter mListener) {
         this.context = context;
         this.mList = mList;
         this.mListener = mListener;
+        final GridLayoutManager linearLayoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (!isLoading && linearLayoutManager.getItemCount() <= linearLayoutManager.findLastVisibleItemPosition() + 5) {
+                    if (mOnLoadMore != null)
+                        mOnLoadMore.onLoadMore();
+                    isLoading = true;
+                }
+            }
+        });
     }
 
     public class SanPhamViewHolder extends RecyclerView.ViewHolder {
@@ -56,11 +75,22 @@ public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if (mList.get(position) instanceof SanPham) {
+            return VIEW_TYPE_SANPHAM;
+        }
+        return 0;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.sanpham_row, parent, false);
-        return new SanPhamViewHolder(view);
+        if (viewType == VIEW_TYPE_SANPHAM) {
+            View view = LayoutInflater.from(context).inflate(R.layout.sanpham_row, parent, false);
+            return new SanPhamViewHolder(view);
+        }
+        return null;
     }
 
     @Override
@@ -70,14 +100,12 @@ public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             String url = mList.get(position).getListFiles().getUrl1();
             Glide.with(context).load(url).centerCrop().into(viewHolder.imgSanPham);
             viewHolder.tvHeaderSanPham.setText(mList.get(position).getHeader());
-
         }
     }
 
-    public void setLoading() {
+    public void setLoaded() {
         isLoading = false;
     }
-
 
     @Override
     public int getItemCount() {
@@ -86,5 +114,9 @@ public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public interface ISelectPayAdapter {
         void onSelectedSanPham(SanPham sanPham);
+    }
+
+    public interface OnLoadMoreListener{
+        void onLoadMore();
     }
 }

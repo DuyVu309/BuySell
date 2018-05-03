@@ -4,10 +4,11 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.List;
 
 @IgnoreExtraProperties
-public class SanPham implements Serializable{
+public class SanPham implements Serializable, Comparator<SanPham>{
     private String idNguoiban;
     private String idSanPham;
     private String idCategory;
@@ -94,5 +95,10 @@ public class SanPham implements Serializable{
 
     public void setListFiles(ListFileImages listFiles) {
         this.listFiles = listFiles;
+    }
+
+    @Override
+    public int compare(SanPham sanPham, SanPham t1) {
+        return sanPham.getTime().compareTo(t1.getTime());
     }
 }

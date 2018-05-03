@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.animation.DecelerateInterpolator;
@@ -12,19 +11,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.user.banhangonline.R;
-import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.screen.home.HomeActivity;
-import com.example.user.banhangonline.screen.login.LoginActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class LoaderActivity extends AppCompatActivity {
-
-
-    @BindView(R.id.tv_loader)
-    TextView tvLoader;
+public class SplashActivity extends AppCompatActivity {
 
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
@@ -36,7 +29,6 @@ public class LoaderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loader);
         unbinder = ButterKnife.bind(this);
-        initFontLoader();
         initProgress();
     }
 
@@ -58,7 +50,7 @@ public class LoaderActivity extends AppCompatActivity {
         smoothProgress(100, 400, new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(LoaderActivity.this, HomeActivity.class);
+                Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
                 startActivity(intent);
                 finish();
 
@@ -93,11 +85,6 @@ public class LoaderActivity extends AppCompatActivity {
             }
         });
         animation.start();
-    }
-
-    private void initFontLoader() {
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Pacifico-Regular.ttf");
-        tvLoader.setTypeface(typeface);
     }
 
     @Override

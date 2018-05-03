@@ -1,8 +1,12 @@
 package com.example.user.banhangonline.screen.detail;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,11 +19,18 @@ import com.example.user.banhangonline.screen.detail.adapter.DetailAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartDetail;
 
 public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetailContact.View {
+
+    @BindView(R.id.collapsing_toolbar_layout)
+    CollapsingToolbarLayout collapsingToolbarLayout;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @BindView(R.id.img_account)
     ImageView imgAccount;
@@ -42,10 +53,17 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
     private SanPham sanPham;
 
     @Override
+    public boolean isTransparentStatusBar() {
+        return false;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_san_pham_detail);
         unbinder = ButterKnife.bind(this);
+        initToolBar();
+        setSupportActionBar(toolbar);
         mPresenter = new SanPhamDetailPresenter();
         mPresenter.attachView(this);
         sanPham = (SanPham) getIntent().getSerializableExtra(keyStartDetail);
@@ -54,13 +72,18 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
         }
     }
 
+    private void initToolBar() {
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
+        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
+        collapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);
+    }
+
     private void initAdapter() {
         mPresenter.getInfomationWithIdAccount(mDataBase, sanPham.getIdNguoiban());
         tvTime.setText(sanPham.getTime());
         tvMota.setText(sanPham.getHeader() + " - " + sanPham.getMota());
 
         rvImageDetail.setLayoutManager(new LinearLayoutManager(this));
-        rvImageDetail.setHasFixedSize(true);
         mAdapter = new DetailAdapter(this, sanPham.getListFiles().getListUrl());
         rvImageDetail.setAdapter(mAdapter);
     }
@@ -74,12 +97,28 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
 
     @Override
     public void getInfoMationSuccess(Account account) {
-        Glide.with(this).load(account.getUrlImage()).error(R.drawable.ic_account).into(imgAccount);
+        Glide.with(this).load(account.getUrlAvt()).error(R.drawable.ic_account).into(imgAccount);
         tvAccoutName.setText(account.getName());
+        toolbar.setTitle(account.getName());
+    }
+
+    @OnClick(R.id.btn_mua_hang)
+    public void clickMuaHang(){
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return true;
     }
 
     @Override
     public void getInfomationError() {
-
+        showSnackbar(getString(R.string.error));
     }
 }

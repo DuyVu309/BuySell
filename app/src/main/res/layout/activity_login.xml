@@ -109,7 +109,7 @@
             android:layout_marginLeft="@dimen/pading_small"
             android:layout_weight="1"
             android:background="@drawable/bg_button_signin_after"
-            android:text="Register"
+            android:text="@string/dang_ki"
             android:textColor="@color/white" />
     </LinearLayout>
 

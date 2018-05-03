@@ -1,4 +1,4 @@
-package com.example.user.banhangonline.screen.myAccount.adapter;
+package com.example.user.banhangonline.screen.mySanPham.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

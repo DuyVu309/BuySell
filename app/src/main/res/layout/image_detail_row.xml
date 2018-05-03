@@ -9,14 +9,37 @@
         android:layout_height="6dp"
         android:background="@color/greyish_divider" />
 
-    <ImageView
-        android:id="@+id/img_detail"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/pg_load"
+            android:indeterminateTint="@color/greyish_divider"
+            android:layout_width="@dimen/nav_bar_height_small"
+            android:layout_height="@dimen/nav_bar_height_small"
+            android:layout_gravity="center" />
+
+        <ImageView
+            android:id="@+id/img_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </FrameLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="12dp"
-        android:background="@color/white" />
+        android:layout_height="1dp"
+        android:background="@color/greyish_divider" />
+
+    <TextView
+        android:id="@+id/tv_total_anh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="left"
+        android:padding="@dimen/pading_small"
+        android:textColor="@color/md_grey_600"
+        android:textSize="@dimen/default_text_size" />
 
 </LinearLayout>

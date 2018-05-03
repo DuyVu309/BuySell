@@ -1,6 +1,7 @@
 package com.example.user.banhangonline.base;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -29,11 +30,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class BaseActivity extends AppCompatActivity {
     protected FirebaseAuth mAuth;
     protected DatabaseReference mDataBase;
     protected FirebaseStorage mStorage;
     protected StorageReference mStorageReferrence;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +60,15 @@ public class BaseActivity extends AppCompatActivity {
         mDataBase = FirebaseDatabase.getInstance().getReference();
         mStorage = FirebaseStorage.getInstance();
         mStorageReferrence = mStorage.getReferenceFromUrl("gs://banhangonline-7058d.appspot.com");
+        initFonts();
+
+    }
+
+    private void initFonts() {
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                 .setDefaultFontPath("fonts/Roboto-Regular.ttf")
+                 .setFontAttrId(R.attr.fontPath)
+                 .build());
     }
 
     public boolean isTransparentStatusBar() {
@@ -122,7 +140,7 @@ public class BaseActivity extends AppCompatActivity {
             ipm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
 
-        if(getCurrentFocus()!=null) {
+        if (getCurrentFocus() != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }

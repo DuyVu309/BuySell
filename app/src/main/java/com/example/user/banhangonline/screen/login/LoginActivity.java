@@ -6,19 +6,14 @@ import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
 import com.example.user.banhangonline.interactor.prefer.PreferManager;
-import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.screen.forgot.ForgotActivity;
 import com.example.user.banhangonline.screen.home.HomeActivity;
 import com.example.user.banhangonline.screen.register.RegisterActivity;
@@ -37,10 +32,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.example.user.banhangonline.untils.KeyUntils.keyAccount;
-import static com.example.user.banhangonline.untils.KeyUntils.keyAccountEmail;
-import static com.example.user.banhangonline.untils.KeyUntils.keyAccountID;
-import static com.example.user.banhangonline.untils.KeyUntils.keyAccountName;
-import static com.example.user.banhangonline.untils.KeyUntils.keyAccountPhone;
 import static com.example.user.banhangonline.untils.KeyUntils.keyID;
 import static com.example.user.banhangonline.untils.KeyUntils.keyName;
 import static com.example.user.banhangonline.untils.KeyUntils.keyPhone;
@@ -207,7 +198,6 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
                                     idBuySell = dataSnapshot.child(keyID).getValue(String.class);
                                     name = dataSnapshot.child(keyName).getValue(String.class);
                                     phoneNumber = dataSnapshot.child(keyPhone).getValue(String.class);
-
 
                                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                     if (email != null && idBuySell != null && name != null && phoneNumber != null) {

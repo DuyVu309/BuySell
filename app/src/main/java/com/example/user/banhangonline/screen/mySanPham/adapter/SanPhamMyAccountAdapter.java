@@ -1,4 +1,4 @@
-package com.example.user.banhangonline.screen.myAccount.adapter;
+package com.example.user.banhangonline.screen.mySanPham.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -15,7 +15,9 @@ import android.widget.TextView;
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.SanPham;
+
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -99,7 +101,7 @@ public class SanPhamMyAccountAdapter extends RecyclerView.Adapter<RecyclerView.V
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onDeleteSanPham(mListSp.get(getAdapterPosition()));
+                    mListener.onDeleteSanPham(getAdapterPosition(), mListSp.get(getAdapterPosition()));
                 }
             });
         }
@@ -150,6 +152,6 @@ public class SanPhamMyAccountAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         void onChangeSanpham(SanPham sanPham);
 
-        void onDeleteSanPham(SanPham sanPham);
+        void onDeleteSanPham(int position, SanPham sanPham);
     }
 }
