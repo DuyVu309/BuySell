@@ -21,5 +21,6 @@ public class KeyPreferUntils {
     //key start activity
     public static final String keyStartSP = "keyStartSP";
     public static final String keyStartDetail = "keyStartDetail";
+    public static final String keyStartFilter = "keyStartFilter";
 
 }

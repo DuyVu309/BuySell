@@ -17,6 +17,6 @@ public interface HomeContact {
 
         void getInfomationAccount(DatabaseReference databaseReference);
 
-        void loadPay();
+        void getTextSearch(DatabaseReference databaseReference, String filter);
     }
 }

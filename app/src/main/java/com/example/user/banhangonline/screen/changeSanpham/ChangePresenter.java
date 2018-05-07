@@ -18,6 +18,7 @@ import static com.example.user.banhangonline.untils.KeyUntils.keySanPham;
 public class ChangePresenter extends BasePresenter implements ChangeSanPhamContact.Presenter {
 
     ChangeSanPhamContact.View mView;
+
     @Override
     public void onCreate() {
 
@@ -57,9 +58,13 @@ public class ChangePresenter extends BasePresenter implements ChangeSanPhamConta
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                mView.updateSanPhamSuccess();
+                                if (mView != null) {
+                                    mView.updateSanPhamSuccess();
+                                }
                             } else {
-                                mView.updateSanPhamError();
+                                if (mView != null) {
+                                    mView.updateSanPhamError();
+                                }
                             }
                         }
                     });

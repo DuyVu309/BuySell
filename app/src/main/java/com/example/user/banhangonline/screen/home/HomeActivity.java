@@ -1,5 +1,6 @@
 package com.example.user.banhangonline.screen.home;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -19,7 +20,9 @@ import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.screen.home.adapter.HomePagerAdapter;
 import com.example.user.banhangonline.screen.mySanPham.MySanPhamActivity;
+import com.example.user.banhangonline.screen.search.SearchActivity;
 import com.example.user.banhangonline.screen.sell.SellActivity;
+import com.example.user.banhangonline.untils.NetworkUtils;
 import com.example.user.banhangonline.widget.dialog.DialogPositiveNegative;
 
 import butterknife.BindView;
@@ -41,9 +44,6 @@ public class HomeActivity extends BaseActivity implements
 
     @BindView(R.id.img_sell)
     ImageView imgSell;
-
-    @BindView(R.id.edt_search)
-    EditText edtSearch;
 
     @BindView(R.id.tl_home)
     TabLayout tableLayout;
@@ -101,7 +101,11 @@ public class HomeActivity extends BaseActivity implements
 
         viewPager.setAdapter(new HomePagerAdapter(this, getSupportFragmentManager(), mPresenter.getListCategories()));
         tableLayout.setupWithViewPager(viewPager);
-        mPresenter.getInfomationAccount(mDataBase);
+        if (NetworkUtils.isConnected(this)) {
+            mPresenter.getInfomationAccount(mDataBase);
+        } else {
+            showNoInternet();
+        }
     }
 
     private void getInfomationAccount() {
@@ -136,8 +140,6 @@ public class HomeActivity extends BaseActivity implements
         if (phoneNumber != null) {
             tvDangXuat.append("\n" + phoneNumber);
         }
-
-
     }
 
     private void initFontTitle() {
@@ -160,9 +162,9 @@ public class HomeActivity extends BaseActivity implements
 
     }
 
-    @OnClick(R.id.img_search)
-    public void searchEnything() {
-
+    @OnClick(R.id.edt_search)
+    public void searchSanPham(){
+        startActivity(new Intent(HomeActivity.this, SearchActivity.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     @OnClick(R.id.ln_account)

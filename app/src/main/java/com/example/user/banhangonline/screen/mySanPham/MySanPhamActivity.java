@@ -21,9 +21,11 @@ import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.screen.changeSanpham.ChangeSanPhamActivity;
+import com.example.user.banhangonline.screen.home.HomeActivity;
 import com.example.user.banhangonline.screen.mySanPham.adapter.ListImagesCartAdapter;
 import com.example.user.banhangonline.screen.mySanPham.adapter.SanPhamMyAccountAdapter;
 import com.example.user.banhangonline.untils.DialogUntils;
+import com.example.user.banhangonline.untils.NetworkUtils;
 import com.example.user.banhangonline.widget.dialog.DialogChangeAccount;
 
 import java.util.Collections;
@@ -115,6 +117,7 @@ public class MySanPhamActivity extends BaseActivity implements
 
     @OnClick(R.id.img_arrow_back)
     public void onBackActivity() {
+        startActivity(new Intent(MySanPhamActivity.this, HomeActivity.class));
         finish();
     }
 
@@ -181,17 +184,22 @@ public class MySanPhamActivity extends BaseActivity implements
 
     @OnClick(R.id.btn_save)
     public void saveImageAccount() {
-        showDialog();
-        if (urlLanscape != null) {
-            mPresenter.upLoadImageLanscapeToStorage(mStorageReferrence, mPresenter.getAccount(), urlLanscape);
-            urlLanscape = null;
-            return;
+        if (NetworkUtils.isConnected(this)) {
+            showDialog();
+            if (urlLanscape != null) {
+                mPresenter.upLoadImageLanscapeToStorage(mStorageReferrence, mPresenter.getAccount(), urlLanscape);
+                urlLanscape = null;
+                return;
+            }
+            if (urlAvt != null) {
+                mPresenter.upLoadImageAvtToStorage(mStorageReferrence, mPresenter.getAccount(), urlAvt);
+                urlAvt = null;
+                return;
+            }
+        } else {
+            showNoInternet();
         }
-        if (urlAvt != null) {
-            mPresenter.upLoadImageAvtToStorage(mStorageReferrence, mPresenter.getAccount(), urlAvt);
-            urlAvt = null;
-            return;
-        }
+
     }
 
     @Override

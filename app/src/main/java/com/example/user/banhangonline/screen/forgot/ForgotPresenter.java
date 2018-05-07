@@ -12,7 +12,7 @@ public class ForgotPresenter extends BasePresenter implements ForgotContact.Pres
     private ForgotContact.View mView;
     private FirebaseAuth firebaseAuth;
 
-    public void setFirebaseAuth(FirebaseAuth auth){
+    public void setFirebaseAuth(FirebaseAuth auth) {
         this.firebaseAuth = auth;
     }
 
@@ -49,9 +49,13 @@ public class ForgotPresenter extends BasePresenter implements ForgotContact.Pres
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        mView.resetPasswordSuccess();
+                        if (mView != null) {
+                            mView.resetPasswordSuccess();
+                        }
                     } else {
-                        mView.resetPasswordFailed();
+                        if (mView != null) {
+                            mView.resetPasswordFailed();
+                        }
                     }
                 }
             });

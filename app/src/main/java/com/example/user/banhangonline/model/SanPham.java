@@ -7,9 +7,9 @@ import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
-@IgnoreExtraProperties
-public class SanPham implements Serializable, Comparator<SanPham>{
+public class SanPham implements Serializable, Comparator<SanPham> {
     private String idNguoiban;
+    private String nameNguoiBan;
     private String idSanPham;
     private String idCategory;
     private String idPart;
@@ -21,8 +21,9 @@ public class SanPham implements Serializable, Comparator<SanPham>{
     public SanPham() {
     }
 
-    public SanPham(String idNguoiban, String idSanPham, String idCategory, String idPart, String header, String mota, String time, ListFileImages listFiles) {
+    public SanPham(String idNguoiban, String nameNguoiBan, String idSanPham, String idCategory, String idPart, String header, String mota, String time, ListFileImages listFiles) {
         this.idNguoiban = idNguoiban;
+        this.nameNguoiBan = nameNguoiBan;
         this.idSanPham = idSanPham;
         this.idCategory = idCategory;
         this.idPart = idPart;
@@ -39,6 +40,14 @@ public class SanPham implements Serializable, Comparator<SanPham>{
 
     public void setIdNguoiban(String idNguoiban) {
         this.idNguoiban = idNguoiban;
+    }
+
+    public String getNameNguoiBan() {
+        return nameNguoiBan;
+    }
+
+    public void setNameNguoiBan(String nameNguoiBan) {
+        this.nameNguoiBan = nameNguoiBan;
     }
 
     public String getIdSanPham() {

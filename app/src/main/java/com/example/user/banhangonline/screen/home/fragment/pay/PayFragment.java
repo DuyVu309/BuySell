@@ -72,7 +72,6 @@ public class PayFragment extends Fragment implements PayContact.View {
 
     private void initAdapter() {
         mPresenter.loadSanPhamFromFirebase(mDatabase, categories.getId());
-
         mAdapter = new SanPhamAdapter(recyclerView, getActivity(), mPresenter.getSanPhamList(), new SanPhamAdapter.ISelectPayAdapter() {
             @Override
             public void onSelectedSanPham(SanPham sanPham) {
@@ -81,9 +80,7 @@ public class PayFragment extends Fragment implements PayContact.View {
                 startActivity(intent);
             }
         });
-
         recyclerView.setAdapter(mAdapter);
-
 //        mAdapter.setmOnLoadMore(new SanPhamAdapter.OnLoadMoreListener() {
 //            @Override
 //            public void onLoadMore() {
@@ -120,7 +117,6 @@ public class PayFragment extends Fragment implements PayContact.View {
 
     @Override
     public void loadSanPhamError() {
-
     }
 
     @Override

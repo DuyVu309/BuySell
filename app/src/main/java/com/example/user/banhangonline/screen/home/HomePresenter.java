@@ -8,6 +8,8 @@ import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.model.Categories;
 import com.example.user.banhangonline.model.Pay;
+import com.example.user.banhangonline.model.SanPham;
+import com.example.user.banhangonline.model.SearchSP;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +27,7 @@ import static com.example.user.banhangonline.untils.KeyUntils.keyIdCateHocTap;
 import static com.example.user.banhangonline.untils.KeyUntils.keyIdCateKhac;
 import static com.example.user.banhangonline.untils.KeyUntils.keyIdCatePhuKien;
 import static com.example.user.banhangonline.untils.KeyUntils.keyIdCateThoiTrang;
+import static com.example.user.banhangonline.untils.KeyUntils.keySanPham;
 import static com.example.user.banhangonline.untils.KeyUntils.titleDienTu;
 import static com.example.user.banhangonline.untils.KeyUntils.titleDoAn;
 import static com.example.user.banhangonline.untils.KeyUntils.titleDochoi;
@@ -43,6 +46,7 @@ public class HomePresenter extends BasePresenter implements HomeContact.Presente
     private HomeContact.View mView;
     private List<Categories> listCategories;
     private List<Pay> listPays;
+    private List<SearchSP> listSearchs;
 
     public List<Categories> getListCategories() {
         return listCategories;
@@ -75,6 +79,7 @@ public class HomePresenter extends BasePresenter implements HomeContact.Presente
         listCategories = new ArrayList<>();
         initCategories();
         listPays = new ArrayList<>();
+        listSearchs = new ArrayList<>();
     }
 
     @Override
@@ -99,27 +104,52 @@ public class HomePresenter extends BasePresenter implements HomeContact.Presente
 
     @Override
     public void getInfomationAccount(DatabaseReference databaseReference) {
-        databaseReference.child(keyAccount).child(PreferManager.getEmailID(context)).addValueEventListener(new ValueEventListener() {
+        if (!isViewAttached()) {
+            return;
+        }
+        if (keyAccount != null && PreferManager.getEmailID(context) != null) {
+            databaseReference.child(keyAccount).child(PreferManager.getEmailID(context)).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Account account = dataSnapshot.getValue(Account.class);
+                    if (account != null) {
+                        if (mView != null) {
+                            mView.getInfoSuccess(account);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    if (mView != null) {
+                        mView.getInfoError();
+                    }
+
+                }
+            });
+        }
+    }
+
+    @Override
+    public void getTextSearch(DatabaseReference databaseReference, final String filter) {
+        listSearchs.clear();
+        databaseReference.child(keySanPham).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Account account = dataSnapshot.getValue(Account.class);
-                if (account != null) {
-                    if (mView != null) {
-                        mView.getInfoSuccess(account);
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    SanPham sanPham = snapshot.getValue(SanPham.class);
+                    if (sanPham.getHeader().toLowerCase().contains(filter)) {
+                        listSearchs.add(new SearchSP(sanPham.getIdSanPham(), sanPham.getHeader()));
                     }
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                mView.getInfoError();
+                if (mView != null) {
+                    mView.getInfoError();
+                }
             }
         });
-
-    }
-
-    @Override
-    public void loadPay() {
-
     }
 }

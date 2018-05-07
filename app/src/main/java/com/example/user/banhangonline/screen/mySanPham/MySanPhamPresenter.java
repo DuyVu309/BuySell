@@ -171,7 +171,9 @@ public class MySanPhamPresenter extends BasePresenter implements MySanPhamContac
                         mView.updateInfoSuccess();
                     }
                 } else {
-                    mView.updateInfoError();
+                    if (mView != null) {
+                        mView.updateInfoError();
+                    }
                 }
             }
         });
@@ -188,19 +190,25 @@ public class MySanPhamPresenter extends BasePresenter implements MySanPhamContac
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                mView.uploadImageError();
+                if (mView != null) {
+                    mView.uploadImageError();
+                }
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                mView.uploadImageLansSuccess(taskSnapshot.getDownloadUrl().toString());
+                if (mView != null) {
+                    mView.uploadImageLansSuccess(taskSnapshot.getDownloadUrl().toString());
+                }
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                 double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
                 int x = (int) Math.round(progress);
-                mView.displayPercent(x + "%...");
+                if (mView != null) {
+                    mView.displayPercent(x + "%...");
+                }
             }
         });
     }
@@ -216,19 +224,25 @@ public class MySanPhamPresenter extends BasePresenter implements MySanPhamContac
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                mView.uploadImageError();
+                if (mView != null) {
+                    mView.uploadImageError();
+                }
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                mView.uploadImageAvtSuccess(taskSnapshot.getDownloadUrl().toString());
+                if (mView != null) {
+                    mView.uploadImageAvtSuccess(taskSnapshot.getDownloadUrl().toString());
+                }
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                 double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
                 int x = (int) Math.round(progress);
-                mView.displayPercent(x + "%...");
+                if (mView != null) {
+                    mView.displayPercent(x + "%...");
+                }
             }
         });
     }

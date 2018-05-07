@@ -80,6 +80,8 @@
     <string name="khong_the_cap_nhat">Không thể cập nhật</string>
     <string name="error_retry">Xảy ra lỗi, thử lại</string>
     <string name="title_activity_maps_sell">Map</string>
+    <string name="dont_have_product">Không có sản phẩm</string>
+    <string name="san_pham">Sản phẩm</string>
 
 
 </resources>

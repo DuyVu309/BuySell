@@ -1,4 +1,4 @@
-package com.example.user.banhangonline.screen.sanpham;
+package com.example.user.banhangonline.screen.sanphamWithId;
 
 import com.example.user.banhangonline.base.IBasePresenter;
 import com.example.user.banhangonline.base.IBaseView;
@@ -7,7 +7,7 @@ import com.google.firebase.database.DatabaseReference;
 
 import java.util.List;
 
-public interface SanPhamContact {
+public interface SanPhamWithIdContact {
 
     interface View extends IBaseView {
 

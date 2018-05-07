@@ -296,7 +296,6 @@ public class SellActivity extends BaseActivity implements SellContact.View {
     @OnClick(R.id.btn_dangbai)
     public void onClickDangBai() {
         if (NetworkUtils.isConnected(this)) {
-            showDialog();
             if (edtHeader.getText().length() > 255) {
                 showSnackbar(getString(R.string.tieu_de_qua_lon));
                 return;
@@ -322,12 +321,14 @@ public class SellActivity extends BaseActivity implements SellContact.View {
     }
 
     private void uploadListImage() {
+        showDialog();
         mPresenter.upLoadFileImageToStorage(mStorageReferrence, PreferManager.getEmailID(this));
     }
 
     private void uploadListFile(String idPart) {
         mPresenter.upLoadSanPhamToFirebase(mDataBase,
                  new SanPham(PreferManager.getEmailID(this),
+                          PreferManager.getNameAccount(this),
                           PreferManager.getEmailID(this) + Calendar.getInstance().getTimeInMillis(),
                           mPresenter.getIdCate(),
                           idPart,
@@ -397,7 +398,8 @@ public class SellActivity extends BaseActivity implements SellContact.View {
 
     @Override
     public void upLoadImagErrror() {
-        showSnackbar(getString(R.string.error));
+        showSnackbar(getString(R.string.error_retry));
+        dismissDialog();
     }
 
     @Override

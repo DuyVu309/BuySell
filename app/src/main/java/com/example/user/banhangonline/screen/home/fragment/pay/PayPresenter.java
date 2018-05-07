@@ -3,6 +3,7 @@ package com.example.user.banhangonline.screen.home.fragment.pay;
 import android.util.Log;
 
 import com.example.user.banhangonline.model.SanPham;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,43 +53,79 @@ public class PayPresenter implements PayContact.Presenter {
         if (!isViewAttached()) {
             return;
         }
-        database.child(keySanPham).orderByChild(keyIdCategory).equalTo(idCategory).addValueEventListener(new ValueEventListener() {
+        sanPhamList.clear();
+
+//        database.child(keySanPham).orderByChild(keyIdCategory).equalTo(idCategory).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    database.child(keySanPham).child(snapshot.getKey()).limitToLast(100).addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            SanPham sanPham = dataSnapshot.getValue(SanPham.class);
+//                            if (sanPham != null && sanPham.getIdCategory() != null) {
+//                                if (sanPham.getIdCategory().equals(idCategory)) {
+//                                    sanPhamList.add(sanPham);
+//                                }
+//                            }
+//
+//                            if (sanPhamList != null) {
+//                                if (mView != null) {
+//                                    mView.loadSanPhamSuccess();
+//                                }
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//                            if (mView != null) {
+//                                mView.loadSanPhamError();
+//                            }
+//                        }
+//                    });
+//
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                mView.loadSanPhamError();
+//            }
+//        }
+        database.child(keySanPham).orderByChild(keyIdCategory).equalTo(idCategory).limitToLast(100).addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    database.child(keySanPham).child(snapshot.getKey()).limitToLast(100).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            SanPham sanPham = dataSnapshot.getValue(SanPham.class);
-                            if (sanPham != null && sanPham.getIdCategory() != null) {
-                                if (sanPham.getIdCategory().equals(idCategory)) {
-                                    sanPhamList.add(sanPham);
-                                }
-                            }
-
-                            if (mView != null) {
-                                if (sanPhamList.size() > 0) {
-                                    mView.loadSanPhamSuccess();
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            mView.loadSanPhamSuccess();
-                        }
-                    });
-
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                SanPham sanPham = dataSnapshot.getValue(SanPham.class);
+                if (sanPham != null && sanPham.getIdCategory() != null) {
+                    if (sanPham.getIdCategory().equals(idCategory)) {
+                        sanPhamList.add(sanPham);
+                    }
                 }
 
+                if (sanPhamList != null) {
+                    if (mView != null) {
+                        mView.loadSanPhamSuccess();
+                    }
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                mView.loadSanPhamError();
             }
         });
-
     }
 
 }

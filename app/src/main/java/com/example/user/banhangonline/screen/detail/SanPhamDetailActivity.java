@@ -29,6 +29,9 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
     @BindView(R.id.collapsing_toolbar_layout)
     CollapsingToolbarLayout collapsingToolbarLayout;
 
+    @BindView(R.id.img_lanscape)
+    ImageView imgLanscape;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -98,6 +101,7 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
     @Override
     public void getInfoMationSuccess(Account account) {
         Glide.with(this).load(account.getUrlAvt()).error(R.drawable.ic_account).into(imgAccount);
+        Glide.with(this).load(account.getUrlLanscape()).error(R.drawable.bg_app).into(imgLanscape);
         tvAccoutName.setText(account.getName());
         toolbar.setTitle(account.getName());
     }

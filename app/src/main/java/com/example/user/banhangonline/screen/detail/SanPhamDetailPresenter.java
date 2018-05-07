@@ -38,12 +38,15 @@ public class SanPhamDetailPresenter implements SanPhamDetailContact.Presenter {
 
     @Override
     public void getInfomationWithIdAccount(DatabaseReference databaseReference, String idAccount) {
+        if (!isViewAttached()) return;
         databaseReference.child(keyAccount).child(idAccount).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Account account = dataSnapshot.getValue(Account.class);
                 if (account != null) {
-                    mView.getInfoMationSuccess(account);
+                    if (mView != null) {
+                        mView.getInfoMationSuccess(account);
+                    }
                 }
             }
 

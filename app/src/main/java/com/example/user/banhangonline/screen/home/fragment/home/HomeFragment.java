@@ -20,7 +20,7 @@ import com.example.user.banhangonline.model.Part;
 import com.example.user.banhangonline.screen.home.adapter.HomeAdapter;
 import com.example.user.banhangonline.screen.login.LoginActivity;
 import com.example.user.banhangonline.screen.register.RegisterActivity;
-import com.example.user.banhangonline.screen.sanpham.SanPhamActivity;
+import com.example.user.banhangonline.screen.sanphamWithId.SanPhamWithIDActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,7 +134,7 @@ public class HomeFragment extends Fragment implements HomeAdapter.IAdapterListen
     @Override
     public void onClickItemPay(Part part) {
         if (part != null) {
-            Intent intent = new Intent(getActivity(), SanPhamActivity.class);
+            Intent intent = new Intent(getActivity(), SanPhamWithIDActivity.class);
             intent.putExtra(keyIdSanPham, part);
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
         }

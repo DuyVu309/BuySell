@@ -14,6 +14,7 @@ import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.screen.mySanPham.MySanPhamActivity;
 import com.example.user.banhangonline.screen.sell.adapter.ImageAdapter;
+import com.example.user.banhangonline.untils.NetworkUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -102,18 +103,22 @@ public class ChangeSanPhamActivity extends BaseActivity implements ChangeSanPham
 
     @OnClick(R.id.btn_luu)
     public void updateSp() {
-        if (edtHeader.getText().length() < 255 && edtMota.getText().length() > 0) {
-            mPresenter.updateSanPham(mDataBase, new SanPham(sanPham.getIdNguoiban(),
-                     sanPham.getIdSanPham(),
-                     sanPham.getIdCategory(),
-                     sanPham.getIdPart(),
-                     edtHeader.getText().toString().trim(),
-                     edtMota.getText().toString().trim(),
-                     sanPham.getTime(),
-                     sanPham.getListFiles()));
-        } else {
-            showSnackbar(getString(R.string.error_and_check));
-        }
+        if (NetworkUtils.isConnected(this)) {
+            if (edtHeader.getText().length() < 255 && edtMota.getText().length() > 0) {
+                mPresenter.updateSanPham(mDataBase, new SanPham(sanPham.getIdNguoiban(),
+                         sanPham.getNameNguoiBan(),
+                         sanPham.getIdSanPham(),
+                         sanPham.getIdCategory(),
+                         sanPham.getIdPart(),
+                         edtHeader.getText().toString().trim(),
+                         edtMota.getText().toString().trim(),
+                         sanPham.getTime(),
+                         sanPham.getListFiles()));
+            } else {
+                showSnackbar(getString(R.string.error_and_check));
+            }
+        }else showNoInternet();
+
 
     }
 

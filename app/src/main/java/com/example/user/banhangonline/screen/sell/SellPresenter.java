@@ -217,7 +217,9 @@ public class SellPresenter extends BasePresenter implements SellContact.Presente
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
-                    mView.upLoadImagErrror();
+                    if (mView != null) {
+                        mView.upLoadImagErrror();
+                    }
                 }
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -225,7 +227,9 @@ public class SellPresenter extends BasePresenter implements SellContact.Presente
                     String downloadUrl = taskSnapshot.getDownloadUrl().toString();
                     listImages.add(downloadUrl);
                     if (listImages.size() == listFiles.size()) {
-                        mView.upLoadImagesSuccess(listNameImages);
+                        if (mView != null) {
+                            mView.upLoadImagesSuccess(listNameImages);
+                        }
                     }
                 }
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -233,7 +237,10 @@ public class SellPresenter extends BasePresenter implements SellContact.Presente
                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                     double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
                     int x = (int) Math.round(progress);
-                    mView.displayPercent(x + "%...");
+                    if (mView != null) {
+                        mView.displayPercent(x + "%...");
+                    }
+
                 }
             });
         }

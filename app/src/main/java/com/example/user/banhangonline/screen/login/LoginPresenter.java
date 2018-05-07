@@ -75,9 +75,14 @@ public class LoginPresenter extends BasePresenter implements LoginContact.Presen
         if (!isViewAttached()) return;
         if (android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
                  && password.length() >= 6) {
-            mView.signInSuccess();
+            if (mView != null) {
+                mView.signInSuccess();
+            }
         } else {
-            mView.signInError();
+            if (mView != null) {
+                mView.signInError();
+            }
+
         }
     }
 
