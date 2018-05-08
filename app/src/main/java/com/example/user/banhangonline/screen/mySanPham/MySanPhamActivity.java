@@ -24,6 +24,7 @@ import com.example.user.banhangonline.screen.changeSanpham.ChangeSanPhamActivity
 import com.example.user.banhangonline.screen.home.HomeActivity;
 import com.example.user.banhangonline.screen.mySanPham.adapter.ListImagesCartAdapter;
 import com.example.user.banhangonline.screen.mySanPham.adapter.SanPhamMyAccountAdapter;
+import com.example.user.banhangonline.screen.register.RegisterActivity;
 import com.example.user.banhangonline.untils.DialogUntils;
 import com.example.user.banhangonline.untils.NetworkUtils;
 import com.example.user.banhangonline.widget.dialog.DialogChangeAccount;
@@ -130,7 +131,8 @@ public class MySanPhamActivity extends BaseActivity implements
                      @Override
                      public void doneChange(String name, String phone, String address) {
                          showDialog();
-                         mPresenter.updateInfomation(mDataBase, new Account(PreferManager.getIDBuySell(MySanPhamActivity.this),
+                         mPresenter.updateInfomation(mDataBase, new Account(mPresenter.getAccount().getEmailId(),
+                                  PreferManager.getIDBuySell(MySanPhamActivity.this),
                                   name,
                                   phone,
                                   mPresenter.getAccount().getUrlAvt(),
@@ -205,12 +207,17 @@ public class MySanPhamActivity extends BaseActivity implements
     @Override
     public void getListSuccess() {
         if (mPresenter.getSanPhamList() != null) {
-            Collections.sort(mPresenter.getSanPhamList(), new Comparator<SanPham>() {
-                @Override
-                public int compare(SanPham sanPham, SanPham t1) {
-                    return sanPham.getTime().compareTo(t1.getTime());
-                }
-            });
+            if (mPresenter.getSanPhamList().size() == 0) {
+                showSnackbar(getString(R.string.dont_have_product));
+            } else {
+                Collections.sort(mPresenter.getSanPhamList(), new Comparator<SanPham>() {
+                    @Override
+                    public int compare(SanPham sanPham, SanPham t1) {
+                        return sanPham.getTime().compareTo(t1.getTime());
+                    }
+                });
+            }
+
             mAdapter.notifyDataSetChanged();
         }
 
@@ -253,12 +260,11 @@ public class MySanPhamActivity extends BaseActivity implements
         if (account.getPhoneNumber() != null) {
             tvAccountPhone.setText(account.getPhoneNumber());
         } else {
-            tvAccountPhone.setText(getString(R.string.dont_phone_number));
+            tvAccountPhone.setText(PreferManager.getPhoneNumber(this));
             tvAccountPhone.setTextColor(Color.RED);
         }
 
         Glide.with(this).load(account.getUrlLanscape()).error(R.drawable.bg_app).into(imgMyLanscape);
-
         Glide.with(this).load(account.getUrlAvt()).into(imgAvt);
     }
 
@@ -289,7 +295,8 @@ public class MySanPhamActivity extends BaseActivity implements
 
     @Override
     public void uploadImageLansSuccess(String urlLans) {
-        mPresenter.updateInfomation(mDataBase, new Account(mPresenter.getAccount().getId(),
+        mPresenter.updateInfomation(mDataBase, new Account(mPresenter.getAccount().getEmailId(),
+                 mPresenter.getAccount().getIdBS(),
                  mPresenter.getAccount().getName(),
                  mPresenter.getAccount().getPhoneNumber(),
                  mPresenter.getAccount().getUrlAvt(),
@@ -303,7 +310,8 @@ public class MySanPhamActivity extends BaseActivity implements
 
     @Override
     public void uploadImageAvtSuccess(String urlAvt) {
-        mPresenter.updateInfomation(mDataBase, new Account(mPresenter.getAccount().getId(),
+        mPresenter.updateInfomation(mDataBase, new Account(mPresenter.getAccount().getEmailId(),
+                 mPresenter.getAccount().getIdBS(),
                  mPresenter.getAccount().getName(),
                  mPresenter.getAccount().getPhoneNumber(),
                  urlAvt,
@@ -356,7 +364,7 @@ public class MySanPhamActivity extends BaseActivity implements
         }
         mPresenter.getSanPhamList().remove(position);
         mAdapter.notifyItemRemoved(position);
-        mAdapter.notifyItemRangeChanged(position,  mPresenter.getSanPhamList().size());
+        mAdapter.notifyItemRangeChanged(position, mPresenter.getSanPhamList().size());
     }
 
     @Override

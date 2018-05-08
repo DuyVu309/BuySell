@@ -52,7 +52,7 @@
             android:layout_width="@dimen/nav_bar_height"
             android:layout_height="@dimen/nav_bar_height"
             android:layout_margin="@dimen/pading_normal"
-            android:src="@drawable/ic_account" />
+            android:src="@drawable/ic_product" />
 
         <TextView
             android:id="@+id/tv_account_name"

@@ -9,7 +9,7 @@ import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.model.Categories;
 import com.example.user.banhangonline.model.Pay;
 import com.example.user.banhangonline.model.SanPham;
-import com.example.user.banhangonline.model.SearchSP;
+import com.example.user.banhangonline.model.search.SearchSP;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -130,26 +130,4 @@ public class HomePresenter extends BasePresenter implements HomeContact.Presente
         }
     }
 
-    @Override
-    public void getTextSearch(DatabaseReference databaseReference, final String filter) {
-        listSearchs.clear();
-        databaseReference.child(keySanPham).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    SanPham sanPham = snapshot.getValue(SanPham.class);
-                    if (sanPham.getHeader().toLowerCase().contains(filter)) {
-                        listSearchs.add(new SearchSP(sanPham.getIdSanPham(), sanPham.getHeader()));
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                if (mView != null) {
-                    mView.getInfoError();
-                }
-            }
-        });
-    }
 }

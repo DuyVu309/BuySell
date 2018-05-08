@@ -16,7 +16,5 @@ public interface HomeContact {
     interface Presenter extends IBasePresenter<View> {
 
         void getInfomationAccount(DatabaseReference databaseReference);
-
-        void getTextSearch(DatabaseReference databaseReference, String filter);
     }
 }

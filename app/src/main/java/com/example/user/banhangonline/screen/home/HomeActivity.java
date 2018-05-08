@@ -8,7 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -135,10 +134,6 @@ public class HomeActivity extends BaseActivity implements
 
         if (email != null) {
             tvDangXuat.append("(" + email + ")");
-        }
-
-        if (phoneNumber != null) {
-            tvDangXuat.append("\n" + phoneNumber);
         }
     }
 
@@ -276,7 +271,7 @@ public class HomeActivity extends BaseActivity implements
     @Override
     public void getInfoSuccess(Account account) {
         imgAccount.setClipToOutline(true);
-        Glide.with(this).load(account.getUrlAvt()).error(R.drawable.ic_account).into(imgAccount);
+        Glide.with(this).load(account.getUrlAvt()).error(R.drawable.ic_product).into(imgAccount);
     }
 
     @Override

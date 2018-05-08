@@ -143,7 +143,6 @@
                     android:drawablePadding="@dimen/pading_small"
                     android:enabled="false"
                     android:gravity="center_vertical"
-                    android:text="0163 747 9760"
                     android:textColor="@color/black"
                     android:textSize="@dimen/small_text_size" />
 

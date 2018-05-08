@@ -51,17 +51,51 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/transparent"
-                android:hint="Tìm kiếm"
-                android:singleLine="true"
+                android:drawableLeft="@drawable/ic_add_shopping"
+                android:drawablePadding="@dimen/pading_small"
                 android:ellipsize="end"
+                android:hint="Tìm kiếm sản phẩm"
                 android:inputType="textFilter"
-                android:paddingLeft="@dimen/pading_normal"
+                android:paddingLeft="@dimen/pading_small"
                 android:paddingRight="@dimen/nav_bar_height"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/default_text_size" />
 
             <ImageView
                 android:id="@+id/img_search"
+                style="@style/NavIconStyle"
+                android:layout_gravity="right"
+                android:src="@drawable/ic_search" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/pading_small"
+            android:layout_marginLeft="@dimen/pading_small"
+            android:layout_marginRight="@dimen/pading_small"
+            app:cardCornerRadius="3dp"
+            app:cardElevation="1dp">
+
+            <EditText
+                android:id="@+id/edt_search_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/transparent"
+                android:drawableLeft="@drawable/ic_product"
+                android:drawablePadding="@dimen/pading_small"
+                android:ellipsize="end"
+                android:hint="Tìm kiếm doanh nghiệp"
+                android:inputType="textFilter"
+                android:paddingLeft="@dimen/pading_small"
+                android:paddingRight="@dimen/nav_bar_height"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+
+            <ImageView
+                android:id="@+id/img_search_account"
                 style="@style/NavIconStyle"
                 android:layout_gravity="right"
                 android:src="@drawable/ic_search" />

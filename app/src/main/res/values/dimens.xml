@@ -23,6 +23,7 @@
     <dimen name="pading_large">32dp</dimen>
     <dimen name="pading_normal">16dp</dimen>
     <dimen name="pading_small">8dp</dimen>
+    <dimen name="pading_very_small">4dp</dimen>
     <dimen name="width_toolbar">62dp</dimen>
 
     <dimen name="height_btn_small">32dp</dimen>

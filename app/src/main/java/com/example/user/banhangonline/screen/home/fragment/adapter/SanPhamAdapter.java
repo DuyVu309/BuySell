@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int VIEW_TYPE_SANPHAM = 1;
+    private static final int VIEW_TYPE_LOADING = 2;
     private Context context;
     private List<SanPham> mList;
     private ISelectPayAdapter mListener;
@@ -75,10 +76,19 @@ public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
+    public class LoadingViewHolder extends RecyclerView.ViewHolder {
+        public LoadingViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
     @Override
     public int getItemViewType(int position) {
         if (mList.get(position) instanceof SanPham) {
             return VIEW_TYPE_SANPHAM;
+        }
+        if (mList.get(position) == null) {
+            return VIEW_TYPE_LOADING;
         }
         return 0;
     }
@@ -89,6 +99,9 @@ public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (viewType == VIEW_TYPE_SANPHAM) {
             View view = LayoutInflater.from(context).inflate(R.layout.sanpham_row, parent, false);
             return new SanPhamViewHolder(view);
+        } else if (viewType == VIEW_TYPE_LOADING) {
+            View view = LayoutInflater.from(context).inflate(R.layout.loading_row, parent, false);
+            return new LoadingViewHolder(view);
         }
         return null;
     }

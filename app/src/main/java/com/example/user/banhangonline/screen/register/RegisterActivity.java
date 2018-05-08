@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
+import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.screen.home.HomeActivity;
 import com.example.user.banhangonline.screen.login.LoginActivity;
@@ -471,9 +472,10 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mDataBase.child(keyAccount).child(key[0]).setValue(new Account(keyAccountBuy,
+                    mDataBase.child(keyAccount).child(key[0]).setValue(new Account(key[0],
+                             keyAccountBuy,
                              edtFullName.getText().toString().trim(),
-                             getString(R.string.dont_phone_number),
+                             PreferManager.getPhoneNumber(RegisterActivity.this),
                              "",
                              "",
                              "",
@@ -524,22 +526,22 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
         String email = edtEmailRegisterSell.getText().toString().trim();
         final String[] key = email.split("\\.");
         if (NetworkUtils.isConnected(this)) {
-
-            mDataBase.child(keyAccount).child(key[0]).setValue(new Account(keyAccountSell,
-                     edtTenDoanhNghiep.getText().toString().trim(),
-                     mPresenter.getPhoneNumber(),
-                     "",
-                     "",
-                     "",
-                     "",
-                     getString(R.string.dont_address))).addOnCompleteListener(new OnCompleteListener<Void>() {
+            mAuth.createUserWithEmailAndPassword(edtEmailRegisterSell.getText().toString().trim(),
+                     edtPasswordSell.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
-                public void onComplete(@NonNull Task<Void> task) {
+                public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        mAuth.createUserWithEmailAndPassword(edtEmailRegisterSell.getText().toString().trim(),
-                                 edtPasswordSell.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        mDataBase.child(keyAccount).child(key[0]).setValue(new Account(key[0],
+                                 keyAccountSell,
+                                 edtTenDoanhNghiep.getText().toString().trim(),
+                                 mPresenter.getPhoneNumber(),
+                                 "",
+                                 "",
+                                 "",
+                                 "",
+                                 getString(R.string.dont_address))).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
+                            public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
                                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                     intent.putExtra(KeyUntils.keyEmailRegister, edtEmailRegisterSell.getText().toString().trim());
@@ -548,22 +550,21 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
                                     startActivity(intent);
                                     finish();
                                 } else {
-                                    showSnackbar(getResources().getString(R.string.email_avaliable_or_er));
+                                    showSnackbar(getResources().getString(R.string.error_and_check));
                                     dismissDialog();
                                 }
                             }
                         });
+
                     } else {
-                        showSnackbar(getResources().getString(R.string.error_and_check));
+                        showSnackbar(getResources().getString(R.string.email_avaliable_or_er));
+                        dismissDialog();
                     }
                 }
             });
-
-
         } else {
-            dismissDialog();
+            showNoInternet();
         }
-
     }
 
     @Override

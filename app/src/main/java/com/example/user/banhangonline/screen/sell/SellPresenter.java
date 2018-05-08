@@ -240,7 +240,6 @@ public class SellPresenter extends BasePresenter implements SellContact.Presente
                     if (mView != null) {
                         mView.displayPercent(x + "%...");
                     }
-
                 }
             });
         }

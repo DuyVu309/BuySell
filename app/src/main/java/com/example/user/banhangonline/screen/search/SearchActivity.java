@@ -10,7 +10,9 @@ import android.widget.EditText;
 
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
-import com.example.user.banhangonline.model.SearchSP;
+import com.example.user.banhangonline.model.search.SearchAccount;
+import com.example.user.banhangonline.model.search.SearchSP;
+import com.example.user.banhangonline.screen.account.SearchAccountActivity;
 import com.example.user.banhangonline.screen.allSanPham.AllSanPhamSearchedActivity;
 import com.example.user.banhangonline.screen.home.HomeActivity;
 import com.example.user.banhangonline.screen.sanphamWithId.adapter.SearchAdapter;
@@ -22,12 +24,16 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartAccount;
 import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartFilter;
 
 public class SearchActivity extends BaseActivity implements SearchContact.View {
 
     @BindView(R.id.edt_search)
     EditText edtSearch;
+
+    @BindView(R.id.edt_search_account)
+    EditText edtSearchAccount;
 
     @BindView(R.id.rv_search)
     RecyclerView rvSearch;
@@ -57,18 +63,26 @@ public class SearchActivity extends BaseActivity implements SearchContact.View {
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rvSearch.setLayoutManager(manager);
         rvSearch.setHasFixedSize(true);
-        mAdapter = new SearchAdapter(this, mPresenter.getListSearchs(), new SearchAdapter.IOnClickSearch() {
+        mAdapter = new SearchAdapter(SearchActivity.this, mPresenter.getListSearchs(), new SearchAdapter.IOnClickSearch() {
             @Override
-            public void onClickSanPham(SearchSP searchSP) {
-                if (searchSP != null) {
-                    edtSearch.setText(searchSP.getHeaderSp().toString());
-                    Intent intent = new Intent(SearchActivity.this, AllSanPhamSearchedActivity.class);
-                    intent.putExtra(keyStartFilter, searchSP.getHeaderSp());
-                    startActivity(intent);
+            public void onClickSanPham(Object search) {
+                if (search != null) {
+                    if (search instanceof SearchSP) {
+                        Intent intent = new Intent(SearchActivity.this, AllSanPhamSearchedActivity.class);
+                        intent.putExtra(keyStartFilter, ((SearchSP) search).getHeaderSp());
+                        startActivity(intent);
+                        finish();
+                    } else if (search instanceof SearchAccount) {
+                        Intent intent = new Intent(SearchActivity.this, SearchAccountActivity.class);
+                        intent.putExtra(keyStartAccount, ((SearchAccount) search).getNameAc());
+                        startActivity(intent);
+                        finish();
+                    }
                 }
             }
         });
         rvSearch.setAdapter(mAdapter);
+
     }
 
     @OnClick(R.id.img_arrow_back)
@@ -79,9 +93,19 @@ public class SearchActivity extends BaseActivity implements SearchContact.View {
 
     @OnClick(R.id.img_search)
     public void searchSanPham() {
-        if (!edtSearch.getText().toString().isEmpty()) {
+        if (!edtSearch.getText().toString().trim().isEmpty()) {
             Intent intent = new Intent(SearchActivity.this, AllSanPhamSearchedActivity.class);
             intent.putExtra(keyStartFilter, edtSearch.getText().toString());
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    @OnClick(R.id.img_search_account)
+    public void searchAccount() {
+        if (!edtSearchAccount.getText().toString().trim().isEmpty()) {
+            Intent intent = new Intent(SearchActivity.this, SearchAccountActivity.class);
+            intent.putExtra(keyStartAccount, edtSearchAccount.getText().toString());
             startActivity(intent);
             finish();
         }
@@ -96,18 +120,38 @@ public class SearchActivity extends BaseActivity implements SearchContact.View {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mPresenter.getTextSearch(mDataBase, edtSearch.getText().toString());
+                mPresenter.getTextSearchProduct(mDataBase, edtSearch.getText().toString());
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        edtSearchAccount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                mPresenter.getTextSearchAccount(mDataBase, edtSearchAccount.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
     }
 
     @Override
-    public void getFilterSuccess(List<SearchSP> searchSPList) {
-        mAdapter.notifyDataSetChanged();
+    public void getFilterSuccess(List<Object> searchSPList) {
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

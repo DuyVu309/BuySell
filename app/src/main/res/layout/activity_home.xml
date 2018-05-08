@@ -92,6 +92,7 @@
                 app:tabGravity="fill"
                 app:tabMode="scrollable"
                 app:tabSelectedTextColor="@color/red"
+                app:tabIndicatorColor="@color/transparent"
                 app:tabTextColor="@color/blue" />
 
         </android.support.design.widget.AppBarLayout>

@@ -1,8 +1,5 @@
 package com.example.user.banhangonline.screen.allSanPham;
 
-import android.content.Context;
-import android.util.Log;
-
 import com.example.user.banhangonline.model.SanPham;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -18,16 +15,10 @@ import static com.example.user.banhangonline.untils.KeyUntils.keySanPham;
 public class AllSanPhamSearchPresenter implements AllSanPhamSearchedContact.Presenter {
 
     AllSanPhamSearchedContact.View mView;
-    private Context context;
-    boolean isLoadedWithLittle = false;
     private List<SanPham> sanPhamList;
     private List<String> keyList;
+    boolean isLoadedWithLittle = false;
     private int total = 0;
-
-
-    public void setContext(Context context) {
-        this.context = context;
-    }
 
     public List<SanPham> getSanPhamList() {
         return sanPhamList;
@@ -65,8 +56,8 @@ public class AllSanPhamSearchPresenter implements AllSanPhamSearchedContact.Pres
     @Override
     public void getAllKeySanPham(DatabaseReference databaseReference, final String filter) {
         if (!isViewAttached()) return;
-        if (context == null) return;
 
+        keyList.clear();
         databaseReference.child(keySanPham).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -87,7 +78,9 @@ public class AllSanPhamSearchPresenter implements AllSanPhamSearchedContact.Pres
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                mView.getKeyError();
+                if (mView != null) {
+                    mView.getKeyError();
+                }
             }
         });
     }
@@ -95,7 +88,6 @@ public class AllSanPhamSearchPresenter implements AllSanPhamSearchedContact.Pres
     @Override
     public void getAllSpWithFilterFromFirebase(DatabaseReference databaseReference, final String filter) {
         if (!isViewAttached()) return;
-        if (context == null) return;
         if (filter == null) return;
 
         if (keyList.size() >= total + 10) {
@@ -106,7 +98,7 @@ public class AllSanPhamSearchPresenter implements AllSanPhamSearchedContact.Pres
                     if (sanPham.getHeader() != null && sanPham.getHeader().toLowerCase().contains(filter.toLowerCase())) {
                         sanPhamList.add(sanPham);
                     } else if (sanPham.getNameNguoiBan() != null && sanPham.getNameNguoiBan().toLowerCase().contains(filter.toLowerCase())) {
-                        keyList.add(dataSnapshot.getKey().toString());
+                        sanPhamList.add(sanPham);
                     }
 
                     if (sanPhamList != null) {
@@ -147,7 +139,7 @@ public class AllSanPhamSearchPresenter implements AllSanPhamSearchedContact.Pres
                         if (sanPham.getHeader() != null && sanPham.getHeader().toLowerCase().contains(filter.toLowerCase())) {
                             sanPhamList.add(sanPham);
                         } else if (sanPham.getNameNguoiBan() != null && sanPham.getNameNguoiBan().toLowerCase().contains(filter.toLowerCase())) {
-                            keyList.add(dataSnapshot.getKey().toString());
+                            sanPhamList.add(sanPham);
                         }
 
                         if (sanPhamList != null) {

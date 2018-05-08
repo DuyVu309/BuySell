@@ -9,7 +9,8 @@ public class KeyUntils {
     public static final String keyAccountBuy = "Tài khoản mua";
     public static final String keyAccountSell = "Tài khoản bán";
 
-    public static final String keyID = "id";
+    public static final String keyEmailID = "emailId";
+    public static final String keyID = "idBS";
     public static final String keyName = "name";
     public static final String keyPhone = "phoneNumber";
     //end account
@@ -67,6 +68,7 @@ public class KeyUntils {
     public static final String keySanPham = "SanPham";
     public static final String keyIdCategory = "idCategory";
     public static final String keyIdSanPham = "idSanPham";
+    public static final String keyIDNguoiban = "idNguoiban";
     public static final String keyIdPart = "idPart";
     public static final String keyHeader = "header";
     public static final String keyMota = "mota";

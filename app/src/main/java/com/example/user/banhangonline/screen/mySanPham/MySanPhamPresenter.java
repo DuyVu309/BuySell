@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -82,23 +83,40 @@ public class MySanPhamPresenter extends BasePresenter implements MySanPhamContac
         if (!isViewAttached()) return;
         if (context == null) return;
         sanPhamList.clear();
-        databaseReference.child(keySanPham).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(keySanPham).addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    SanPham sanPham = snapshot.getValue(SanPham.class);
-                    if (PreferManager.getEmailID(context).equals(sanPham.getIdNguoiban())) {
-                        sanPhamList.add(sanPham);
-                    }
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                SanPham sanPham = dataSnapshot.getValue(SanPham.class);
+                if (PreferManager.getEmailID(context).equals(sanPham.getIdNguoiban())) {
+                    sanPhamList.add(sanPham);
                 }
-                if (mView != null) {
-                    mView.getListSuccess();
+                if (sanPhamList != null) {
+                    if (mView != null) {
+                        mView.getListSuccess();
+                    }
                 }
             }
 
             @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
             public void onCancelled(DatabaseError databaseError) {
-                mView.getListError();
+                if (mView != null) {
+                    mView.getListError();
+                }
             }
         });
     }
@@ -111,22 +129,35 @@ public class MySanPhamPresenter extends BasePresenter implements MySanPhamContac
         for (int i = 0; i < sanPham.getListFiles().getListName().size(); i++) {
             storageReference.child("images/" + sanPham.getListFiles().getListName().get(i)).delete();
         }
-        databaseReference.child(keySanPham).orderByChild(keyIdSanPham).equalTo(sanPham.getIdSanPham()).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(keySanPham).orderByChild(keyIdSanPham).equalTo(sanPham.getIdSanPham()).addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String key = snapshot.getKey();
-                    databaseReference.child(keySanPham).child(key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                mView.deleteSuscess();
-                            } else {
-                                mView.deleteError();
-                            }
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                String key = dataSnapshot.getKey();
+                databaseReference.child(keySanPham).child(key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            mView.deleteSuscess();
+                        } else {
+                            mView.deleteError();
                         }
-                    });
-                }
+                    }
+                });
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
             }
 
             @Override

@@ -23,6 +23,7 @@
                 <ImageView
                     android:id="@+id/img_arrow_back"
                     style="@style/NavIconStyle"
+                    android:layout_margin="@dimen/pading_small"
                     android:src="@drawable/ic_arrow_back" />
 
                 <TextView
@@ -30,9 +31,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/pading_small"
                     android:layout_weight="1"
                     android:ellipsize="end"
+                    android:text="Đồ ăn vặt"
                     android:singleLine="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/default_text_size" />
@@ -85,14 +86,4 @@
             android:layout_height="wrap_content"
             android:background="@color/white" />
     </FrameLayout>
-
-
-    <ProgressBar
-        android:id="@+id/pg_loading"
-        android:layout_width="@dimen/nav_bar_height_small"
-        android:layout_height="@dimen/nav_bar_height_small"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_margin="@dimen/pading_small"
-        android:visibility="gone" />
-
 </android.support.design.widget.CoordinatorLayout>

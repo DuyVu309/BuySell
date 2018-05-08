@@ -29,23 +29,11 @@
 
     </LinearLayout>
 
-    <FrameLayout
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycerview_sp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycerview_sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:visibility="gone"
-            android:layout_width="@dimen/nav_bar_height_small"
-            android:layout_height="@dimen/nav_bar_height_small"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_margin="@dimen/pading_small" />
-    </FrameLayout>
+        android:layout_height="wrap_content" />
 
 
 </LinearLayout>

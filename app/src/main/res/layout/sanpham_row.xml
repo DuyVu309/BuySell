@@ -1,48 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/pading_small"
     android:layout_marginRight="@dimen/pading_small"
     android:layout_marginTop="@dimen/pading_small"
-    android:orientation="vertical">
+    android:elevation="1px"
+    app:cardCornerRadius="3dp">
 
-    <android.support.v7.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="@dimen/card_elevation_normal"
-        app:cardCornerRadius="@dimen/card_corner_radius_normal">
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/img_sanpham"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/tv_header_sanpham"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/pading_small"
+            android:ellipsize="end"
+            android:inputType="textFilter"
+            android:maxLines="2"
+            android:padding="@dimen/pading_small"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/default_text_size" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:background="@color/transparent"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:text="......................................................................................................................."/>
 
-            <ImageView
-                android:id="@+id/img_sanpham"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:scaleType="centerCrop" />
-
-            <TextView
-                android:id="@+id/tv_header_sanpham"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/pading_small"
-                android:ellipsize="end"
-                android:inputType="textFilter"
-                android:maxLines="1"
-                android:padding="@dimen/pading_small"
-                android:textColor="@color/black"
-                android:textSize="@dimen/small_text_size" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/md_grey_600" />
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-</LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

@@ -114,6 +114,7 @@ public class LibraryActivity extends BaseActivity implements LibraryContact.View
             initAdapter();
         } else {
             showSnackbar(getString(R.string.khong_cho_phep_truy_cap_may_anh));
+            finish();
         }
     }
 
@@ -144,7 +145,6 @@ public class LibraryActivity extends BaseActivity implements LibraryContact.View
 
     @OnClick(R.id.btn_done)
     public void doneImage(){
-
         if (photoAdapter.getSelectedPhotos() != null) {
             showDialog();
             if (photoAdapter.getSelectedPhotos().size() <= 4) {

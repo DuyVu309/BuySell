@@ -81,24 +81,6 @@ public class PayFragment extends Fragment implements PayContact.View {
             }
         });
         recyclerView.setAdapter(mAdapter);
-//        mAdapter.setmOnLoadMore(new SanPhamAdapter.OnLoadMoreListener() {
-//            @Override
-//            public void onLoadMore() {
-//                rotateLoading.setVisibility(View.VISIBLE);
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        rotateLoading.setVisibility(View.GONE);
-//                        int position = mPresenter.getPosition();
-//                        if (mPresenter.getSanPhamList().size() > position) {
-//                            mPresenter.setPosition(position + 10);
-//                        }
-//                        mPresenter.loadMoreSanPham(mDatabase, categories.getId());
-//                        mAdapter.setLoaded();
-//                    }
-//                }, 1000);
-//            }
-//        });
     }
 
 
@@ -117,6 +99,7 @@ public class PayFragment extends Fragment implements PayContact.View {
 
     @Override
     public void loadSanPhamError() {
+
     }
 
     @Override

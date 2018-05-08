@@ -54,45 +54,6 @@ public class PayPresenter implements PayContact.Presenter {
             return;
         }
         sanPhamList.clear();
-
-//        database.child(keySanPham).orderByChild(keyIdCategory).equalTo(idCategory).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    database.child(keySanPham).child(snapshot.getKey()).limitToLast(100).addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(DataSnapshot dataSnapshot) {
-//                            SanPham sanPham = dataSnapshot.getValue(SanPham.class);
-//                            if (sanPham != null && sanPham.getIdCategory() != null) {
-//                                if (sanPham.getIdCategory().equals(idCategory)) {
-//                                    sanPhamList.add(sanPham);
-//                                }
-//                            }
-//
-//                            if (sanPhamList != null) {
-//                                if (mView != null) {
-//                                    mView.loadSanPhamSuccess();
-//                                }
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(DatabaseError databaseError) {
-//                            if (mView != null) {
-//                                mView.loadSanPhamError();
-//                            }
-//                        }
-//                    });
-//
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                mView.loadSanPhamError();
-//            }
-//        }
         database.child(keySanPham).orderByChild(keyIdCategory).equalTo(idCategory).limitToLast(100).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -124,6 +85,9 @@ public class PayPresenter implements PayContact.Presenter {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                if (mView != null) {
+                    mView.loadSanPhamError();
+                }
             }
         });
     }

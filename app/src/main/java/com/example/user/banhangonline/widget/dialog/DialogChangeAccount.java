@@ -111,7 +111,7 @@ public class DialogChangeAccount extends Dialog {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (mlistAdress != null) {
                     edtAddress.setText(mlistAdress.get(i));
-                    listView.setVisibility(View.GONE);
+                    listView.setVisibility(View.INVISIBLE);
                 }
             }
         });

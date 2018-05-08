@@ -3,13 +3,15 @@ package com.example.user.banhangonline.model;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 @IgnoreExtraProperties
-public class Account {
+public class Account implements Serializable{
 
-    private String id;
+    private String emailId;
+    private String idBS;
     private String name;
     private String phoneNumber;
     private String urlAvt;
@@ -21,8 +23,9 @@ public class Account {
     public Account() {
     }
 
-    public Account(String id, String name, String phoneNumber, String urlAvt, String nameAvt, String urlLanscape, String nameLans, String address) {
-        this.id = id;
+    public Account(String emailId, String idBS, String name, String phoneNumber, String urlAvt, String nameAvt, String urlLanscape, String nameLans, String address) {
+        this.emailId = emailId;
+        this.idBS = idBS;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.urlAvt = urlAvt;
@@ -32,12 +35,20 @@ public class Account {
         this.address = address;
     }
 
-    public String getId() {
-        return id;
+    public String getEmailId() {
+        return emailId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
+    }
+
+    public String getIdBS() {
+        return idBS;
+    }
+
+    public void setIdBS(String id) {
+        this.idBS = id;
     }
 
     public String getName() {

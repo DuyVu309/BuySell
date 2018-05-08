@@ -353,7 +353,6 @@ public class SellActivity extends BaseActivity implements SellContact.View {
             intent.putExtra(keyTitlePart, mPresenter.getTitlePart());
         }
         startActivity(intent);
-        finish();
         dismissDialog();
     }
 

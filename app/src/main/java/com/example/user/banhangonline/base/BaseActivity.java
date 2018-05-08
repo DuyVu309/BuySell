@@ -66,7 +66,7 @@ public class BaseActivity extends AppCompatActivity {
 
     private void initFonts() {
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                 .setDefaultFontPath("fonts/Roboto-Regular.ttf")
+                 .setDefaultFontPath("fonts/Quicksand-Regular.ttf")
                  .setFontAttrId(R.attr.fontPath)
                  .build());
     }

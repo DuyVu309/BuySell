@@ -75,7 +75,9 @@
             android:value="@string/API_KEY" />
 
         <activity android:name=".screen.search.SearchActivity" />
-        <activity android:name=".screen.allSanPham.AllSanPhamSearchedActivity"></activity>
+        <activity android:name=".screen.allSanPham.AllSanPhamSearchedActivity" />
+        <activity android:name=".screen.account.SearchAccountActivity" />
+        <activity android:name=".screen.spAccount.SanPhamAccountActivity"></activity>
     </application>
 
 </manifest>

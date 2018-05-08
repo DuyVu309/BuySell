@@ -15,15 +15,21 @@ public interface SanPhamWithIdContact {
 
         void getKeyError();
 
-        void getSpSuccess(List<SanPham> sanPham);
+        void getSpSuccess();
 
         void getSpError();
+
+        void getSearchSuccess();
+
+        void getSearchError();
     }
 
     interface Presenter extends IBasePresenter<View> {
 
-        void getIdSanPhamFromFireBase(DatabaseReference databaseReference, String idCate);
+        void getIdSanPhamFromFireBase(DatabaseReference databaseReference, String idCate, String part);
 
-        void getSanPhamFromFirebase(DatabaseReference databaseReference, String iDCategory);
+        void getSanPhamFromFirebase(DatabaseReference databaseReference, String iDCategory, String part);
+
+        void getListSearchFromFirebase(DatabaseReference databaseReference, String filter, String idCate, String idPart);
     }
 }

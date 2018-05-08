@@ -1,5 +1,6 @@
 package com.example.user.banhangonline.screen.detail;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -16,6 +17,7 @@ import com.example.user.banhangonline.base.BaseActivity;
 import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.screen.detail.adapter.DetailAdapter;
+import com.example.user.banhangonline.screen.spAccount.SanPhamAccountActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +25,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartDetail;
+import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartSPAccount;
 
 public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetailContact.View {
 
@@ -100,7 +103,7 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
 
     @Override
     public void getInfoMationSuccess(Account account) {
-        Glide.with(this).load(account.getUrlAvt()).error(R.drawable.ic_account).into(imgAccount);
+        Glide.with(this).load(account.getUrlAvt()).error(R.drawable.ic_product).into(imgAccount);
         Glide.with(this).load(account.getUrlLanscape()).error(R.drawable.bg_app).into(imgLanscape);
         tvAccoutName.setText(account.getName());
         toolbar.setTitle(account.getName());
@@ -110,6 +113,20 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
     public void clickMuaHang(){
 
     }
+
+    @OnClick(R.id.img_account)
+    public void startAccount(){
+        if (sanPham != null) {
+            if (sanPham.getIdNguoiban() != null) {
+                Intent intent = new Intent(SanPhamDetailActivity.this, SanPhamAccountActivity.class);
+                intent.putExtra(keyStartSPAccount, sanPham.getIdNguoiban());
+                startActivity(intent);
+            }
+        }
+
+    }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

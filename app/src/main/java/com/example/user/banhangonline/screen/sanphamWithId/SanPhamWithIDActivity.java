@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -17,7 +18,7 @@ import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
 import com.example.user.banhangonline.model.Part;
 import com.example.user.banhangonline.model.SanPham;
-import com.example.user.banhangonline.model.SearchSP;
+import com.example.user.banhangonline.model.search.SearchSP;
 import com.example.user.banhangonline.screen.allSanPham.AllSanPhamSearchedActivity;
 import com.example.user.banhangonline.screen.detail.SanPhamDetailActivity;
 import com.example.user.banhangonline.screen.home.fragment.adapter.SanPhamAdapter;
@@ -34,6 +35,7 @@ import butterknife.Unbinder;
 
 import static com.example.user.banhangonline.untils.KeyPreferUntils.keyIdSanPham;
 import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartDetail;
+import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartFilter;
 
 public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithIdContact.View {
     private Part part;
@@ -50,16 +52,13 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
     @BindView(R.id.rv_search)
     RecyclerView rvSearch;
 
-    @BindView(R.id.pg_loading)
-    ProgressBar progressBar;
-
     SanPhamAdapter mAdapter;
     SearchAdapter mAdapterSr;
 
     Unbinder unbinder;
     SanPhamWithIdPresenter mPresenter;
     GridLayoutManager manager;
-    List<SearchSP> filteredList ;
+    List<Object> filteredList;
 
     @Override
     public boolean isTransparentStatusBar() {
@@ -73,7 +72,6 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
         unbinder = ButterKnife.bind(this);
         mPresenter = new SanPhamWithIdPresenter();
         mPresenter.attachView(this);
-        mPresenter.setContext(this);
         part = (Part) getIntent().getSerializableExtra(keyIdSanPham);
         if (part != null) {
             initData();
@@ -82,7 +80,7 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
 
     private void initData() {
         tvTitle.setText(part.getTitle());
-        mPresenter.getIdSanPhamFromFireBase(mDataBase, part.getIDCategory());
+        mPresenter.getIdSanPhamFromFireBase(mDataBase, part.getIDCategory(), part.getIDPay());
         if (NetworkUtils.isConnected(this)) {
             showDialog();
             initAdapterSp();
@@ -95,11 +93,18 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
     private void initAdapterSearch() {
         rvSearch.setLayoutManager(new LinearLayoutManager(this));
         filteredList = new ArrayList<>();
-        mAdapterSr = new SearchAdapter(this, filteredList, new SearchAdapter.IOnClickSearch() {
+        mAdapterSr = new SearchAdapter(this, mPresenter.getSearchList(), new SearchAdapter.IOnClickSearch() {
             @Override
-            public void onClickSanPham(SearchSP searchSP) {
-                edtSearch.setText(searchSP.getHeaderSp());
-                rvSearch.setVisibility(View.INVISIBLE);
+            public void onClickSanPham(Object searchSP) {
+                if (searchSP instanceof SearchSP) {
+                    SearchSP sp = (SearchSP) searchSP;
+                    edtSearch.setText(sp.getHeaderSp());
+                    rvSearch.setVisibility(View.INVISIBLE);
+                    Intent intent = new Intent(SanPhamWithIDActivity.this, AllSanPhamSearchedActivity.class);
+                    intent.putExtra(keyStartFilter, sp.getHeaderSp());
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
         rvSearch.setAdapter(mAdapterSr);
@@ -112,20 +117,7 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
 
             @Override
             public void onTextChanged(CharSequence charSequence, int x, int i1, int i2) {
-                charSequence = charSequence.toString().toLowerCase();
-                filteredList.clear();
-                if (!charSequence.toString().equals("")) {
-                    rvSearch.setVisibility(View.VISIBLE);
-                }
-                for (int i = 0; i < mPresenter.getSearchList().size(); i++) {
-
-                    final String text = mPresenter.getSearchList().get(i).getHeaderSp().toLowerCase();
-                    if (text.contains(charSequence)) {
-                        filteredList.add(mPresenter.getSearchList().get(i));
-                    }
-                }
-
-                mAdapterSr.notifyDataSetChanged();
+                mPresenter.getListSearchFromFirebase(mDataBase, edtSearch.getText().toString(), part.getIDCategory(), part.getIDPay());
             }
 
             @Override
@@ -155,31 +147,20 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
         mAdapter.setmOnLoadMore(new SanPhamAdapter.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                progressBar.setVisibility(View.VISIBLE);
-                try {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (progressBar.getVisibility() == View.VISIBLE) {
-                                progressBar.setVisibility(View.GONE);
-                            }
-                            int position = mPresenter.getTotal();
-                            if (mPresenter.getSanPhamList().size() > position) {
-                                mPresenter.setTotal(position + 10);
-                            }
-                            mPresenter.getSanPhamFromFirebase(mDataBase, part.getIDCategory());
-                            mAdapter.setLoaded();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        int position = mPresenter.getTotal();
+                        if (mPresenter.getSanPhamList().size() > position) {
+                            mPresenter.setTotal(position + 10);
                         }
-                    }, 1000);
-                } catch (NullPointerException e) {
-
-                }
-
+                        mPresenter.getSanPhamFromFirebase(mDataBase, part.getIDCategory(), part.getIDPay());
+                        mAdapter.setLoaded();
+                    }
+                }, 1000);
             }
         });
         recyclerViewSp.setAdapter(mAdapter);
-
-
     }
 
     @OnClick(R.id.img_arrow_back)
@@ -188,19 +169,25 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
     }
 
     @OnClick(R.id.img_search)
-    public void searchSpWithFilter(){
-        if (edtSearch.getText() != null) {
-//            Intent intent = new Intent(SanPhamWithIDActivity.this, AllSanPhamSearchedActivity.class);
-//            intent.putExtra(keyStartFilter, edtSearch.getText());
-//            startActivity(intent);
-//            finish();
+    public void searchSpWithFilter() {
+        if (NetworkUtils.isConnected(this)) {
+            if (edtSearch.getText() != null) {
+                Intent intent = new Intent(SanPhamWithIDActivity.this, AllSanPhamSearchedActivity.class);
+                intent.putExtra(keyStartFilter, edtSearch.getText().toString().trim());
+                startActivity(intent);
+                finish();
+            }
+        } else {
+            showNoInternet();
         }
+
     }
+
     @Override
     public void getKeySuccess() {
         if (mPresenter.getKeyList() != null) {
             if (mPresenter.getKeyList().size() != 0) {
-                mPresenter.getSanPhamFromFirebase(mDataBase, part.getIDCategory());
+                mPresenter.getSanPhamFromFirebase(mDataBase, part.getIDCategory(), part.getIDPay());
             } else if (mPresenter.getKeyList().size() == 0) {
                 showSnackbar(getString(R.string.dont_have_product));
                 dismissDialog();
@@ -214,7 +201,7 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
     }
 
     @Override
-    public void getSpSuccess(List<SanPham> sanPham) {
+    public void getSpSuccess() {
         if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
             mAdapterSr.notifyDataSetChanged();
@@ -226,6 +213,18 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
     @Override
     public void getSpError() {
         dismissDialog();
+    }
+
+    @Override
+    public void getSearchSuccess() {
+        if (mAdapterSr != null) {
+            mAdapterSr.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void getSearchError() {
+        showSnackbar(getString(R.string.error));
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.user.banhangonline.model;
+package com.example.user.banhangonline.model.search;
 
 import java.io.Serializable;
 

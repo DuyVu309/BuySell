@@ -5,8 +5,8 @@
     <string name="name_register">Đăng ký</string>
     <string name="error_and_check">Đã xảy ra lỗi, vui lòng kiểm tra lại</string>
     <string name="no_internet">Không có kết nối mạng, vui lòng kiểm tra lại</string>
-    <string name="sign_in">Sign in</string>
-    <string name="forgot">Forgot?</string>
+    <string name="sign_in">Đăng nhập</string>
+    <string name="forgot">Quên mật khẩu?</string>
     <string name="new_to_buy_sell">New to Buy-Sell ?</string>
 
     <string name="email">Email</string>
@@ -19,7 +19,6 @@
 
     <string name="password">Password</string>
     <string name="mat_khau">Mật khẩu</string>
-    <string name="confirm_password">Confirm password</string>
     <string name="notifi_password">Mật khẩu phải lớn hơn hoặc bằng 6 kí tự</string>
     <string name="notifi_confirm_password">Mật khẩu không trùng khớp</string>
 
@@ -81,6 +80,7 @@
     <string name="error_retry">Xảy ra lỗi, thử lại</string>
     <string name="title_activity_maps_sell">Map</string>
     <string name="dont_have_product">Không có sản phẩm</string>
+    <string name="dont_have_account">Không có tài khoản</string>
     <string name="san_pham">Sản phẩm</string>
 
 
