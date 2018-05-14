@@ -1,5 +1,6 @@
 package com.example.user.banhangonline.screen.login;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
 import com.example.user.banhangonline.interactor.prefer.PreferManager;
@@ -25,6 +27,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -188,6 +191,7 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
 
         if (key != null) {
             mAuth.signInWithEmailAndPassword(email, edtPassword.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @SuppressLint("RestrictedApi")
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {

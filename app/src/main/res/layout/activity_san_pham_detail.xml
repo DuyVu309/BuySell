@@ -89,7 +89,8 @@
                 android:background="@drawable/bg_back_activity"
                 android:text="@string/mua_hang"
                 android:textColor="@color/red"
-                android:textSize="@dimen/default_text_size" />
+                android:textSize="@dimen/default_text_size"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout

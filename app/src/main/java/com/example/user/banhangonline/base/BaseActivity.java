@@ -3,12 +3,14 @@ package com.example.user.banhangonline.base;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -181,6 +183,14 @@ public class BaseActivity extends AppCompatActivity {
             view.startAnimation(animation);
         }
     }
+    protected boolean checkPermissions(String[] permissions) {
+        for (String s : permissions) {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), s) != PackageManager.PERMISSION_GRANTED)
+                return false;
+        }
+        return true;
+    }
+
 
     protected void showSnackbar(String message) {
         Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)

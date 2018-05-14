@@ -4,18 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
-import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.model.SanPham;
-import com.example.user.banhangonline.screen.account.SearchAccountActivity;
 import com.example.user.banhangonline.screen.detail.SanPhamDetailActivity;
-import com.example.user.banhangonline.screen.home.fragment.adapter.SanPhamAdapter;
 import com.example.user.banhangonline.screen.search.SearchActivity;
 import com.example.user.banhangonline.screen.spAccount.adapter.SanPhamAccountAdapter;
-import com.example.user.banhangonline.untils.NetworkUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

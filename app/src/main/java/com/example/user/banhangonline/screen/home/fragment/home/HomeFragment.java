@@ -20,7 +20,7 @@ import com.example.user.banhangonline.model.Part;
 import com.example.user.banhangonline.screen.home.adapter.HomeAdapter;
 import com.example.user.banhangonline.screen.login.LoginActivity;
 import com.example.user.banhangonline.screen.register.RegisterActivity;
-import com.example.user.banhangonline.screen.sanphamWithId.SanPhamWithIDActivity;
+import com.example.user.banhangonline.screen.sanphamWithIdCate.SanPhamWithIDActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,8 +109,8 @@ public class HomeFragment extends Fragment implements HomeAdapter.IAdapterListen
     }
 
     private void initList() {
-        mList.add(new Part(keyIdCateDoAn, "", R.drawable.bg_doanvat, doAnVat));
-        mList.add(new Part(keyIdCateMyPham, "", R.drawable.bg_mypham, myPham));
+        mList.add(new Part(keyIdCateDoAn, null, R.drawable.bg_doanvat, doAnVat));
+        mList.add(new Part(keyIdCateMyPham, null, R.drawable.bg_mypham, myPham));
         mList.add(new Part(keyIdCateThoiTrang, keythoiTrangNam, R.drawable.bg_thoitrangnam, thoiTrangNam));
         mList.add(new Part(keyIdCateThoiTrang, keygiayNam, R.drawable.bg_giaynam, giayNam));
         mList.add(new Part(keyIdCateThoiTrang, keytuiSachNam, R.drawable.bg_tuisachnam, tuiSachNam));
@@ -122,12 +122,12 @@ public class HomeFragment extends Fragment implements HomeAdapter.IAdapterListen
         mList.add(new Part(keyIdCateThoiTrang, keytuiSachNu, R.drawable.bg_tuisachnu, tuiSachNu));
         mList.add(new Part(keyIdCateThoiTrang, keyphuKienNu, R.drawable.bg_phu_kien_nu, phuKienNu));
         mList.add(new Part(keyIdCateThoiTrang, keybeNu, R.drawable.bg_be_gai, thoiTrangBeGai));
-        mList.add(new Part(keyIdCateCongNghe, "", R.drawable.bg_dientu, doDienTu));
-        mList.add(new Part(keyIdCatePhuKien, "", R.drawable.bg_phukien, phuKien));
-        mList.add(new Part(keyIdCateGiaDung, "", R.drawable.bg_dogiadung, doGiaDung));
-        mList.add(new Part(keyIdCateHocTap, "", R.drawable.bg_sachvo, sachVo));
-        mList.add(new Part(keyIdCateDoChoi, "", R.drawable.bg_dochoibe, doChoiChoBe));
-        mList.add(new Part(keyIdCateKhac, "", R.drawable.bg_khac, khac));
+        mList.add(new Part(keyIdCateCongNghe, null, R.drawable.bg_dientu, doDienTu));
+        mList.add(new Part(keyIdCatePhuKien, null, R.drawable.bg_phukien, phuKien));
+        mList.add(new Part(keyIdCateGiaDung, null, R.drawable.bg_dogiadung, doGiaDung));
+        mList.add(new Part(keyIdCateHocTap, null, R.drawable.bg_sachvo, sachVo));
+        mList.add(new Part(keyIdCateDoChoi, null, R.drawable.bg_dochoibe, doChoiChoBe));
+        mList.add(new Part(keyIdCateKhac, null, R.drawable.bg_khac, khac));
 
     }
 

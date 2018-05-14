@@ -8,13 +8,13 @@ import java.io.Serializable;
 @IgnoreExtraProperties
 public class Part implements Serializable {
     private String IDCategory;
-    private String IDPay;
+    private String IDPart;
     private int url;
     private String title;
 
-    public Part(String IDCategory, String IDPay, int url, String title) {
+    public Part(String IDCategory, String IDPart, int url, String title) {
         this.IDCategory = IDCategory;
-        this.IDPay = IDPay;
+        this.IDPart = IDPart;
         this.url = url;
         this.title = title;
     }
@@ -27,12 +27,12 @@ public class Part implements Serializable {
         this.IDCategory = IDCategory;
     }
 
-    public String getIDPay() {
-        return IDPay;
+    public String getIDPart() {
+        return IDPart;
     }
 
-    public void setIDPay(String IDPay) {
-        this.IDPay = IDPay;
+    public void setIDPart(String IDPart) {
+        this.IDPart = IDPart;
     }
 
     public int getUrl() {

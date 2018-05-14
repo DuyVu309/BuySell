@@ -1,6 +1,11 @@
 <resources>
     <string name="API_KEY">AIzaSyDCUDjlQqJRaapcRmtdb2l7uTQh4J2oK8Q</string>
 
+
+    <!--faceook-->
+    <string name="facebook_app_id">2048145105447742</string>
+    <string name="fb_login_protocol_scheme">fb2048145105447742</string>
+
     <string name="app_name">Buy - Sell</string>
     <string name="name_register">Đăng ký</string>
     <string name="error_and_check">Đã xảy ra lỗi, vui lòng kiểm tra lại</string>
@@ -39,7 +44,7 @@
     <string name="xac_nhan">Xác nhận</string>
     <string name="dang_bai">ĐĂNG BÀI</string>
     <string name="huy">Hủy</string>
-    <string name="message_not_acccount">Bạn chưa đăng nhập \n để mua(bán) hàng</string>
+    <string name="message_not_acccount">Bạn chưa đăng nhập \n để mua (bán) hàng</string>
 
     //sell
     <string name="tao_bai_dang">Tạo bài đăng</string>
@@ -82,6 +87,11 @@
     <string name="dont_have_product">Không có sản phẩm</string>
     <string name="dont_have_account">Không có tài khoản</string>
     <string name="san_pham">Sản phẩm</string>
+    <string name="select_photo">Select photo</string>
 
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
+    <string name="xem_truoc_anh">Xem trước ảnh</string>
+    <string name="xac_nhan_call">Bạn có muốn gọi tới số điện thoại"\n" </string>
 
 </resources>

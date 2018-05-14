@@ -12,10 +12,9 @@ import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
 import com.example.user.banhangonline.model.search.SearchAccount;
 import com.example.user.banhangonline.model.search.SearchSP;
-import com.example.user.banhangonline.screen.account.SearchAccountActivity;
-import com.example.user.banhangonline.screen.allSanPham.AllSanPhamSearchedActivity;
-import com.example.user.banhangonline.screen.home.HomeActivity;
-import com.example.user.banhangonline.screen.sanphamWithId.adapter.SearchAdapter;
+import com.example.user.banhangonline.screen.search.account.SearchAccountActivity;
+import com.example.user.banhangonline.screen.search.allSanPham.AllSanPhamSearchedActivity;
+import com.example.user.banhangonline.screen.sanphamWithIdCate.adapter.SearchAdapter;
 
 import java.util.List;
 
@@ -71,12 +70,10 @@ public class SearchActivity extends BaseActivity implements SearchContact.View {
                         Intent intent = new Intent(SearchActivity.this, AllSanPhamSearchedActivity.class);
                         intent.putExtra(keyStartFilter, ((SearchSP) search).getHeaderSp());
                         startActivity(intent);
-                        finish();
                     } else if (search instanceof SearchAccount) {
                         Intent intent = new Intent(SearchActivity.this, SearchAccountActivity.class);
                         intent.putExtra(keyStartAccount, ((SearchAccount) search).getNameAc());
                         startActivity(intent);
-                        finish();
                     }
                 }
             }
@@ -87,8 +84,7 @@ public class SearchActivity extends BaseActivity implements SearchContact.View {
 
     @OnClick(R.id.img_arrow_back)
     public void backActivity() {
-        startActivity(new Intent(SearchActivity.this, HomeActivity.class));
-        finish();
+        onBackPressed();
     }
 
     @OnClick(R.id.img_search)
@@ -97,7 +93,6 @@ public class SearchActivity extends BaseActivity implements SearchContact.View {
             Intent intent = new Intent(SearchActivity.this, AllSanPhamSearchedActivity.class);
             intent.putExtra(keyStartFilter, edtSearch.getText().toString());
             startActivity(intent);
-            finish();
         }
     }
 
@@ -107,7 +102,6 @@ public class SearchActivity extends BaseActivity implements SearchContact.View {
             Intent intent = new Intent(SearchActivity.this, SearchAccountActivity.class);
             intent.putExtra(keyStartAccount, edtSearchAccount.getText().toString());
             startActivity(intent);
-            finish();
         }
     }
 

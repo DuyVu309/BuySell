@@ -24,5 +24,7 @@ public class KeyPreferUntils {
     public static final String keyStartFilter = "keyStartFilter";
     public static final String keyStartAccount = "keyStartAccount";
     public static final String keyStartSPAccount = "keyStartSPAccount";
+    public static final String keyStartIdCategory = "keyStartIdCategory";
+    public static final String keyStartIdPart = "keyStartIdPart";
 
 }

@@ -53,10 +53,16 @@ dependencies {
     //custom fonts
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
 
+    // crop image view
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.4.7'
+
     //map
     implementation 'com.google.android.gms:play-services-maps:12.0.1'
     implementation 'com.google.android.gms:play-services-location:12.0.1'
     implementation 'com.google.android.gms:play-services-places:12.0.1'
+
+    //facebook
+    implementation 'com.facebook.android:facebook-login:[4,5)'
 
 }
 apply plugin: 'com.google.gms.google-services'

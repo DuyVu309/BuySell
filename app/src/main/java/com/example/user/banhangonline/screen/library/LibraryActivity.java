@@ -19,6 +19,7 @@ import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
 import com.example.user.banhangonline.screen.library.adapter.PhotoAdapter;
 import com.example.user.banhangonline.screen.sell.SellActivity;
+
 import java.io.Serializable;
 
 import butterknife.BindView;
@@ -64,10 +65,11 @@ public class LibraryActivity extends BaseActivity implements LibraryContact.View
         mPresenter.onCreate();
         mPresenter.attachView(this);
         try {
-            if (ActivityCompat.checkSelfPermission(LibraryActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(LibraryActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, RESULT_LOAD_IMAGE);
-            } else {
+            String s[] = {android.Manifest.permission.READ_EXTERNAL_STORAGE};
+            if (checkPermissions(s)) {
                 initAdapter();
+            } else {
+                ActivityCompat.requestPermissions(LibraryActivity.this, s, RESULT_LOAD_IMAGE);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -144,7 +146,7 @@ public class LibraryActivity extends BaseActivity implements LibraryContact.View
     }
 
     @OnClick(R.id.btn_done)
-    public void doneImage(){
+    public void doneImage() {
         if (photoAdapter.getSelectedPhotos() != null) {
             showDialog();
             if (photoAdapter.getSelectedPhotos().size() <= 4) {

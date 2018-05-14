@@ -129,7 +129,7 @@ public class SellActivity extends BaseActivity implements SellContact.View {
             public void onClickItemSpinner(Object object) {
                 Part part = (Part) object;
                 spnPart.setText(part.getTitle());
-                mPresenter.setIdPart(part.getIDPay());
+                mPresenter.setIdPart(part.getIDPart());
                 mPresenter.setTitlePart(part.getTitle());
                 recyclerViewPart.setVisibility(View.GONE);
                 expandSpinner(recyclerViewPart, spnPart);

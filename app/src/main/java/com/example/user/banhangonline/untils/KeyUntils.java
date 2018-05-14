@@ -74,4 +74,13 @@ public class KeyUntils {
     public static final String keyMota = "mota";
     public static final String keyListFile = "listFiles";
     public static final String keyTime = "time";
+
+    //key notifi
+    public static final String keyNotifications = "Notifications";
+    public static final String keyTitle = "Title";
+    public static final String keyMessage = "Notification";
+
+    //key show Image
+    public static final String keyShowImage = "keyShowImage";
+
 }

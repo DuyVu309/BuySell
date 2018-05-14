@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -56,10 +55,10 @@ public class SanPhamMyAccountAdapter extends RecyclerView.Adapter<RecyclerView.V
         LinearLayout lnUpdate;
 
         @BindView(R.id.btn_change)
-        Button btnChange;
+        TextView btnChange;
 
         @BindView(R.id.btn_delete)
-        Button btnDelete;
+        TextView btnDelete;
 
         @BindView(R.id.tv_header)
         TextView tvHeader;

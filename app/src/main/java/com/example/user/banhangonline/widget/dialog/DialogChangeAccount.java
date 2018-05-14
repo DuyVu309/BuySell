@@ -17,8 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-
-import com.example.user.banhangonline.Demo;
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.untils.NetworkUtils;
 

@@ -97,8 +97,7 @@ public class ChangeSanPhamActivity extends BaseActivity implements ChangeSanPham
 
     @OnClick(R.id.img_arrow_back)
     public void backActivity() {
-        startActivity(new Intent(ChangeSanPhamActivity.this, MySanPhamActivity.class));
-        finish();
+        onBackPressed();
     }
 
     @OnClick(R.id.btn_luu)

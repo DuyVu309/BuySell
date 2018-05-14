@@ -97,7 +97,6 @@ public class HomeActivity extends BaseActivity implements
         mPresenter.attachView(this);
         getInfomationAccount();
         initFontTitle();
-
         viewPager.setAdapter(new HomePagerAdapter(this, getSupportFragmentManager(), mPresenter.getListCategories()));
         tableLayout.setupWithViewPager(viewPager);
         if (NetworkUtils.isConnected(this)) {
@@ -112,7 +111,6 @@ public class HomeActivity extends BaseActivity implements
         String idBuySell = PreferManager.getIDBuySell(this);
         String email = PreferManager.getEmailID(this);
         String name = PreferManager.getNameAccount(this);
-        String phoneNumber = PreferManager.getPhoneNumber(this);
 
         if (!PreferManager.getIsLogin(this)) {
             imgSell.setVisibility(View.GONE);

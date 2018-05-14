@@ -26,6 +26,7 @@ import com.example.user.banhangonline.untils.NetworkUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 
 import butterknife.BindView;
@@ -472,7 +473,8 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mDataBase.child(keyAccount).child(key[0]).setValue(new Account(key[0],
+                    mDataBase.child(keyAccount).child(key[0]).setValue(new Account("",
+                             key[0],
                              keyAccountBuy,
                              edtFullName.getText().toString().trim(),
                              PreferManager.getPhoneNumber(RegisterActivity.this),
@@ -480,7 +482,8 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
                              "",
                              "",
                              "",
-                             getString(R.string.dont_address)))
+                             getString(R.string.dont_address),
+                             ""))
                              .addOnCompleteListener(new OnCompleteListener<Void>() {
                                  @Override
                                  public void onComplete(@NonNull Task<Void> task) {
@@ -489,6 +492,17 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
                                              @Override
                                              public void onComplete(@NonNull Task<AuthResult> task) {
                                                  if (task.isSuccessful()) {
+                                                     mDataBase.child(keyAccount).child(key[0]).setValue(new Account(mAuth.getCurrentUser().getUid(),
+                                                                       key[0],
+                                                                       keyAccountBuy,
+                                                                       edtFullName.getText().toString().trim(),
+                                                                       PreferManager.getPhoneNumber(RegisterActivity.this),
+                                                                       "",
+                                                                       "",
+                                                                       "",
+                                                                       "",
+                                                                       getString(R.string.dont_address),
+                                                              ""));
                                                      Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                                      intent.putExtra(KeyUntils.keyEmailRegister, edtmailBuy.getText().toString().trim());
                                                      intent.putExtra(KeyUntils.keyPasswordRegister, edtPasswordBuy.getText().toString().trim());
@@ -531,7 +545,8 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        mDataBase.child(keyAccount).child(key[0]).setValue(new Account(key[0],
+                        mDataBase.child(keyAccount).child(key[0]).setValue(new Account("",
+                                 key[0],
                                  keyAccountSell,
                                  edtTenDoanhNghiep.getText().toString().trim(),
                                  mPresenter.getPhoneNumber(),
@@ -539,10 +554,22 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
                                  "",
                                  "",
                                  "",
-                                 getString(R.string.dont_address))).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                 getString(R.string.dont_address),
+                                 "")).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
+                                    mDataBase.child(keyAccount).child(key[0]).setValue(new Account(mAuth.getCurrentUser().getUid(),
+                                             key[0],
+                                             keyAccountBuy,
+                                             edtFullName.getText().toString().trim(),
+                                             PreferManager.getPhoneNumber(RegisterActivity.this),
+                                             "",
+                                             "",
+                                             "",
+                                             "",
+                                             getString(R.string.dont_address),
+                                             ""));
                                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                     intent.putExtra(KeyUntils.keyEmailRegister, edtEmailRegisterSell.getText().toString().trim());
                                     intent.putExtra(KeyUntils.keyPasswordRegister, edtPasswordSell.getText().toString().trim());

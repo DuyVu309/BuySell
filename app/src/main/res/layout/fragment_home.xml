@@ -31,7 +31,6 @@
 
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
-                android:background="@color/transparent"
                 android:layout_height="@dimen/height_btn_small"
                 android:layout_marginLeft="@dimen/pading_large"
                 android:layout_marginRight="@dimen/pading_normal"
@@ -42,7 +41,7 @@
                 <Button
                     android:id="@+id/btn_dangki"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@drawable/bg_button_click_white"
                     android:gravity="center"
                     android:text="@string/dang_ki"
@@ -53,18 +52,16 @@
 
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
-                android:background="@color/transparent"
                 android:layout_height="@dimen/height_btn_small"
                 android:layout_marginLeft="@dimen/pading_normal"
                 android:layout_marginRight="@dimen/pading_large"
                 android:layout_weight="1"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="1dp">
+                app:cardCornerRadius="5dp">
 
                 <Button
                     android:id="@+id/btn_dangnhap"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@drawable/bg_button_click_white"
                     android:gravity="center"
                     android:text="@string/dang_nhap"

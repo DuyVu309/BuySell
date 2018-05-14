@@ -12,7 +12,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/blue"
+            android:background="@drawable/bg_toolbar"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="@dimen/pading_small"
@@ -21,7 +21,6 @@
             <ImageView
                 android:id="@+id/img_arrow_back"
                 style="@style/NavIconStyle"
-                android:background="@drawable/bg_click_button_blue"
                 android:src="@drawable/ic_arrow_back" />
 
             <TextView
@@ -33,16 +32,6 @@
                 android:text="@string/don_hang_cua_ban"
                 android:textColor="@color/white"
                 android:textSize="@dimen/default_text_size" />
-
-            <Button
-                android:id="@+id/btn_save"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_back_activity"
-                android:text="@string/luu"
-                android:textColor="@color/white"
-                android:visibility="gone"
-                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -82,14 +71,6 @@
                             style="@style/change_image"
                             android:layout_gravity="right|bottom" />
 
-                        <ProgressBar
-                            android:id="@+id/pb_load_lanscape"
-                            android:layout_width="@dimen/nav_bar_height_small"
-                            android:layout_height="@dimen/nav_bar_height_small"
-                            android:layout_gravity="center"
-                            android:visibility="gone"
-                            android:indeterminateTint="@color/blue" />
-
                     </FrameLayout>
 
                     <FrameLayout
@@ -111,13 +92,6 @@
                             style="@style/change_image"
                             android:layout_gravity="right|bottom" />
 
-                        <ProgressBar
-                            android:id="@+id/pb_load_avt"
-                            android:visibility="gone"
-                            android:layout_width="@dimen/nav_bar_height_small"
-                            android:layout_height="@dimen/nav_bar_height_small"
-                            android:layout_gravity="center"
-                            android:indeterminateTint="@color/blue" />
                     </FrameLayout>
 
                 </FrameLayout>
@@ -157,7 +131,20 @@
                     android:ellipsize="end"
                     android:enabled="false"
                     android:maxLines="2"
-                    android:text="Cẩm Vũ, Cẩm Giàng, Hải Dương"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/default_text_size" />
+
+                <TextView
+                    android:id="@+id/tv_account_fb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/pading_small"
+                    android:backgroundTint="@color/transparent"
+                    android:drawableLeft="@drawable/ic_facebook"
+                    android:drawablePadding="@dimen/pading_small"
+                    android:textIsSelectable="false"
+                    android:text="Link Facebook"
+                    android:background="@drawable/bg_back_activity"
                     android:textColor="@color/black"
                     android:textSize="@dimen/default_text_size" />
 

@@ -1,34 +1,41 @@
 package com.example.user.banhangonline.screen.mySanPham;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.user.banhangonline.AppConstants;
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
 import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.screen.changeSanpham.ChangeSanPhamActivity;
-import com.example.user.banhangonline.screen.home.HomeActivity;
+import com.example.user.banhangonline.screen.cropImage.CropImageActivity;
+import com.example.user.banhangonline.screen.linkFb.GetLinkFbActivity;
 import com.example.user.banhangonline.screen.mySanPham.adapter.ListImagesCartAdapter;
 import com.example.user.banhangonline.screen.mySanPham.adapter.SanPhamMyAccountAdapter;
-import com.example.user.banhangonline.screen.register.RegisterActivity;
+import com.example.user.banhangonline.screen.showImage.ShowImageActivity;
 import com.example.user.banhangonline.untils.DialogUntils;
-import com.example.user.banhangonline.untils.NetworkUtils;
+import com.example.user.banhangonline.untils.FileUtils;
 import com.example.user.banhangonline.widget.dialog.DialogChangeAccount;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -38,6 +45,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartSP;
+import static com.example.user.banhangonline.untils.KeyUntils.keyShowImage;
 
 public class MySanPhamActivity extends BaseActivity implements
          MySanPhamContact.View,
@@ -46,9 +54,6 @@ public class MySanPhamActivity extends BaseActivity implements
 
     private static final int RESULT_LOAD_IMAGE = 1;
     private static final int RESULT_LOAD_AVT = 2;
-
-    @BindView(R.id.btn_save)
-    Button btnSave;
 
     @BindView(R.id.recycerview_my_account)
     RecyclerView rvMyAccount;
@@ -74,19 +79,12 @@ public class MySanPhamActivity extends BaseActivity implements
     @BindView(R.id.tv_account_address)
     TextView tvAccountAdress;
 
-    @BindView(R.id.pb_load_lanscape)
-    ProgressBar pbLoadLanscape;
-
-    @BindView(R.id.pb_load_avt)
-    ProgressBar pbLoadAvt;
-
     @BindView(R.id.btn_change_detail)
     Button btnChangeDetail;
 
     private SanPhamMyAccountAdapter mAdapter;
     private Unbinder unbinder;
     private MySanPhamPresenter mPresenter;
-    String urlAvt, urlLanscape;
 
     @Override
     public boolean isTransparentStatusBar() {
@@ -116,10 +114,24 @@ public class MySanPhamActivity extends BaseActivity implements
         mPresenter.getListSanphamMyAccount(mDataBase);
     }
 
+
+    @OnClick(R.id.img_my_account)
+    public void showImageLans() {
+        Intent intent = new Intent(MySanPhamActivity.this, ShowImageActivity.class);
+        intent.putExtra(keyShowImage, mPresenter.getAccount().getUrlLanscape());
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.img_avt)
+    public void showImageAvt() {
+        Intent intent = new Intent(MySanPhamActivity.this, ShowImageActivity.class);
+        intent.putExtra(keyShowImage, mPresenter.getAccount().getUrlAvt());
+        startActivity(intent);
+    }
+
     @OnClick(R.id.img_arrow_back)
     public void onBackActivity() {
-        startActivity(new Intent(MySanPhamActivity.this, HomeActivity.class));
-        finish();
+        onBackPressed();
     }
 
     @OnClick(R.id.btn_change_detail)
@@ -131,7 +143,8 @@ public class MySanPhamActivity extends BaseActivity implements
                      @Override
                      public void doneChange(String name, String phone, String address) {
                          showDialog();
-                         mPresenter.updateInfomation(mDataBase, new Account(mPresenter.getAccount().getEmailId(),
+                         mPresenter.updateInfomation(mDataBase, new Account(mPresenter.getAccount().getUserId(),
+                                  mPresenter.getAccount().getEmailId(),
                                   PreferManager.getIDBuySell(MySanPhamActivity.this),
                                   name,
                                   phone,
@@ -139,16 +152,32 @@ public class MySanPhamActivity extends BaseActivity implements
                                   mPresenter.getAccount().getNameAvt(),
                                   mPresenter.getAccount().getUrlLanscape(),
                                   mPresenter.getAccount().getNameLans(),
-                                  address));
+                                  address,
+                                  mPresenter.getAccount().getLinkFacebook()));
                      }
                  });
+    }
+
+    @OnClick(R.id.tv_account_fb)
+    public void getLinkFb(){
+        Intent intent = new Intent(MySanPhamActivity.this, GetLinkFbActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @OnClick(R.id.tv_choose_lanscape)
     public void getImageLanscape() {
         try {
-            Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(i, RESULT_LOAD_IMAGE);
+            String s[] = {android.Manifest.permission.READ_EXTERNAL_STORAGE};
+            if (checkPermissions(s)) {
+                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, RESULT_LOAD_IMAGE);
+            } else {
+                ActivityCompat.requestPermissions(MySanPhamActivity.this,
+                         s,
+                         AppConstants.REQUEST_PERMISSION_READ_LIBRARY);
+            }
+
         } catch (Exception exp) {
         }
 
@@ -157,59 +186,67 @@ public class MySanPhamActivity extends BaseActivity implements
     @OnClick(R.id.tv_choose_avt)
     public void getImageAvt() {
         try {
+            String s[] = {android.Manifest.permission.READ_EXTERNAL_STORAGE};
+            if (checkPermissions(s)) {
+                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, RESULT_LOAD_AVT);
+            } else {
+                ActivityCompat.requestPermissions(MySanPhamActivity.this,
+                         s,
+                         AppConstants.REQUEST_PERMISSION_READ_LIBRARY);
+            }
+        } catch (Exception exp) {
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == AppConstants.REQUEST_PERMISSION_READ_LIBRARY && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(i, RESULT_LOAD_AVT);
-        } catch (Exception exp) {
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             Uri pickedImage = data.getData();
-            urlLanscape = pickedImage.toString();
-            Glide.with(this).load(pickedImage.toString()).into(imgMyLanscape);
-            btnSave.setVisibility(View.VISIBLE);
             tvChooseAvt.setVisibility(View.GONE);
+            File file = FileUtils.convertUriToFile(this, pickedImage);
+            if (file != null) {
+                showCropImageActivity(file.getPath(), imgMyLanscape.getWidth(), imgMyLanscape.getHeight(), false);
+            }
 
         }
         if (requestCode == RESULT_LOAD_AVT && resultCode == RESULT_OK && data != null) {
             Uri pickedImage = data.getData();
-            urlAvt = pickedImage.toString();
-            Glide.with(this).load(pickedImage.toString()).into(imgAvt);
-            btnSave.setVisibility(View.VISIBLE);
             tvChooseLans.setVisibility(View.GONE);
+            File file = FileUtils.convertUriToFile(this, pickedImage);
+            if (file != null) {
+                Log.d("TAG SIZE", String.valueOf(imgAvt.getWidth()) + "\n" + imgAvt.getHeight());
+                showCropImageActivity(file.getPath(), imgAvt.getWidth(), imgAvt.getHeight(), true);
+            }
         }
 
     }
 
-    @OnClick(R.id.btn_save)
-    public void saveImageAccount() {
-        if (NetworkUtils.isConnected(this)) {
-            showDialog();
-            if (urlLanscape != null) {
-                mPresenter.upLoadImageLanscapeToStorage(mStorageReferrence, mPresenter.getAccount(), urlLanscape);
-                urlLanscape = null;
-                return;
-            }
-            if (urlAvt != null) {
-                mPresenter.upLoadImageAvtToStorage(mStorageReferrence, mPresenter.getAccount(), urlAvt);
-                urlAvt = null;
-                return;
-            }
-        } else {
-            showNoInternet();
-        }
-
+    private void showCropImageActivity(String sourcePath, int width, int height, boolean isAvt) {
+        Intent i = new Intent(this, CropImageActivity.class);
+        i.putExtra(CropImageActivity.EXTRA_ACCOUNT, mPresenter.getAccount());
+        i.putExtra(CropImageActivity.EXTRA_SOURCE_PATH, sourcePath);
+        i.putExtra(CropImageActivity.EXTRA_WIDTH, width);
+        i.putExtra(CropImageActivity.EXTRA_HEIGHT, height);
+        i.putExtra(CropImageActivity.IS_AVT, isAvt);
+        startActivity(i);
+        finish();
     }
 
     @Override
     public void getListSuccess() {
         if (mPresenter.getSanPhamList() != null) {
-            if (mPresenter.getSanPhamList().size() == 0) {
-                showSnackbar(getString(R.string.dont_have_product));
-            } else {
+            if (mPresenter.getSanPhamList().size() != 0) {
                 Collections.sort(mPresenter.getSanPhamList(), new Comparator<SanPham>() {
                     @Override
                     public int compare(SanPham sanPham, SanPham t1) {
@@ -217,7 +254,6 @@ public class MySanPhamActivity extends BaseActivity implements
                     }
                 });
             }
-
             mAdapter.notifyDataSetChanged();
         }
 
@@ -266,6 +302,7 @@ public class MySanPhamActivity extends BaseActivity implements
 
         Glide.with(this).load(account.getUrlLanscape()).error(R.drawable.bg_app).into(imgMyLanscape);
         Glide.with(this).load(account.getUrlAvt()).into(imgAvt);
+
     }
 
     @Override
@@ -294,48 +331,6 @@ public class MySanPhamActivity extends BaseActivity implements
     }
 
     @Override
-    public void uploadImageLansSuccess(String urlLans) {
-        mPresenter.updateInfomation(mDataBase, new Account(mPresenter.getAccount().getEmailId(),
-                 mPresenter.getAccount().getIdBS(),
-                 mPresenter.getAccount().getName(),
-                 mPresenter.getAccount().getPhoneNumber(),
-                 mPresenter.getAccount().getUrlAvt(),
-                 mPresenter.getAccount().getNameAvt(),
-                 urlLans,
-                 mPresenter.getNameLans(),
-                 mPresenter.getAccount().getAddress()));
-        btnSave.setVisibility(View.GONE);
-        dismissDialog();
-    }
-
-    @Override
-    public void uploadImageAvtSuccess(String urlAvt) {
-        mPresenter.updateInfomation(mDataBase, new Account(mPresenter.getAccount().getEmailId(),
-                 mPresenter.getAccount().getIdBS(),
-                 mPresenter.getAccount().getName(),
-                 mPresenter.getAccount().getPhoneNumber(),
-                 urlAvt,
-                 mPresenter.getNameAvt(),
-                 mPresenter.getAccount().getUrlLanscape(),
-                 mPresenter.getAccount().getNameLans(),
-                 mPresenter.getAccount().getAddress()));
-        btnSave.setVisibility(View.GONE);
-        dismissDialog();
-    }
-
-    @Override
-    public void uploadImageError() {
-        showSnackbar("Đã có lỗi xảy ra, thử lại!");
-        dismissDialog();
-        btnSave.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void displayPercent(String percent) {
-        Log.d("TAG X", percent);
-    }
-
-    @Override
     public void onClickSanPham(SanPham sanPham) {
         if (sanPham != null) {
             Intent intent = new Intent(MySanPhamActivity.this, ChangeSanPhamActivity.class);
@@ -350,7 +345,6 @@ public class MySanPhamActivity extends BaseActivity implements
             Intent intent = new Intent(MySanPhamActivity.this, ChangeSanPhamActivity.class);
             intent.putExtra(keyStartSP, sanPham);
             startActivity(intent);
-            finish();
         }
     }
 

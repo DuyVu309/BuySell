@@ -10,6 +10,7 @@ import java.util.Map;
 @IgnoreExtraProperties
 public class Account implements Serializable{
 
+    private String userId;
     private String emailId;
     private String idBS;
     private String name;
@@ -19,11 +20,15 @@ public class Account implements Serializable{
     private String urlLanscape;
     private String nameLans;
     private String address;
+    private String linkFacebook;
 
     public Account() {
     }
 
-    public Account(String emailId, String idBS, String name, String phoneNumber, String urlAvt, String nameAvt, String urlLanscape, String nameLans, String address) {
+    public Account(String userId, String emailId, String idBS, String name,
+                   String phoneNumber, String urlAvt, String nameAvt, String urlLanscape,
+                   String nameLans, String address, String linkFacebook) {
+        this.userId = userId;
         this.emailId = emailId;
         this.idBS = idBS;
         this.name = name;
@@ -33,6 +38,15 @@ public class Account implements Serializable{
         this.urlLanscape = urlLanscape;
         this.nameLans = nameLans;
         this.address = address;
+        this.linkFacebook = linkFacebook;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getEmailId() {
@@ -105,5 +119,13 @@ public class Account implements Serializable{
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getLinkFacebook() {
+        return linkFacebook;
+    }
+
+    public void setLinkFacebook(String linkFacebook) {
+        this.linkFacebook = linkFacebook;
     }
 }
