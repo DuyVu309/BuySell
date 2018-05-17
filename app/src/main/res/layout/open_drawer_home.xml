@@ -30,9 +30,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/pading_normal"
-            android:textColor="@color/white"
-            android:singleLine="true"
             android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/white"
             android:textSize="@dimen/default_text_size" />
     </LinearLayout>
 
@@ -65,6 +65,20 @@
                 android:padding="@dimen/pading_small">
 
                 <TextView
+                    android:id="@+id/tv_trang_ca_nhan"
+                    style="@style/normalText"
+                    android:drawableLeft="@drawable/ic_face"
+                    android:text="@string/trang_ca_nhan" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/pading_small">
+
+                <TextView
                     android:id="@+id/tv_thong_bao"
                     style="@style/normalText"
                     android:drawableLeft="@drawable/ic_notifications"
@@ -84,6 +98,7 @@
                     android:text="@string/cai_dat" />
             </LinearLayout>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -91,31 +106,9 @@
                 android:padding="@dimen/pading_small">
 
                 <TextView
-                    android:id="@+id/tv_my_account"
-                    style="@style/normalText"
-                    android:drawableLeft="@drawable/ic_face"
-                    android:drawableRight="@drawable/ic_expand_more"
-                    android:text="@string/tai_khoan_cua_toi" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ln_my_account"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/pading_very_large"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_trang_ca_nhan"
-                    style="@style/normalText"
-                    android:background="@drawable/bg_back_activity"
-                    android:text="@string/trang_ca_nhan" />
-
-                <TextView
                     android:id="@+id/tv_dang_xuat"
                     style="@style/normalText"
-                    android:background="@drawable/bg_back_activity"
+                    android:drawableLeft="@drawable/ic_logout"
                     android:text="@string/dang_xuat" />
             </LinearLayout>
 

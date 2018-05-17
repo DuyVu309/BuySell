@@ -101,6 +101,17 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_gia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/transparent"
+                android:drawablePadding="@dimen/pading_normal"
+                android:lineSpacingExtra="5dp"
+                android:textColor="@color/blue"
+                android:textColorHint="@color/grey_divider"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
                 android:id="@+id/tv_mota"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

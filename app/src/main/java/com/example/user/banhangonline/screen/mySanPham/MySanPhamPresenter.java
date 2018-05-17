@@ -19,9 +19,9 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.user.banhangonline.untils.KeyUntils.keyAccount;
-import static com.example.user.banhangonline.untils.KeyUntils.keyIdSanPham;
-import static com.example.user.banhangonline.untils.KeyUntils.keySanPham;
+import static com.example.user.banhangonline.utils.KeyUntils.keyAccount;
+import static com.example.user.banhangonline.utils.KeyUntils.keyIdSanPham;
+import static com.example.user.banhangonline.utils.KeyUntils.keySanPham;
 
 public class MySanPhamPresenter extends BasePresenter implements MySanPhamContact.Presenter {
     private Context context;
@@ -79,7 +79,7 @@ public class MySanPhamPresenter extends BasePresenter implements MySanPhamContac
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 SanPham sanPham = dataSnapshot.getValue(SanPham.class);
-                if (PreferManager.getEmailID(context).equals(sanPham.getIdNguoiban())) {
+                if (PreferManager.getUserID(context).equals(sanPham.getIdNguoiban())) {
                     sanPhamList.add(sanPham);
                 }
                 if (sanPhamList != null) {
@@ -164,7 +164,7 @@ public class MySanPhamPresenter extends BasePresenter implements MySanPhamContac
         if (!isViewAttached()) return;
         if (context == null) return;
 
-        databaseReference.child(keyAccount).child(PreferManager.getEmailID(context)).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(keyAccount).child(PreferManager.getUserID(context)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Account account = dataSnapshot.getValue(Account.class);
@@ -186,7 +186,7 @@ public class MySanPhamPresenter extends BasePresenter implements MySanPhamContac
     public void updateInfomation(DatabaseReference databaseReference, Account account) {
         if (!isViewAttached()) return;
         if (context == null) return;
-        databaseReference.child(keyAccount).child(PreferManager.getEmailID(context)).setValue(account).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.child(keyAccount).child(PreferManager.getUserID(context)).setValue(account).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {

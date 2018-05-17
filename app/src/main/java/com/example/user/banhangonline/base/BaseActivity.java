@@ -1,15 +1,20 @@
 package com.example.user.banhangonline.base;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
@@ -18,11 +23,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.screen.login.LoginActivity;
-import com.example.user.banhangonline.untils.DialogUntils;
-import com.example.user.banhangonline.untils.NetworkUtils;
+import com.example.user.banhangonline.utils.DialogUntils;
+import com.example.user.banhangonline.utils.NetworkUtils;
 import com.example.user.banhangonline.widget.dialog.DialogOk;
 import com.example.user.banhangonline.widget.dialog.DialogPositiveNegative;
 import com.example.user.banhangonline.widget.dialog.DialogProgress;
@@ -35,12 +41,15 @@ import com.google.firebase.storage.StorageReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static com.example.user.banhangonline.AppConstants.REQUEST_CODE_LOCATION;
+
 public class BaseActivity extends AppCompatActivity {
     protected FirebaseAuth mAuth;
     protected DatabaseReference mDataBase;
     protected FirebaseStorage mStorage;
     protected StorageReference mStorageReferrence;
 
+    private Location location;
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -64,6 +73,33 @@ public class BaseActivity extends AppCompatActivity {
         mStorageReferrence = mStorage.getReferenceFromUrl("gs://banhangonline-7058d.appspot.com");
         initFonts();
 
+    }
+
+    protected Location getMyLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        } else {
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
+            }
+        }
+        return location;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CODE_LOCATION) {
+            if (permissions.length > 0 && permissions[0] == Manifest.permission.ACCESS_FINE_LOCATION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            } else {
+                showSnackbar(getString(R.string.khong_the_hien_thi_khoang_cach));
+            }
+        }
     }
 
     private void initFonts() {

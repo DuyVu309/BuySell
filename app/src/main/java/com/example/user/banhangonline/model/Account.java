@@ -20,14 +20,13 @@ public class Account implements Serializable{
     private String urlLanscape;
     private String nameLans;
     private String address;
-    private String linkFacebook;
 
     public Account() {
     }
 
     public Account(String userId, String emailId, String idBS, String name,
                    String phoneNumber, String urlAvt, String nameAvt, String urlLanscape,
-                   String nameLans, String address, String linkFacebook) {
+                   String nameLans, String address) {
         this.userId = userId;
         this.emailId = emailId;
         this.idBS = idBS;
@@ -38,7 +37,6 @@ public class Account implements Serializable{
         this.urlLanscape = urlLanscape;
         this.nameLans = nameLans;
         this.address = address;
-        this.linkFacebook = linkFacebook;
     }
 
     public String getUserId() {
@@ -121,11 +119,4 @@ public class Account implements Serializable{
         this.address = address;
     }
 
-    public String getLinkFacebook() {
-        return linkFacebook;
-    }
-
-    public void setLinkFacebook(String linkFacebook) {
-        this.linkFacebook = linkFacebook;
-    }
 }

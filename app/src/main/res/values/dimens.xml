@@ -32,7 +32,14 @@
     <dimen name="circle_border_radius">3dp</dimen>
     <dimen name="default_square_border_radius">1dp</dimen>
     <dimen name="line_spacing_normal">8dp</dimen>
+    <dimen name="line_spacing_small">4dp</dimen>
+    <dimen name="line_thick_normal">4dp</dimen>
+    <dimen name="line_thick_small">1px</dimen>
     <dimen name="card_corner_radius_normal">5dp</dimen>
     <dimen name="card_elevation_normal">1dp</dimen>
     <dimen name="layout_dot">8dp</dimen>
+
+    <!--image-->
+    <dimen name="width_image_donhang">84dp</dimen>
+    <dimen name="height_image_donhang">72dp</dimen>
 </resources>

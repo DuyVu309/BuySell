@@ -12,8 +12,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 
-import static com.example.user.banhangonline.untils.KeyUntils.keyIdSanPham;
-import static com.example.user.banhangonline.untils.KeyUntils.keySanPham;
+import static com.example.user.banhangonline.utils.KeyUntils.keyIdSanPham;
+import static com.example.user.banhangonline.utils.KeyUntils.keySanPham;
 
 public class ChangePresenter extends BasePresenter implements ChangeSanPhamContact.Presenter {
 

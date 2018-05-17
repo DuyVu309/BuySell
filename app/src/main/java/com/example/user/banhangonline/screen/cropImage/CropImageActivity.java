@@ -9,9 +9,9 @@ import com.example.user.banhangonline.base.BaseActivity;
 import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.screen.mySanPham.MySanPhamActivity;
-import com.example.user.banhangonline.untils.BitmapUtils;
-import com.example.user.banhangonline.untils.FileUtils;
-import com.example.user.banhangonline.untils.NetworkUtils;
+import com.example.user.banhangonline.utils.BitmapUtils;
+import com.example.user.banhangonline.utils.FileUtils;
+import com.example.user.banhangonline.utils.NetworkUtils;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
@@ -120,8 +120,7 @@ public class CropImageActivity extends BaseActivity implements CropImageContact.
                      mPresenter.getNameImage(),
                      mPresenter.getAccount().getUrlLanscape(),
                      mPresenter.getAccount().getNameLans(),
-                     mPresenter.getAccount().getAddress(),
-                     mPresenter.getAccount().getLinkFacebook()));
+                     mPresenter.getAccount().getAddress()));
         } else {
             showNoInternet();
         }
@@ -145,8 +144,7 @@ public class CropImageActivity extends BaseActivity implements CropImageContact.
                      mPresenter.getAccount().getNameAvt(),
                      mPresenter.getUrlLink(),
                      mPresenter.getNameImage(),
-                     mPresenter.getAccount().getAddress(),
-                     mPresenter.getAccount().getLinkFacebook()));
+                     mPresenter.getAccount().getAddress()));
         } else {
             showNoInternet();
         }

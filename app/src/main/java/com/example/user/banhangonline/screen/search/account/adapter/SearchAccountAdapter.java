@@ -2,8 +2,6 @@ package com.example.user.banhangonline.screen.search.account.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +15,7 @@ import com.bumptech.glide.Glide;
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.screen.home.fragment.adapter.SanPhamAdapter;
-import com.example.user.banhangonline.untils.DialogUntils;
+import com.example.user.banhangonline.utils.DialogUntils;
 import com.example.user.banhangonline.widget.dialog.DialogPositiveNegative;
 
 import java.util.List;

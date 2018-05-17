@@ -24,8 +24,8 @@ import com.example.user.banhangonline.screen.home.HomeActivity;
 import com.example.user.banhangonline.screen.library.LibraryActivity;
 import com.example.user.banhangonline.screen.sell.adapter.ImageAdapter;
 import com.example.user.banhangonline.screen.sell.adapter.SpinnerAdapter;
-import com.example.user.banhangonline.untils.NetworkUtils;
-import com.example.user.banhangonline.untils.TimeNowUtils;
+import com.example.user.banhangonline.utils.NetworkUtils;
+import com.example.user.banhangonline.utils.TimeNowUtils;
 import com.example.user.banhangonline.widget.dialog.DialogPositiveNegative;
 
 import java.io.File;
@@ -35,14 +35,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyIDCategory;
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyIDPart;
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyTitleCategory;
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyTitlePart;
-import static com.example.user.banhangonline.untils.KeyUntils.keyIdCateThoiTrang;
-import static com.example.user.banhangonline.untils.KeyUntils.keyListImage;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyIDCategory;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyIDPart;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyTitleCategory;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyTitlePart;
+import static com.example.user.banhangonline.utils.KeyUntils.keyIdCateThoiTrang;
+import static com.example.user.banhangonline.utils.KeyUntils.keyListImage;
 
 public class SellActivity extends BaseActivity implements SellContact.View {
 
@@ -70,7 +69,9 @@ public class SellActivity extends BaseActivity implements SellContact.View {
     @BindView(R.id.edt_mota)
     EditText edtMota;
 
-    private Unbinder unbinder;
+    @BindView(R.id.edt_sell_gia)
+    EditText edtSellGia;
+
     private SellPresenter mPresenter;
     private SpinnerAdapter adapterCate;
     private SpinnerAdapter adapterPart;
@@ -86,7 +87,7 @@ public class SellActivity extends BaseActivity implements SellContact.View {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sell);
-        unbinder = ButterKnife.bind(this);
+        ButterKnife.bind(this);
         mPresenter = new SellPresenter();
         mPresenter.onCreate();
         mPresenter.attachView(this);
@@ -117,6 +118,7 @@ public class SellActivity extends BaseActivity implements SellContact.View {
                 }
             }
         });
+
         recyclerViewCate.setAdapter(adapterCate);
 
         //spinner part
@@ -185,6 +187,7 @@ public class SellActivity extends BaseActivity implements SellContact.View {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
             }
 
             @Override
@@ -193,20 +196,6 @@ public class SellActivity extends BaseActivity implements SellContact.View {
             }
         });
 
-        edtHeader.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                final int DRAWABLE_RIGHT = 2;
-
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    if (motionEvent.getRawX() >= (edtHeader.getRight() - edtHeader.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        edtHeader.setText("");
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
         edtMota.setText(PreferManager.getTextMota(this));
         edtMota.addTextChangedListener(new TextWatcher() {
             @Override
@@ -224,20 +213,27 @@ public class SellActivity extends BaseActivity implements SellContact.View {
                 PreferManager.setTextMota(SellActivity.this, editable.toString());
             }
         });
-        edtMota.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                final int DRAWABLE_RIGHT = 2;
 
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    if (motionEvent.getRawX() >= (edtMota.getRight() - edtMota.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        edtMota.setText("");
-                        return true;
-                    }
-                }
-                return false;
+        edtSellGia.setText(PreferManager.getTextGia(this));
+        edtSellGia.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                PreferManager.setTextGia(SellActivity.this, editable.toString());
+
             }
         });
+
+
     }
 
     @OnClick(R.id.spiner_category)
@@ -300,7 +296,17 @@ public class SellActivity extends BaseActivity implements SellContact.View {
                 showSnackbar(getString(R.string.tieu_de_qua_lon));
                 return;
             }
-            if (edtHeader.getText().length() < 255 && mPresenter.getListFiles() != null && mPresenter.getIdCate() != null) {
+            if (!edtHeader.getText().toString().equals("") &&
+                     mPresenter.getListFiles() != null &&
+                     mPresenter.getIdCate() != null &&
+                     !edtSellGia.getText().toString().equals("")) {
+                if (mPresenter.getIdCate().equals(keyIdCateThoiTrang)) {
+                    if (mPresenter.getIdPart() == null) {
+                        showSnackbar(getString(R.string.chua_chon_muc));
+                        lnPart.setVisibility(View.VISIBLE);
+                        return;
+                    }
+                }
                 if (lnPart.getVisibility() != View.VISIBLE) {
                     uploadListImage();
                 }
@@ -322,20 +328,22 @@ public class SellActivity extends BaseActivity implements SellContact.View {
 
     private void uploadListImage() {
         showDialog();
-        mPresenter.upLoadFileImageToStorage(mStorageReferrence, PreferManager.getEmailID(this));
+        mPresenter.upLoadFileImageToStorage(mStorageReferrence, PreferManager.getUserID(this));
     }
 
     private void uploadListFile(String idPart) {
         mPresenter.upLoadSanPhamToFirebase(mDataBase,
-                 new SanPham(PreferManager.getEmailID(this),
+                 new SanPham(PreferManager.getUserID(this),
                           PreferManager.getNameAccount(this),
-                          PreferManager.getEmailID(this) + Calendar.getInstance().getTimeInMillis(),
+                          PreferManager.getUserID(this) + Calendar.getInstance().getTimeInMillis(),
                           mPresenter.getIdCate(),
                           idPart,
                           edtHeader.getText().toString().trim(),
                           edtMota.getText().toString().trim(),
                           TimeNowUtils.getTimeNow(),
-                          new ListFileImages().getContructor(mPresenter.getListImages(), mPresenter.getListNameImages())));
+                          new ListFileImages().getContructor(mPresenter.getListImages(), mPresenter.getListNameImages()),
+                          edtSellGia.getText().toString().trim(),
+                          PreferManager.getMyAddress(this)));
         dismissDialog();
     }
 
@@ -353,13 +361,12 @@ public class SellActivity extends BaseActivity implements SellContact.View {
             intent.putExtra(keyTitlePart, mPresenter.getTitlePart());
         }
         startActivity(intent);
+        finish();
         dismissDialog();
     }
 
     @Override
     protected void onDestroy() {
-        unbinder.unbind();
-        unbinder = null;
         mPresenter.onDestroy();
         mPresenter.detach();
         super.onDestroy();
@@ -369,6 +376,7 @@ public class SellActivity extends BaseActivity implements SellContact.View {
     public void upLoadToFirebaseSuccess() {
         PreferManager.setTextHeader(this, "");
         PreferManager.setTextMota(this, "");
+        PreferManager.setTextGia(this, "");
         startActivity(new Intent(SellActivity.this, HomeActivity.class));
         finish();
         dismissDialog();

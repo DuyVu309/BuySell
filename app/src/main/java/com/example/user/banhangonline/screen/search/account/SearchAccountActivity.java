@@ -3,7 +3,6 @@ package com.example.user.banhangonline.screen.search.account;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Bundle;
@@ -19,16 +18,15 @@ import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.screen.search.account.adapter.SearchAccountAdapter;
 import com.example.user.banhangonline.screen.home.fragment.adapter.SanPhamAdapter;
 import com.example.user.banhangonline.screen.spAccount.SanPhamAccountActivity;
-import com.example.user.banhangonline.untils.NetworkUtils;
+import com.example.user.banhangonline.utils.NetworkUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 import static com.example.user.banhangonline.AppConstants.REQUEST_CALL_PHONE;
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartAccount;
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartSPAccount;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartAccount;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartSPAccount;
 
 public class SearchAccountActivity extends BaseActivity implements SearchAccountContact.View {
     @BindView(R.id.rv_account)
@@ -43,7 +41,6 @@ public class SearchAccountActivity extends BaseActivity implements SearchAccount
     }
 
     SearchAccountAdapter mAdapter;
-    Unbinder unbinder;
     SearchAccountPresenter mPresenter;
     String name;
 
@@ -51,7 +48,7 @@ public class SearchAccountActivity extends BaseActivity implements SearchAccount
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_account);
-        unbinder = ButterKnife.bind(this);
+        ButterKnife.bind(this);
         mPresenter = new SearchAccountPresenter();
         mPresenter.attachView(this);
         name = getIntent().getStringExtra(keyStartAccount);
@@ -73,9 +70,8 @@ public class SearchAccountActivity extends BaseActivity implements SearchAccount
             public void onClickAccount(Account account) {
                 if (account != null) {
                     Intent intent = new Intent(SearchAccountActivity.this, SanPhamAccountActivity.class);
-                    intent.putExtra(keyStartSPAccount, account.getEmailId());
+                    intent.putExtra(keyStartSPAccount, account.getUserId());
                     startActivity(intent);
-                    finish();
                 }
             }
 
@@ -163,7 +159,6 @@ public class SearchAccountActivity extends BaseActivity implements SearchAccount
 
     @Override
     protected void onDestroy() {
-        unbinder.unbind();
         mPresenter.detach();
         super.onDestroy();
     }

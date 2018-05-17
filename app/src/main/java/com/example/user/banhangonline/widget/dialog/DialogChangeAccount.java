@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -18,7 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import com.example.user.banhangonline.R;
-import com.example.user.banhangonline.untils.NetworkUtils;
+import com.example.user.banhangonline.utils.NetworkUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -192,5 +191,8 @@ public class DialogChangeAccount extends Dialog {
         }
     }
 
-
+    @Override
+    public void onBackPressed() {
+        dismiss();
+    }
 }

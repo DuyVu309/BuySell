@@ -55,8 +55,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/default_text_size"
-            android:textColor="@color/black"
             android:enabled="false"
+            android:textColor="@color/black"
             android:textSize="@dimen/title_text_size" />
     </LinearLayout>
 
@@ -108,6 +108,30 @@
             android:textColor="@color/blue"
             android:textSize="@dimen/default_text_size" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/pading_small"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giá: "
+            android:textColor="@color/black"
+            android:textSize="@dimen/default_text_size" />
+
+        <EditText
+            android:id="@+id/edt_gia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/transparent"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/default_text_size" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

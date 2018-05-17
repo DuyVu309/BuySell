@@ -20,7 +20,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
 import java.util.UUID;
 
-import static com.example.user.banhangonline.untils.KeyUntils.keyAccount;
+import static com.example.user.banhangonline.utils.KeyUntils.keyAccount;
 
 public class CropImagePresenter extends BasePresenter implements CropImageContact.Presenter {
 
@@ -87,8 +87,8 @@ public class CropImagePresenter extends BasePresenter implements CropImageContac
         byte[] data = baos.toByteArray();
 
         String date = String.valueOf(Calendar.getInstance().getTimeInMillis()) + UUID.randomUUID();
-        StorageReference riversRef = storageReference.child("imagesAccount/" + PreferManager.getEmailID(context) + date);
-        nameImage = PreferManager.getEmailID(context) + date;
+        StorageReference riversRef = storageReference.child("imagesAccount/" + PreferManager.getUserID(context) + date);
+        nameImage = PreferManager.getUserID(context) + date;
         UploadTask uploadTask = riversRef.putBytes(data);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
@@ -126,8 +126,8 @@ public class CropImagePresenter extends BasePresenter implements CropImageContac
         bitmapLans.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] data = baos.toByteArray();
         String date = String.valueOf(Calendar.getInstance().getTimeInMillis()) + UUID.randomUUID();
-        StorageReference riversRef = storageReference.child("imagesAccount/" + PreferManager.getEmailID(context) + date);
-        nameImage = PreferManager.getEmailID(context) + date;
+        StorageReference riversRef = storageReference.child("imagesAccount/" + PreferManager.getUserID(context) + date);
+        nameImage = PreferManager.getUserID(context) + date;
 
         UploadTask uploadTask = riversRef.putBytes(data);
         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -160,7 +160,7 @@ public class CropImagePresenter extends BasePresenter implements CropImageContac
     public void updateInfomationToFirebase(DatabaseReference databaseReference, Account account) {
         if (!isViewAttached()) return;
         if (context == null) return;
-        databaseReference.child(keyAccount).child(PreferManager.getEmailID(context)).setValue(account).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.child(keyAccount).child(PreferManager.getUserID(context)).setValue(account).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {

@@ -154,7 +154,6 @@
         android:layout_marginRight="@dimen/pading_small"
         android:backgroundTint="@color/transparent"
         android:drawablePadding="@dimen/pading_normal"
-        android:drawableRight="@drawable/ic_delete_text"
         android:hint="@string/nhap_tieu_de"
         android:singleLine="true"
         android:textColor="@color/md_grey_600"
@@ -168,10 +167,18 @@
         android:layout_marginRight="@dimen/pading_small"
         android:backgroundTint="@color/transparent"
         android:drawablePadding="@dimen/pading_normal"
-        android:drawableRight="@drawable/ic_delete_text"
         android:hint="@string/nhap_mota"
         android:textColor="@color/md_grey_600"
         android:textColorHint="@color/grey_divider"
+        android:textSize="@dimen/default_text_size" />
+
+    <EditText
+        android:id="@+id/edt_sell_gia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/transparent"
+        android:hint="@string/gia"
+        android:textColor="@color/black"
         android:textSize="@dimen/default_text_size" />
 
     <android.support.v7.widget.RecyclerView

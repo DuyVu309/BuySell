@@ -17,15 +17,18 @@ import com.example.user.banhangonline.base.BaseActivity;
 import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.screen.detail.adapter.DetailAdapter;
+import com.example.user.banhangonline.screen.thanhToan.ThanhToanActivity;
 import com.example.user.banhangonline.screen.spAccount.SanPhamAccountActivity;
+import com.example.user.banhangonline.utils.DialogUntils;
+import com.example.user.banhangonline.utils.NetworkUtils;
+import com.example.user.banhangonline.widget.dialog.DialogMethodPay;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartDetail;
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartSPAccount;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartDetail;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartSPAccount;
 
 public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetailContact.View {
 
@@ -50,10 +53,12 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
     @BindView(R.id.tv_mota)
     TextView tvMota;
 
+    @BindView(R.id.tv_gia)
+    TextView tvGia;
+
     @BindView(R.id.recycerview_image_detail)
     RecyclerView rvImageDetail;
 
-    private Unbinder unbinder;
     private SanPhamDetailPresenter mPresenter;
     private DetailAdapter mAdapter;
     private SanPham sanPham;
@@ -67,7 +72,7 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_san_pham_detail);
-        unbinder = ButterKnife.bind(this);
+        ButterKnife.bind(this);
         initToolBar();
         setSupportActionBar(toolbar);
         mPresenter = new SanPhamDetailPresenter();
@@ -88,6 +93,7 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
         mPresenter.getInfomationWithIdAccount(mDataBase, sanPham.getIdNguoiban());
         tvTime.setText(sanPham.getTime());
         tvMota.setText(sanPham.getHeader() + " - " + sanPham.getMota());
+        tvGia.setText(sanPham.getGia());
 
         rvImageDetail.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new DetailAdapter(this, sanPham.getListFiles().getListUrl());
@@ -97,7 +103,6 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
     @Override
     protected void onDestroy() {
         mPresenter.detach();
-        unbinder.unbind();
         super.onDestroy();
     }
 
@@ -111,7 +116,26 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
 
     @OnClick(R.id.btn_mua_hang)
     public void clickMuaHang(){
+        DialogUntils.showMethodPay(this, new DialogMethodPay.IOnClickChooseMethodPay() {
+            @Override
+            public void onMethodPayBuy(DialogMethodPay dialogMethodPay) {
+                if (NetworkUtils.isConnected(SanPhamDetailActivity.this)) {
+                    if (sanPham != null) {
+                        Intent intent = new Intent(SanPhamDetailActivity.this, ThanhToanActivity.class);
+                        intent.putExtra(keyStartDetail, sanPham);
+                        startActivity(intent);
+                        dialogMethodPay.dismiss();
+                    }
+                } else {
+                    showNoInternet();
+                }
+            }
 
+            @Override
+            public void onMethodAddCart(DialogMethodPay dialogMethodPay) {
+                dialogMethodPay.dismiss();
+            }
+        });
     }
 
     @OnClick(R.id.img_account)
@@ -123,10 +147,7 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
                 startActivity(intent);
             }
         }
-
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -8,7 +8,6 @@ import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.model.Categories;
 import com.example.user.banhangonline.model.Pay;
-import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.model.search.SearchSP;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,27 +17,26 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.user.banhangonline.untils.KeyUntils.keyAccount;
-import static com.example.user.banhangonline.untils.KeyUntils.keyIdCateCongNghe;
-import static com.example.user.banhangonline.untils.KeyUntils.keyIdCateDoAn;
-import static com.example.user.banhangonline.untils.KeyUntils.keyIdCateDoChoi;
-import static com.example.user.banhangonline.untils.KeyUntils.keyIdCateGiaDung;
-import static com.example.user.banhangonline.untils.KeyUntils.keyIdCateHocTap;
-import static com.example.user.banhangonline.untils.KeyUntils.keyIdCateKhac;
-import static com.example.user.banhangonline.untils.KeyUntils.keyIdCatePhuKien;
-import static com.example.user.banhangonline.untils.KeyUntils.keyIdCateThoiTrang;
-import static com.example.user.banhangonline.untils.KeyUntils.keySanPham;
-import static com.example.user.banhangonline.untils.KeyUntils.titleDienTu;
-import static com.example.user.banhangonline.untils.KeyUntils.titleDoAn;
-import static com.example.user.banhangonline.untils.KeyUntils.titleDochoi;
-import static com.example.user.banhangonline.untils.KeyUntils.titleGiaDung;
-import static com.example.user.banhangonline.untils.KeyUntils.titleGiaHocTap;
-import static com.example.user.banhangonline.untils.KeyUntils.titleHome;
-import static com.example.user.banhangonline.untils.KeyUntils.keyIdCateMyPham;
-import static com.example.user.banhangonline.untils.KeyUntils.titleKhac;
-import static com.example.user.banhangonline.untils.KeyUntils.titleMyPham;
-import static com.example.user.banhangonline.untils.KeyUntils.titlePhuKien;
-import static com.example.user.banhangonline.untils.KeyUntils.titleThoiTrang;
+import static com.example.user.banhangonline.utils.KeyUntils.keyAccount;
+import static com.example.user.banhangonline.utils.KeyUntils.keyIdCateCongNghe;
+import static com.example.user.banhangonline.utils.KeyUntils.keyIdCateDoAn;
+import static com.example.user.banhangonline.utils.KeyUntils.keyIdCateDoChoi;
+import static com.example.user.banhangonline.utils.KeyUntils.keyIdCateGiaDung;
+import static com.example.user.banhangonline.utils.KeyUntils.keyIdCateHocTap;
+import static com.example.user.banhangonline.utils.KeyUntils.keyIdCateKhac;
+import static com.example.user.banhangonline.utils.KeyUntils.keyIdCatePhuKien;
+import static com.example.user.banhangonline.utils.KeyUntils.keyIdCateThoiTrang;
+import static com.example.user.banhangonline.utils.KeyUntils.titleDienTu;
+import static com.example.user.banhangonline.utils.KeyUntils.titleDoAn;
+import static com.example.user.banhangonline.utils.KeyUntils.titleDochoi;
+import static com.example.user.banhangonline.utils.KeyUntils.titleGiaDung;
+import static com.example.user.banhangonline.utils.KeyUntils.titleGiaHocTap;
+import static com.example.user.banhangonline.utils.KeyUntils.titleHome;
+import static com.example.user.banhangonline.utils.KeyUntils.keyIdCateMyPham;
+import static com.example.user.banhangonline.utils.KeyUntils.titleKhac;
+import static com.example.user.banhangonline.utils.KeyUntils.titleMyPham;
+import static com.example.user.banhangonline.utils.KeyUntils.titlePhuKien;
+import static com.example.user.banhangonline.utils.KeyUntils.titleThoiTrang;
 
 public class HomePresenter extends BasePresenter implements HomeContact.Presenter {
 
@@ -107,8 +105,8 @@ public class HomePresenter extends BasePresenter implements HomeContact.Presente
         if (!isViewAttached()) {
             return;
         }
-        if (keyAccount != null && PreferManager.getEmailID(context) != null) {
-            databaseReference.child(keyAccount).child(PreferManager.getEmailID(context)).addValueEventListener(new ValueEventListener() {
+        if (keyAccount != null && PreferManager.getUserID(context) != null) {
+            databaseReference.child(keyAccount).child(PreferManager.getUserID(context)).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Account account = dataSnapshot.getValue(Account.class);

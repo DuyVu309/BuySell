@@ -1,6 +1,5 @@
 package com.example.user.banhangonline.screen.library;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Environment;
@@ -27,11 +26,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyIDCategory;
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyIDPart;
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyTitleCategory;
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyTitlePart;
-import static com.example.user.banhangonline.untils.KeyUntils.keyListImage;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyIDCategory;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyIDPart;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyTitleCategory;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyTitlePart;
+import static com.example.user.banhangonline.utils.KeyUntils.keyListImage;
 
 public class LibraryActivity extends BaseActivity implements LibraryContact.View,
          DragSelectRecyclerViewAdapter.SelectionListener {

@@ -14,7 +14,7 @@ import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.screen.mySanPham.MySanPhamActivity;
 import com.example.user.banhangonline.screen.sell.adapter.ImageAdapter;
-import com.example.user.banhangonline.untils.NetworkUtils;
+import com.example.user.banhangonline.utils.NetworkUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -23,9 +23,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartSP;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartSP;
 
 public class ChangeSanPhamActivity extends BaseActivity implements ChangeSanPhamContact.View {
 
@@ -42,12 +41,15 @@ public class ChangeSanPhamActivity extends BaseActivity implements ChangeSanPham
     @BindView(R.id.edt_mota)
     EditText edtMota;
 
+    @BindView(R.id.edt_gia)
+    EditText edtGia;
+
     @BindView(R.id.rv_sanpham_myaccount)
     RecyclerView rvChangeSp;
 
+
     private ImageAdapter mAdapter;
     private ChangePresenter mPresenter;
-    private Unbinder unbinder;
     private SanPham sanPham;
 
     @Override
@@ -59,7 +61,7 @@ public class ChangeSanPhamActivity extends BaseActivity implements ChangeSanPham
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_san_pham);
-        unbinder = ButterKnife.bind(this);
+        ButterKnife.bind(this);
         mPresenter = new ChangePresenter();
         mPresenter.onCreate();
         mPresenter.attachView(this);
@@ -93,6 +95,7 @@ public class ChangeSanPhamActivity extends BaseActivity implements ChangeSanPham
         tvAccountName.setText(PreferManager.getNameAccount(this));
         edtHeader.setText(sanPham.getHeader());
         edtMota.setText(sanPham.getMota());
+        edtGia.setText(sanPham.getGia());
     }
 
     @OnClick(R.id.img_arrow_back)
@@ -112,11 +115,13 @@ public class ChangeSanPhamActivity extends BaseActivity implements ChangeSanPham
                          edtHeader.getText().toString().trim(),
                          edtMota.getText().toString().trim(),
                          sanPham.getTime(),
-                         sanPham.getListFiles()));
+                         sanPham.getListFiles(),
+                         edtGia.getText().toString().trim(),
+                         PreferManager.getMyAddress(this)));
             } else {
                 showSnackbar(getString(R.string.error_and_check));
             }
-        }else showNoInternet();
+        } else showNoInternet();
 
 
     }
@@ -125,7 +130,6 @@ public class ChangeSanPhamActivity extends BaseActivity implements ChangeSanPham
     protected void onDestroy() {
         mPresenter.onDestroy();
         mPresenter.detach();
-        unbinder.unbind();
         super.onDestroy();
     }
 

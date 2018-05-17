@@ -23,8 +23,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartAccount;
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartFilter;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartAccount;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartFilter;
 
 public class SearchActivity extends BaseActivity implements SearchContact.View {
 

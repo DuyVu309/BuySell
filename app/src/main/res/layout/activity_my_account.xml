@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingLeft="10dp"
-                android:text="@string/don_hang_cua_ban"
+                android:text="@string/trang_ca_nhan"
                 android:textColor="@color/white"
                 android:textSize="@dimen/default_text_size" />
 
@@ -131,20 +131,6 @@
                     android:ellipsize="end"
                     android:enabled="false"
                     android:maxLines="2"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/default_text_size" />
-
-                <TextView
-                    android:id="@+id/tv_account_fb"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/pading_small"
-                    android:backgroundTint="@color/transparent"
-                    android:drawableLeft="@drawable/ic_facebook"
-                    android:drawablePadding="@dimen/pading_small"
-                    android:textIsSelectable="false"
-                    android:text="Link Facebook"
-                    android:background="@drawable/bg_back_activity"
                     android:textColor="@color/black"
                     android:textSize="@dimen/default_text_size" />
 

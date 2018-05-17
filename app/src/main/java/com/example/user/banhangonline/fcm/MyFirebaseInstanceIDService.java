@@ -18,8 +18,6 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     }
 
     private void sendRegistrationToServer(String token) {
-        Log.d("TAG TOKENID", token);
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(token);
-        databaseReference.child("token").setValue(token);
+
     }
 }

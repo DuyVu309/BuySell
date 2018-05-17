@@ -19,25 +19,23 @@ import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.screen.forgot.ForgotActivity;
 import com.example.user.banhangonline.screen.home.HomeActivity;
 import com.example.user.banhangonline.screen.register.RegisterActivity;
-import com.example.user.banhangonline.untils.KeyUntils;
-import com.example.user.banhangonline.untils.NetworkUtils;
+import com.example.user.banhangonline.utils.KeyUntils;
+import com.example.user.banhangonline.utils.NetworkUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
-import static com.example.user.banhangonline.untils.KeyUntils.keyAccount;
-import static com.example.user.banhangonline.untils.KeyUntils.keyID;
-import static com.example.user.banhangonline.untils.KeyUntils.keyName;
-import static com.example.user.banhangonline.untils.KeyUntils.keyPhone;
+import static com.example.user.banhangonline.utils.KeyUntils.keyAccount;
+import static com.example.user.banhangonline.utils.KeyUntils.keyID;
+import static com.example.user.banhangonline.utils.KeyUntils.keyName;
+import static com.example.user.banhangonline.utils.KeyUntils.keyPhone;
 
 public class LoginActivity extends BaseActivity implements LoginContact.View {
 
@@ -61,7 +59,6 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
     TextView tvWarning;
 
     private LoginPresenter mPresenter;
-    private Unbinder unbinder;
 
     private boolean isAvaialbeUser = false;
     private boolean isAvaialbePassword = false;
@@ -72,7 +69,7 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        unbinder = ButterKnife.bind(this);
+        ButterKnife.bind(this);
         mPresenter = new LoginPresenter();
         mPresenter.attachView(this);
         mPresenter.onCreate();
@@ -187,15 +184,14 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
     @Override
     public void signInSuccess() {
         final String email = edtEmail.getText().toString().trim();
-        final String[] key = email.split("\\.");
 
-        if (key != null) {
+        if (email != null) {
             mAuth.signInWithEmailAndPassword(email, edtPassword.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @SuppressLint("RestrictedApi")
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        mDataBase.child(keyAccount).child(key[0]).addValueEventListener(new ValueEventListener() {
+                        mDataBase.child(keyAccount).child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.exists()) {
@@ -208,7 +204,7 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
                                         PreferManager.setIsLogin(LoginActivity.this, true);
                                         PreferManager.setIDBuySell(LoginActivity.this, idBuySell);
                                         PreferManager.setEmail(LoginActivity.this, email);
-                                        PreferManager.setEmailID(LoginActivity.this, key[0]);
+                                        PreferManager.setUserID(LoginActivity.this, mAuth.getCurrentUser().getUid());
                                         PreferManager.setNameAccount(LoginActivity.this, name);
                                         PreferManager.setPhoneNumber(LoginActivity.this, phoneNumber);
                                         startActivity(intent);
@@ -256,8 +252,6 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
     protected void onDestroy() {
         mPresenter.onDestroy();
         mPresenter.detach();
-        unbinder.unbind();
-        unbinder = null;
         super.onDestroy();
     }
 

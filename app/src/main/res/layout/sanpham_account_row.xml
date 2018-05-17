@@ -24,12 +24,22 @@
             android:layout_margin="@dimen/pading_small"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="Hạt chia úc 1 kg mẫu mới"
             android:textColor="@color/black"
             android:textSize="@dimen/title_text_size" />
 
         <TextView
             android:id="@+id/tv_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/pading_small"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/red"
+            android:textSize="@dimen/default_text_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_gia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/pading_small"

@@ -3,16 +3,6 @@ package com.example.user.banhangonline.screen.login;
 import android.util.Log;
 
 import com.example.user.banhangonline.base.BasePresenter;
-import com.example.user.banhangonline.model.Account;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
-
-import static com.example.user.banhangonline.untils.KeyUntils.keyAccount;
-import static com.example.user.banhangonline.untils.KeyUntils.keyID;
-import static com.example.user.banhangonline.untils.KeyUntils.keyName;
-import static com.example.user.banhangonline.untils.KeyUntils.keyPhone;
 
 public class LoginPresenter extends BasePresenter implements LoginContact.Presenter {
 

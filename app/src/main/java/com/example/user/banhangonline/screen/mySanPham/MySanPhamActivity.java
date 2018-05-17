@@ -2,9 +2,7 @@ package com.example.user.banhangonline.screen.mySanPham;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,12 +25,11 @@ import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.screen.changeSanpham.ChangeSanPhamActivity;
 import com.example.user.banhangonline.screen.cropImage.CropImageActivity;
-import com.example.user.banhangonline.screen.linkFb.GetLinkFbActivity;
 import com.example.user.banhangonline.screen.mySanPham.adapter.ListImagesCartAdapter;
 import com.example.user.banhangonline.screen.mySanPham.adapter.SanPhamMyAccountAdapter;
 import com.example.user.banhangonline.screen.showImage.ShowImageActivity;
-import com.example.user.banhangonline.untils.DialogUntils;
-import com.example.user.banhangonline.untils.FileUtils;
+import com.example.user.banhangonline.utils.DialogUntils;
+import com.example.user.banhangonline.utils.FileUtils;
 import com.example.user.banhangonline.widget.dialog.DialogChangeAccount;
 
 import java.io.File;
@@ -42,10 +39,9 @@ import java.util.Comparator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartSP;
-import static com.example.user.banhangonline.untils.KeyUntils.keyShowImage;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartSP;
+import static com.example.user.banhangonline.utils.KeyUntils.keyShowImage;
 
 public class MySanPhamActivity extends BaseActivity implements
          MySanPhamContact.View,
@@ -83,7 +79,6 @@ public class MySanPhamActivity extends BaseActivity implements
     Button btnChangeDetail;
 
     private SanPhamMyAccountAdapter mAdapter;
-    private Unbinder unbinder;
     private MySanPhamPresenter mPresenter;
 
     @Override
@@ -95,13 +90,13 @@ public class MySanPhamActivity extends BaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_account);
-        unbinder = ButterKnife.bind(this);
+        ButterKnife.bind(this);
         mPresenter = new MySanPhamPresenter();
         mPresenter.onCreate();
         mPresenter.attachView(this);
         mPresenter.setContext(this);
         initAdapter();
-        if (PreferManager.getEmailID(this) != null && PreferManager.getNameAccount(this) != null) {
+        if (PreferManager.getUserID(this) != null && PreferManager.getNameAccount(this) != null) {
             mPresenter.getInfomationSuccess(mDataBase);
         }
     }
@@ -152,18 +147,11 @@ public class MySanPhamActivity extends BaseActivity implements
                                   mPresenter.getAccount().getNameAvt(),
                                   mPresenter.getAccount().getUrlLanscape(),
                                   mPresenter.getAccount().getNameLans(),
-                                  address,
-                                  mPresenter.getAccount().getLinkFacebook()));
+                                  address));
                      }
                  });
     }
 
-    @OnClick(R.id.tv_account_fb)
-    public void getLinkFb(){
-        Intent intent = new Intent(MySanPhamActivity.this, GetLinkFbActivity.class);
-        startActivity(intent);
-        finish();
-    }
 
     @OnClick(R.id.tv_choose_lanscape)
     public void getImageLanscape() {
@@ -314,6 +302,8 @@ public class MySanPhamActivity extends BaseActivity implements
     public void updateInfoSuccess() {
         showSnackbar(getString(R.string.cap_nhat_thanh_cong));
         PreferManager.setNameAccount(this, tvAccountName.getText().toString().trim());
+        PreferManager.setMyAddress(this, tvAccountAdress.getText().toString().trim());
+        PreferManager.setPhoneNumber(this, tvAccountPhone.getText().toString().trim());
         mAdapter.notifyDataSetChanged();
         dismissDialog();
         visibleTvChooseImage();
@@ -351,7 +341,7 @@ public class MySanPhamActivity extends BaseActivity implements
     @Override
     public void onDeleteSanPham(int position, SanPham sanPham) {
         if (sanPham != null) {
-            if (sanPham.getIdNguoiban().equals(PreferManager.getEmailID(this))) {
+            if (sanPham.getIdNguoiban().equals(PreferManager.getUserID(this))) {
                 showDialog();
                 mPresenter.deleteSanPhamMyAccount(mDataBase, mStorageReferrence, sanPham);
             }
@@ -370,7 +360,6 @@ public class MySanPhamActivity extends BaseActivity implements
     protected void onDestroy() {
         mPresenter.onDestroy();
         mPresenter.detach();
-        unbinder.unbind();
         super.onDestroy();
     }
 

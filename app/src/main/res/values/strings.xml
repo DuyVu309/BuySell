@@ -36,7 +36,7 @@
     <string name="register">Đăng kí</string>
     <string name="ten_doanh_nghiep">Tên doanh nghiệp</string>
     <string name="xac_nhan_mat_khau">Xác nhận mật khẩu</string>
-    <string name="warning_full_name">Tên phải lớn hơn 8 ký tự</string>
+    <string name="warning_full_name">Tên phải lớn hơn 6 ký tự</string>
     <string name="sdt_khong_hop_le">Số điện thoại không hợp lệ</string>
     <string name="gui_lai_ma">Gửi lại</string>
     <string name="xac_nhan_ma">Xác nhận</string>
@@ -69,13 +69,14 @@
     <string name="luu">Lưu</string>
     <string name="mua_hang">Mua hàng</string>
     <string name="dang_xuat">Đăng xuất</string>
-    <string name="tai_khoan_cua_toi">Tài khoản của tôi</string>
+    <string name="tai_khoan">Tài khoản</string>
     <string name="cai_dat">Cài đặt</string>
     <string name="thong_bao">Thông báo</string>
     <string name="trang_chu">Trang chủ</string>
     <string name="trang_ca_nhan">Trang cá nhân</string>
     <string name="chinh_sua">Chỉnh sửa</string>
     <string name="dia_chi">Địa chỉ</string>
+    <string name="sdt">Số điện thoại</string>
     <string name="dang_ki">Đăng kí</string>
     <string name="chinh_sua_chi_tiet">CHỈNH SỬA CHI TIẾT</string>
     <string name="dont_phone_number">Chưa có số điện thoại</string>
@@ -93,5 +94,27 @@
     <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
     <string name="xem_truoc_anh">Xem trước ảnh</string>
     <string name="xac_nhan_call">Bạn có muốn gọi tới số điện thoại"\n" </string>
+    <string name="thay_doi">Thay đổi</string>
+    <string name="san_pham_xu_ly_boi">Sản phẩm xử lý bởi</string>
+
+    <string name="tien_hanh_mua_hang">Tiến hành mua hàng ngay</string>
+    <string name="them_vao_gio_hang">Thêm vào giỏ hàng</string>
+    <string name="phuong_thuc_mua">Phương thức mua hàng</string>
+
+    <string name="thay_doi_dia_chi">Thay đổi địa chỉ</string>
+    <string name="thay_doi_sdt">Thay đổi số điện thoại</string>
+    <string name="ban_co_muon_dn_dk_khong">Bạn có đăng nhập (đăng kí) không?</string>
+    <string name="da_gui">Đã gửi</string>
+    <string name="mat_khau_khong_trung_khop">Mật khẩu không trùng khớp</string>
+    <string name="chua_co_ma">Chưa có mã</string>
+    <string name="qua_so_lan_cho_phep">Quá số lần qua phép</string>
+    <string name="dang_gui_ma_vui_long_cho">Đang gửi mã, xin vui lòng chờ!</string>
+    <string name="khong_the_mua_sp">Không thể mua sản phẩm</string>
+    <string name="chua_dang_nhap">Chưa đăng nhập</string>
+    <string name="chua_chon_muc">Chưa chọn mục</string>
+    <string name="tong_so_dia_diem">Tổng số địa điểm</string>
+    <string name="khong_the_hien_thi_khoang_cach">Không thể hiện thị khoảng cách</string>
+    <string name="gia">Giá</string>
+    <string name="so_luong">Số lượng</string>
 
 </resources>

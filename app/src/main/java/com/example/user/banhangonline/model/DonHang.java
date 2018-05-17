@@ -1,52 +1,45 @@
 package com.example.user.banhangonline.model;
 
-public class DonHang {
-    private String idDonHang;
-    private String idNguoiMua;
-    private String idNguoiBan;
-    private String thoiGian;
+import com.google.firebase.database.IgnoreExtraProperties;
+
+import java.io.Serializable;
+
+@IgnoreExtraProperties
+public class DonHang implements Serializable {
     private String diaChi;
+    private String header;
+    private String idDonHang;
+    private String idNguoiBan;
+    private String idNguoiMua;
+    private String nameNguoiMua;
     private String soDienThoai;
+    private String thoiGian;
+    private String urlImg;
+    private String distance;
+    private String gia;
+    private String soLuong;
 
-    public DonHang(String idDonHang, String idNguoiMua, String idNguoiBan, String thoiGian, String diaChi, String soDienThoai) {
-        this.idDonHang = idDonHang;
-        this.idNguoiMua = idNguoiMua;
-        this.idNguoiBan = idNguoiBan;
-        this.thoiGian = thoiGian;
+    public DonHang() {
+    }
+
+    public DonHang(String diaChi, String header,
+                   String idDonHang, String idNguoiBan,
+                   String idNguoiMua, String nameNguoiMua,
+                   String soDienThoai, String thoiGian,
+                   String urlImg, String distance,
+                   String gia, String soLuong) {
         this.diaChi = diaChi;
-        this.soDienThoai = soDienThoai;
-    }
-
-    public String getIdDonHang() {
-        return idDonHang;
-    }
-
-    public void setIdDonHang(String idDonHang) {
+        this.header = header;
         this.idDonHang = idDonHang;
-    }
-
-    public String getIdNguoiMua() {
-        return idNguoiMua;
-    }
-
-    public void setIdNguoiMua(String idNguoiMua) {
-        this.idNguoiMua = idNguoiMua;
-    }
-
-    public String getIdNguoiBan() {
-        return idNguoiBan;
-    }
-
-    public void setIdNguoiBan(String idNguoiBan) {
         this.idNguoiBan = idNguoiBan;
-    }
-
-    public String getThoiGian() {
-        return thoiGian;
-    }
-
-    public void setThoiGian(String thoiGian) {
+        this.idNguoiMua = idNguoiMua;
+        this.nameNguoiMua = nameNguoiMua;
+        this.soDienThoai = soDienThoai;
         this.thoiGian = thoiGian;
+        this.urlImg = urlImg;
+        this.distance = distance;
+        this.gia = gia;
+        this.soLuong = soLuong;
     }
 
     public String getDiaChi() {
@@ -57,11 +50,91 @@ public class DonHang {
         this.diaChi = diaChi;
     }
 
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
+    }
+
+    public String getIdDonHang() {
+        return idDonHang;
+    }
+
+    public void setIdDonHang(String idDonHang) {
+        this.idDonHang = idDonHang;
+    }
+
+    public String getIdNguoiBan() {
+        return idNguoiBan;
+    }
+
+    public void setIdNguoiBan(String idNguoiBan) {
+        this.idNguoiBan = idNguoiBan;
+    }
+
+    public String getIdNguoiMua() {
+        return idNguoiMua;
+    }
+
+    public void setIdNguoiMua(String idNguoiMua) {
+        this.idNguoiMua = idNguoiMua;
+    }
+
+    public String getNameNguoiMua() {
+        return nameNguoiMua;
+    }
+
+    public void setNameNguoiMua(String nameNguoiMua) {
+        this.nameNguoiMua = nameNguoiMua;
+    }
+
     public String getSoDienThoai() {
         return soDienThoai;
     }
 
     public void setSoDienThoai(String soDienThoai) {
         this.soDienThoai = soDienThoai;
+    }
+
+    public String getThoiGian() {
+        return thoiGian;
+    }
+
+    public void setThoiGian(String thoiGian) {
+        this.thoiGian = thoiGian;
+    }
+
+    public String getUrlImg() {
+        return urlImg;
+    }
+
+    public void setUrlImg(String urlImg) {
+        this.urlImg = urlImg;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
+    public String getGia() {
+        return gia;
+    }
+
+    public void setGia(String gia) {
+        this.gia = gia;
+    }
+
+    public String getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(String soLuong) {
+        this.soLuong = soLuong;
     }
 }

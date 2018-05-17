@@ -1,21 +1,25 @@
 package com.example.user.banhangonline.screen.home.fragment.adapter;
 
 import android.content.Context;
+import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.model.SanPham;
+import com.example.user.banhangonline.model.maps.Directions;
+import com.example.user.banhangonline.model.maps.Route;
+import com.example.user.banhangonline.utils.GoogleMapUtils;
+import com.google.android.gms.maps.model.LatLng;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import butterknife.BindView;
@@ -26,6 +30,7 @@ public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int VIEW_TYPE_SANPHAM = 1;
     private static final int VIEW_TYPE_LOADING = 2;
     private Context context;
+    private Location mLocation;
     private List<SanPham> mList;
     private ISelectPayAdapter mListener;
 
@@ -37,8 +42,9 @@ public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.mOnLoadMore = mOnLoadMore;
     }
 
-    public SanPhamAdapter(RecyclerView recyclerView, Context context, List<SanPham> mList, ISelectPayAdapter mListener) {
+    public SanPhamAdapter(RecyclerView recyclerView, Context context, Location mLocation, List<SanPham> mList, ISelectPayAdapter mListener) {
         this.context = context;
+        this.mLocation = mLocation;
         this.mList = mList;
         this.mListener = mListener;
         final GridLayoutManager linearLayoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
@@ -61,6 +67,12 @@ public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         @BindView(R.id.tv_header_sanpham)
         TextView tvHeaderSanPham;
+
+        @BindView(R.id.tv_gia_sanpham)
+        TextView tvGiaSp;
+
+        @BindView(R.id.tv_distance)
+        TextView tvDistance;
 
         public SanPhamViewHolder(View itemView) {
             super(itemView);
@@ -109,10 +121,31 @@ public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (mList.get(position) instanceof SanPham) {
-            SanPhamViewHolder viewHolder = (SanPhamViewHolder) holder;
+            SanPham sanPham = mList.get(position);
+            final SanPhamViewHolder viewHolder = (SanPhamViewHolder) holder;
             String url = mList.get(position).getListFiles().getUrl1();
             Glide.with(context).load(url).centerCrop().into(viewHolder.imgSanPham);
-            viewHolder.tvHeaderSanPham.setText(mList.get(position).getHeader());
+            viewHolder.tvHeaderSanPham.setText(sanPham.getHeader());
+            viewHolder.tvGiaSp.setText(sanPham.getGia());
+
+            if (sanPham.getAddress() != null) {
+                GoogleMapUtils.getLatLongFromGivenAddress(context, sanPham.getAddress());
+                LatLng latLng = GoogleMapUtils.getLatLng();
+                if (mLocation != null && latLng != null) {
+                    try {
+                        new Directions(mLocation.getLatitude(), mLocation.getLongitude(), latLng.latitude, latLng.longitude, new Directions.DirectionsListener() {
+                            @Override
+                            public void onDirectionSuccess(List<Route> routes) {
+                                for (Route route : routes) {
+                                    viewHolder.tvDistance.setText("Cách " + route.distance);
+                                }
+                            }
+                        }).execute();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
     }
 
@@ -129,7 +162,7 @@ public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         void onSelectedSanPham(SanPham sanPham);
     }
 
-    public interface OnLoadMoreListener{
+    public interface OnLoadMoreListener {
         void onLoadMore();
     }
 }

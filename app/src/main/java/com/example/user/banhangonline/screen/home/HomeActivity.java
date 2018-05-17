@@ -18,19 +18,19 @@ import com.example.user.banhangonline.base.BaseActivity;
 import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.screen.home.adapter.HomePagerAdapter;
+import com.example.user.banhangonline.screen.myGioHang.MyGioHangActivity;
 import com.example.user.banhangonline.screen.mySanPham.MySanPhamActivity;
 import com.example.user.banhangonline.screen.search.SearchActivity;
 import com.example.user.banhangonline.screen.sell.SellActivity;
-import com.example.user.banhangonline.untils.NetworkUtils;
+import com.example.user.banhangonline.utils.NetworkUtils;
 import com.example.user.banhangonline.widget.dialog.DialogPositiveNegative;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
-import static com.example.user.banhangonline.untils.KeyUntils.keyAccountBuy;
-import static com.example.user.banhangonline.untils.KeyUntils.keyAccountSell;
+import static com.example.user.banhangonline.utils.KeyUntils.keyAccountBuy;
+import static com.example.user.banhangonline.utils.KeyUntils.keyAccountSell;
 
 public class HomeActivity extends BaseActivity implements
          HomeContact.View {
@@ -69,16 +69,12 @@ public class HomeActivity extends BaseActivity implements
     @BindView(R.id.tv_cai_dat)
     TextView tvSetting;
 
-    @BindView(R.id.tv_my_account)
+    @BindView(R.id.tv_trang_ca_nhan)
     TextView tvMyAccount;
-
-    @BindView(R.id.ln_my_account)
-    LinearLayout lnMyAccount;
 
     @BindView(R.id.tv_dang_xuat)
     TextView tvDangXuat;
 
-    private Unbinder unbinder;
     private HomePresenter mPresenter;
 
     @Override
@@ -90,7 +86,7 @@ public class HomeActivity extends BaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        unbinder = ButterKnife.bind(this);
+        ButterKnife.bind(this);
         mPresenter = new HomePresenter();
         mPresenter.onCreate();
         mPresenter.setContext(this);
@@ -109,7 +105,7 @@ public class HomeActivity extends BaseActivity implements
     private void getInfomationAccount() {
         tvTrangChu.setSelected(true);
         String idBuySell = PreferManager.getIDBuySell(this);
-        String email = PreferManager.getEmailID(this);
+        String email = PreferManager.getEmail(this);
         String name = PreferManager.getNameAccount(this);
 
         if (!PreferManager.getIsLogin(this)) {
@@ -152,18 +148,42 @@ public class HomeActivity extends BaseActivity implements
 
     @OnClick(R.id.img_cart)
     public void onClickCart() {
+        if (!PreferManager.getIsLogin(this)) {
+            showSnackbar(getString(R.string.chua_dang_nhap));
+            showConfirmDialog(getString(R.string.ban_co_muon_dn_dk_khong), new DialogPositiveNegative.IPositiveNegativeDialogListener() {
+                @Override
+                public void onClickAnswerPositive(DialogPositiveNegative dialog) {
+                    PreferManager.setIsLogin(HomeActivity.this, false);
+                    PreferManager.setIDBuySell(HomeActivity.this, null);
+                    PreferManager.setEmail(HomeActivity.this, null);
+                    PreferManager.setUserID(HomeActivity.this, null);
+                    PreferManager.setNameAccount(HomeActivity.this, null);
+                    PreferManager.setPhoneNumber(HomeActivity.this, null);
+                    logoutUser();
+                }
 
+                @Override
+                public void onClickAnswerNegative(DialogPositiveNegative dialog) {
+                    dialog.dismiss();
+                }
+            });
+        }
+        if (PreferManager.getIDBuySell(this) != null) {
+            if (PreferManager.getIDBuySell(this).equals(keyAccountSell)) {
+                startActivity(new Intent(HomeActivity.this, MyGioHangActivity.class));
+            }
+        }
     }
 
     @OnClick(R.id.edt_search)
-    public void searchSanPham(){
+    public void searchSanPham() {
         startActivity(new Intent(HomeActivity.this, SearchActivity.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     @OnClick(R.id.ln_account)
     public void onClickAccount() {
         if (PreferManager.getIsLogin(this)) {
-            if (PreferManager.getEmailID(this) != null) {
+            if (PreferManager.getUserID(this) != null) {
                 startActivity(new Intent(HomeActivity.this, MySanPhamActivity.class));
             }
         }
@@ -172,53 +192,43 @@ public class HomeActivity extends BaseActivity implements
     @OnClick(R.id.tv_trang_chu)
     public void onClickTrangchu() {
         tvTrangChu.setSelected(true);
-        tvTrangChu.setBackgroundColor(getResources().getColor(R.color.greyish_divider));
         disableSelected(tvNotify, tvSetting, tvMyAccount);
+        drawerLayout.closeDrawer(lnOpenDrawer);
     }
 
     @OnClick(R.id.tv_thong_bao)
     public void onClickThongBao() {
         tvNotify.setSelected(true);
-        tvNotify.setBackgroundColor(getResources().getColor(R.color.greyish_divider));
-        disableSelected(tvTrangChu, tvSetting, tvMyAccount);
+        disableSelected(tvTrangChu, tvMyAccount, tvSetting);
+        drawerLayout.closeDrawer(lnOpenDrawer);
     }
 
     @OnClick(R.id.tv_cai_dat)
     public void onClickSetting() {
         tvSetting.setSelected(true);
-        tvSetting.setBackgroundColor(getResources().getColor(R.color.greyish_divider));
-        disableSelected(tvTrangChu, tvNotify, tvMyAccount);
-    }
+        disableSelected(tvTrangChu, tvMyAccount, tvNotify);
+        drawerLayout.closeDrawer(lnOpenDrawer);
 
-    @OnClick(R.id.tv_my_account)
-    public void onClickMyAccount() {
-        tvMyAccount.setSelected(true);
-        tvMyAccount.setBackgroundColor(getResources().getColor(R.color.greyish_divider));
-        disableSelected(tvTrangChu, tvNotify, tvSetting);
-        if (lnMyAccount.getVisibility() == View.GONE) {
-            lnMyAccount.setVisibility(View.VISIBLE);
-            tvMyAccount.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_face, 0, R.drawable.ic_expand_less, 0);
-        } else {
-            lnMyAccount.setVisibility(View.GONE);
-            tvMyAccount.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_face, 0, R.drawable.ic_expand_more, 0);
-        }
     }
 
     @OnClick(R.id.tv_trang_ca_nhan)
     public void onTrangCaNhan() {
+        tvMyAccount.setSelected(true);
+        disableSelected(tvTrangChu, tvNotify, tvSetting);
+        drawerLayout.closeDrawer(lnOpenDrawer);
         if (PreferManager.getIsLogin(this)) {
-            if (PreferManager.getEmailID(this) != null) {
+            if (PreferManager.getUserID(this) != null) {
                 startActivity(new Intent(HomeActivity.this, MySanPhamActivity.class));
             }
         } else {
-            showSnackbar("Chưa đăng nhập");
-            showConfirmDialog("Bạn có đăng nhập (đăng kí) không?", new DialogPositiveNegative.IPositiveNegativeDialogListener() {
+            showSnackbar(getString(R.string.chua_dang_nhap));
+            showConfirmDialog(getString(R.string.ban_co_muon_dn_dk_khong), new DialogPositiveNegative.IPositiveNegativeDialogListener() {
                 @Override
                 public void onClickAnswerPositive(DialogPositiveNegative dialog) {
                     PreferManager.setIsLogin(HomeActivity.this, false);
                     PreferManager.setIDBuySell(HomeActivity.this, null);
                     PreferManager.setEmail(HomeActivity.this, null);
-                    PreferManager.setEmailID(HomeActivity.this, null);
+                    PreferManager.setUserID(HomeActivity.this, null);
                     PreferManager.setNameAccount(HomeActivity.this, null);
                     PreferManager.setPhoneNumber(HomeActivity.this, null);
                     logoutUser();
@@ -238,6 +248,12 @@ public class HomeActivity extends BaseActivity implements
             showConfirmDialog("Bạn có chắc chắn muốn đăng xuất hay không?", new DialogPositiveNegative.IPositiveNegativeDialogListener() {
                 @Override
                 public void onClickAnswerPositive(DialogPositiveNegative dialog) {
+                    PreferManager.setIsLogin(HomeActivity.this, false);
+                    PreferManager.setIDBuySell(HomeActivity.this, null);
+                    PreferManager.setEmail(HomeActivity.this, null);
+                    PreferManager.setUserID(HomeActivity.this, null);
+                    PreferManager.setNameAccount(HomeActivity.this, null);
+                    PreferManager.setPhoneNumber(HomeActivity.this, null);
                     logoutUser();
                 }
 
@@ -261,8 +277,6 @@ public class HomeActivity extends BaseActivity implements
     protected void onDestroy() {
         mPresenter.onDestroy();
         mPresenter.detach();
-        unbinder.unbind();
-        unbinder = null;
         super.onDestroy();
     }
 

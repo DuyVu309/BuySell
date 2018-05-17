@@ -2,11 +2,10 @@ package com.example.user.banhangonline.model;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.Comparator;
-import java.util.List;
 
+@IgnoreExtraProperties
 public class SanPham implements Serializable, Comparator<SanPham> {
     private String idNguoiban;
     private String nameNguoiBan;
@@ -17,11 +16,18 @@ public class SanPham implements Serializable, Comparator<SanPham> {
     private String mota;
     private String time;
     private ListFileImages listFiles;
+    private String gia;
+    private String address;
 
     public SanPham() {
     }
 
-    public SanPham(String idNguoiban, String nameNguoiBan, String idSanPham, String idCategory, String idPart, String header, String mota, String time, ListFileImages listFiles) {
+    public SanPham(String idNguoiban, String nameNguoiBan,
+                   String idSanPham, String idCategory,
+                   String idPart, String header,
+                   String mota, String time,
+                   ListFileImages listFiles, String gia,
+                   String address) {
         this.idNguoiban = idNguoiban;
         this.nameNguoiBan = nameNguoiBan;
         this.idSanPham = idSanPham;
@@ -31,6 +37,8 @@ public class SanPham implements Serializable, Comparator<SanPham> {
         this.mota = mota;
         this.time = time;
         this.listFiles = listFiles;
+        this.gia = gia;
+        this.address = address;
     }
 
 
@@ -104,6 +112,22 @@ public class SanPham implements Serializable, Comparator<SanPham> {
 
     public void setListFiles(ListFileImages listFiles) {
         this.listFiles = listFiles;
+    }
+
+    public String getGia() {
+        return gia;
+    }
+
+    public void setGia(String gia) {
+        this.gia = gia;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override

@@ -43,6 +43,8 @@ public class SanPhamAccountAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         @BindView(R.id.tv_header)
         TextView tvHeader;
 
+        @BindView(R.id.tv_gia)
+        TextView tvGia;
 
         public SanPhamAcViewHolder(View itemView) {
             super(itemView);
@@ -70,6 +72,7 @@ public class SanPhamAccountAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             SanPhamAcViewHolder viewHolder = (SanPhamAcViewHolder) holder;
             viewHolder.tvMota.setText(sanPham.getMota());
             viewHolder.tvHeader.setText(sanPham.getHeader());
+            viewHolder.tvGia.setText(sanPham.getGia());
             Glide.with(context).load(sanPham.getListFiles().getUrl1()).into(viewHolder.imgSanPham);
         }
     }

@@ -85,5 +85,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white" />
+
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            android:visibility="gone"
+            android:indeterminateTint="@color/red"
+            android:layout_margin="@dimen/pading_small"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_width="@dimen/nav_bar_height_small"
+            android:layout_height="@dimen/nav_bar_height_small" />
+
     </FrameLayout>
 </android.support.design.widget.CoordinatorLayout>

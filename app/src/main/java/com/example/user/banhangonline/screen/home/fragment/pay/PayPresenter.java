@@ -1,19 +1,16 @@
 package com.example.user.banhangonline.screen.home.fragment.pay;
 
-import android.util.Log;
-
 import com.example.user.banhangonline.model.SanPham;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.user.banhangonline.untils.KeyUntils.keyIdCategory;
-import static com.example.user.banhangonline.untils.KeyUntils.keySanPham;
+import static com.example.user.banhangonline.utils.KeyUntils.keyIdCategory;
+import static com.example.user.banhangonline.utils.KeyUntils.keySanPham;
 
 public class PayPresenter implements PayContact.Presenter {
 

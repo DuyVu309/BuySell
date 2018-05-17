@@ -1,7 +1,5 @@
 package com.example.user.banhangonline.screen.search.allSanPham;
 
-import android.util.Log;
-
 import com.example.user.banhangonline.model.SanPham;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -12,7 +10,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.user.banhangonline.untils.KeyUntils.keySanPham;
+import static com.example.user.banhangonline.utils.KeyUntils.keySanPham;
 
 public class AllSanPhamSearchPresenter implements AllSanPhamSearchedContact.Presenter {
 
@@ -73,7 +71,6 @@ public class AllSanPhamSearchPresenter implements AllSanPhamSearchedContact.Pres
                             keyList.add(snapshot.getKey().toString());
                         }
                     } else if (idCate != null && idPart == null) { // sanpham voi idCate
-                        Log.d("TAG ERR", idCate);
                         if (sanPham.getIdCategory() != null && sanPham.getIdCategory().equals(idCate)) {
                             if (sanPham.getHeader() != null && sanPham.getHeader().toLowerCase().contains(filter.toLowerCase())) {
                                 keyList.add(snapshot.getKey().toString());

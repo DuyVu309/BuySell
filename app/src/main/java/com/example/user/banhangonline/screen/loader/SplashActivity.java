@@ -22,13 +22,12 @@ public class SplashActivity extends AppCompatActivity {
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
 
-    Unbinder unbinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loader);
-        unbinder = ButterKnife.bind(this);
+        ButterKnife.bind(this);
         initProgress();
     }
 
@@ -89,8 +88,6 @@ public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        unbinder.unbind();
-        unbinder = null;
         super.onDestroy();
     }
 }

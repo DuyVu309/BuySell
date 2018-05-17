@@ -1,21 +1,15 @@
 package com.example.user.banhangonline.screen.spAccount;
 
-import android.util.Log;
-
-import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.model.SanPham;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.user.banhangonline.untils.KeyUntils.keyEmailID;
-import static com.example.user.banhangonline.untils.KeyUntils.keyIDNguoiban;
-import static com.example.user.banhangonline.untils.KeyUntils.keySanPham;
+import static com.example.user.banhangonline.utils.KeyUntils.keySanPham;
 
 public class SanPhamAccountPresenter implements SanPhamAccountContact.Presenter {
 

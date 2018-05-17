@@ -60,6 +60,9 @@ public class SanPhamMyAccountAdapter extends RecyclerView.Adapter<RecyclerView.V
         @BindView(R.id.btn_delete)
         TextView btnDelete;
 
+        @BindView(R.id.tv_gia)
+        TextView tvGia;
+
         @BindView(R.id.tv_header)
         TextView tvHeader;
 
@@ -123,6 +126,7 @@ public class SanPhamMyAccountAdapter extends RecyclerView.Adapter<RecyclerView.V
         holder.tvTime.setText(sanPham.getTime());
         holder.tvHeader.setText(sanPham.getHeader());
         holder.tvMota.setText(sanPham.getMota());
+        holder.tvGia.setText(sanPham.getGia());
 
         if (sanPham.getListFiles().getListUrl().size() == 1) {
             holder.recyclerView.setLayoutManager(new GridLayoutManager(context, 1));

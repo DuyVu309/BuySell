@@ -1,6 +1,7 @@
 package com.example.user.banhangonline.screen.sanphamWithIdCate;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
@@ -10,6 +11,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.user.banhangonline.R;
@@ -21,7 +23,7 @@ import com.example.user.banhangonline.screen.search.allSanPham.AllSanPhamSearche
 import com.example.user.banhangonline.screen.detail.SanPhamDetailActivity;
 import com.example.user.banhangonline.screen.home.fragment.adapter.SanPhamAdapter;
 import com.example.user.banhangonline.screen.sanphamWithIdCate.adapter.SearchAdapter;
-import com.example.user.banhangonline.untils.NetworkUtils;
+import com.example.user.banhangonline.utils.NetworkUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,13 +31,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyIdSanPham;
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartDetail;
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartFilter;
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartIdCategory;
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartIdPart;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyIdSanPham;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartDetail;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartFilter;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartIdCategory;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartIdPart;
 
 public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithIdContact.View {
     private Part part;
@@ -52,13 +53,17 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
     @BindView(R.id.rv_search)
     RecyclerView rvSearch;
 
+    @BindView(R.id.pb_loading)
+    ProgressBar pbLoading;
+
     SanPhamAdapter mAdapter;
     SearchAdapter mAdapterSr;
 
-    Unbinder unbinder;
     SanPhamWithIdPresenter mPresenter;
     GridLayoutManager manager;
     List<Object> filteredList;
+
+    Location myLocation;
 
     @Override
     public boolean isTransparentStatusBar() {
@@ -69,7 +74,7 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_san_pham);
-        unbinder = ButterKnife.bind(this);
+        ButterKnife.bind(this);
         mPresenter = new SanPhamWithIdPresenter();
         mPresenter.attachView(this);
         part = (Part) getIntent().getSerializableExtra(keyIdSanPham);
@@ -108,6 +113,7 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
                 }
             }
         });
+
         rvSearch.setAdapter(mAdapterSr);
 
         edtSearch.addTextChangedListener(new TextWatcher() {
@@ -131,9 +137,12 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
     }
 
     private void initAdapterSp() {
+        if (getMyLocation() != null) {
+            myLocation = getMyLocation();
+        }
         manager = new GridLayoutManager(this, 2);
         recyclerViewSp.setLayoutManager(manager);
-        mAdapter = new SanPhamAdapter(recyclerViewSp, this, mPresenter.getSanPhamList(), new SanPhamAdapter.ISelectPayAdapter() {
+        mAdapter = new SanPhamAdapter(recyclerViewSp, this, myLocation, mPresenter.getSanPhamList(), new SanPhamAdapter.ISelectPayAdapter() {
             @Override
             public void onSelectedSanPham(SanPham sanPham) {
                 if (sanPham != null) {
@@ -147,9 +156,11 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
         mAdapter.setmOnLoadMore(new SanPhamAdapter.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
+                pbLoading.setVisibility(View.VISIBLE);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        pbLoading.setVisibility(View.GONE);
                         int position = mPresenter.getTotal();
                         if (mPresenter.getSanPhamList().size() > position) {
                             mPresenter.setTotal(position + 10);
@@ -165,7 +176,7 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
 
     @OnClick(R.id.img_arrow_back)
     public void backActivity() {
-       onBackPressed();
+        onBackPressed();
     }
 
     @OnClick(R.id.img_search)
@@ -231,7 +242,6 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
     @Override
     protected void onDestroy() {
         mPresenter.detach();
-        unbinder.unbind();
         super.onDestroy();
     }
 }

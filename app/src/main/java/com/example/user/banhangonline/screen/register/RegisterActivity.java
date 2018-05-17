@@ -21,22 +21,20 @@ import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.screen.home.HomeActivity;
 import com.example.user.banhangonline.screen.login.LoginActivity;
-import com.example.user.banhangonline.untils.KeyUntils;
-import com.example.user.banhangonline.untils.NetworkUtils;
+import com.example.user.banhangonline.utils.KeyUntils;
+import com.example.user.banhangonline.utils.NetworkUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
-import static com.example.user.banhangonline.untils.KeyUntils.keyAccount;
-import static com.example.user.banhangonline.untils.KeyUntils.keyAccountBuy;
-import static com.example.user.banhangonline.untils.KeyUntils.keyAccountSell;
+import static com.example.user.banhangonline.utils.KeyUntils.keyAccount;
+import static com.example.user.banhangonline.utils.KeyUntils.keyAccountBuy;
+import static com.example.user.banhangonline.utils.KeyUntils.keyAccountSell;
 
 public class RegisterActivity extends BaseActivity implements RegisterContact.View {
 
@@ -127,7 +125,6 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
     @BindView(R.id.btn_vevify_code)
     Button btnVerifyCode;
 
-    Unbinder unbinder;
     RegisPresenter mPresenter;
 
     private boolean isConfirmCode = false;
@@ -141,7 +138,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        unbinder = ButterKnife.bind(this);
+         ButterKnife.bind(this);
         mPresenter = new RegisPresenter();
         mPresenter.attachView(this);
         mPresenter.onCreate();
@@ -187,7 +184,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!charSequence.toString().trim().equals("") && charSequence.toString().trim().length() >= 8) {
+                if (!charSequence.toString().trim().equals("") && charSequence.toString().trim().length() >= 6) {
                     tvWarningFullName.setVisibility(View.GONE);
                 } else {
                     tvWarningFullName.setVisibility(View.VISIBLE);
@@ -279,7 +276,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
                                          edtPasswordBuy.getText().toString().trim(),
                                          edtConfirmPasswordBuy.getText().toString().trim());
                             } else {
-                                showSnackbar("Mật khẩu không trùng khớp");
+                                showSnackbar(getString(R.string.mat_khau_khong_trung_khop));
                             }
 
                         }
@@ -459,22 +456,22 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
     protected void onDestroy() {
         mPresenter.onDestroy();
         mPresenter.detach();
-        unbinder.unbind();
-        unbinder = null;
         super.onDestroy();
     }
 
     @Override
     public void registerBuySuccess() {
         final String email = edtmailBuy.getText().toString().trim();
-        final String[] key = email.split("\\.");
+        if (email == null) {
+            return;
+        }
         showDialog();
         if (NetworkUtils.isConnected(this)) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mDataBase.child(keyAccount).child(key[0]).setValue(new Account("",
-                             key[0],
+                    mDataBase.child(keyAccount).child(mAuth.getCurrentUser().getUid()).setValue(new Account("",
+                             email,
                              keyAccountBuy,
                              edtFullName.getText().toString().trim(),
                              PreferManager.getPhoneNumber(RegisterActivity.this),
@@ -482,8 +479,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
                              "",
                              "",
                              "",
-                             getString(R.string.dont_address),
-                             ""))
+                             getString(R.string.dont_address)))
                              .addOnCompleteListener(new OnCompleteListener<Void>() {
                                  @Override
                                  public void onComplete(@NonNull Task<Void> task) {
@@ -492,17 +488,6 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
                                              @Override
                                              public void onComplete(@NonNull Task<AuthResult> task) {
                                                  if (task.isSuccessful()) {
-                                                     mDataBase.child(keyAccount).child(key[0]).setValue(new Account(mAuth.getCurrentUser().getUid(),
-                                                                       key[0],
-                                                                       keyAccountBuy,
-                                                                       edtFullName.getText().toString().trim(),
-                                                                       PreferManager.getPhoneNumber(RegisterActivity.this),
-                                                                       "",
-                                                                       "",
-                                                                       "",
-                                                                       "",
-                                                                       getString(R.string.dont_address),
-                                                              ""));
                                                      Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                                      intent.putExtra(KeyUntils.keyEmailRegister, edtmailBuy.getText().toString().trim());
                                                      intent.putExtra(KeyUntils.keyPasswordRegister, edtPasswordBuy.getText().toString().trim());
@@ -537,16 +522,16 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
 
     @Override
     public void registerSellSuccess() {
-        String email = edtEmailRegisterSell.getText().toString().trim();
-        final String[] key = email.split("\\.");
+        final String email = edtEmailRegisterSell.getText().toString().trim();
+        if (email == null) return;;
         if (NetworkUtils.isConnected(this)) {
             mAuth.createUserWithEmailAndPassword(edtEmailRegisterSell.getText().toString().trim(),
                      edtPasswordSell.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        mDataBase.child(keyAccount).child(key[0]).setValue(new Account("",
-                                 key[0],
+                        mDataBase.child(keyAccount).child(mAuth.getCurrentUser().getUid()).setValue(new Account("",
+                                 email,
                                  keyAccountSell,
                                  edtTenDoanhNghiep.getText().toString().trim(),
                                  mPresenter.getPhoneNumber(),
@@ -554,22 +539,10 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
                                  "",
                                  "",
                                  "",
-                                 getString(R.string.dont_address),
-                                 "")).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                 getString(R.string.dont_address))).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-                                    mDataBase.child(keyAccount).child(key[0]).setValue(new Account(mAuth.getCurrentUser().getUid(),
-                                             key[0],
-                                             keyAccountBuy,
-                                             edtFullName.getText().toString().trim(),
-                                             PreferManager.getPhoneNumber(RegisterActivity.this),
-                                             "",
-                                             "",
-                                             "",
-                                             "",
-                                             getString(R.string.dont_address),
-                                             ""));
                                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                     intent.putExtra(KeyUntils.keyEmailRegister, edtEmailRegisterSell.getText().toString().trim());
                                     intent.putExtra(KeyUntils.keyPasswordRegister, edtPasswordSell.getText().toString().trim());
@@ -620,7 +593,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
         edtCode.setEnabled(true);
         edtCode.setClickable(true);
         dismissDialog();
-        showSnackbar("Đang gửi mã, xin vui lòng chờ! ");
+        showSnackbar(getString(R.string.dang_gui_ma_vui_long_cho));
     }
 
     @Override
@@ -637,7 +610,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
         isConfirmCode = false;
         edtPhoneNumberSell.setEnabled(true);
         edtPhoneStandard.setEnabled(true);
-        showSnackbar("Quá số lần qua phép");
+        showSnackbar(getString(R.string.qua_so_lan_cho_phep));
     }
 
     @Override
@@ -650,14 +623,14 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
         edtPhoneNumberSell.setEnabled(false);
         isConfirmCode = true;
         isVisibilityBtnRegisterSell();
-        showSnackbar("Xác nhận thành công");
+        showSnackbar(getString(R.string.thanh_cong));
     }
 
     @Override
     public void codeInvalid() {
         dismissDialog();
         isConfirmCode = false;
-        showSnackbar("Xác nhận thất bại, kiểm tra lại");
+        showSnackbar(getString(R.string.error_retry));
     }
 
     @OnClick(R.id.img_back)
@@ -702,7 +675,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
             if (edtCode.getText().toString().trim().length() > 0) {
                 mPresenter.verifyPhoneNumberWithCode(edtCode.getText().toString().trim());
             } else {
-                edtCode.setError("Chưa có mã");
+                edtCode.setError(getString(R.string.chua_co_ma));
             }
         } else {
             showNoInternet();

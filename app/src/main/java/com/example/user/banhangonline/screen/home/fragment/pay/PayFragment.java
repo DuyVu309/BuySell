@@ -2,33 +2,28 @@ package com.example.user.banhangonline.screen.home.fragment.pay;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.model.Categories;
 import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.screen.detail.SanPhamDetailActivity;
 import com.example.user.banhangonline.screen.home.fragment.adapter.SanPhamAdapter;
-import com.example.user.banhangonline.untils.DialogUntils;
-import com.example.user.banhangonline.widget.dialog.DialogProgress;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Collections;
 import java.util.Comparator;
 
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartDetail;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartDetail;
 
 public class PayFragment extends Fragment implements PayContact.View {
     RecyclerView recyclerView;
@@ -72,7 +67,7 @@ public class PayFragment extends Fragment implements PayContact.View {
 
     private void initAdapter() {
         mPresenter.loadSanPhamFromFirebase(mDatabase, categories.getId());
-        mAdapter = new SanPhamAdapter(recyclerView, getActivity(), mPresenter.getSanPhamList(), new SanPhamAdapter.ISelectPayAdapter() {
+        mAdapter = new SanPhamAdapter(recyclerView, getActivity(), null, mPresenter.getSanPhamList(), new SanPhamAdapter.ISelectPayAdapter() {
             @Override
             public void onSelectedSanPham(SanPham sanPham) {
                 Intent intent = new Intent(getActivity(), SanPhamDetailActivity.class);

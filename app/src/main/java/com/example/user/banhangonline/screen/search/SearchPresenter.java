@@ -12,9 +12,9 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.user.banhangonline.untils.KeyUntils.keyAccount;
-import static com.example.user.banhangonline.untils.KeyUntils.keyAccountSell;
-import static com.example.user.banhangonline.untils.KeyUntils.keySanPham;
+import static com.example.user.banhangonline.utils.KeyUntils.keyAccount;
+import static com.example.user.banhangonline.utils.KeyUntils.keyAccountSell;
+import static com.example.user.banhangonline.utils.KeyUntils.keySanPham;
 
 public class SearchPresenter implements SearchContact.Presenter {
     SearchContact.View mView;

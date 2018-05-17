@@ -10,4 +10,5 @@ public class AppConstants {
     public static final int REQUEST_READ_LIBRARY = 4;
     public static final int REQUEST_IMAGE_CODE_CROP = 9;
     public static final int REQUEST_CALL_PHONE = 10;
+    public static final int REQUEST_CODE_LOCATION = 11;
 }

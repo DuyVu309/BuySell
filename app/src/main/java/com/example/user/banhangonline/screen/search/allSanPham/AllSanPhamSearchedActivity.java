@@ -5,34 +5,37 @@ import android.os.Handler;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
 import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.screen.detail.SanPhamDetailActivity;
 import com.example.user.banhangonline.screen.home.fragment.adapter.SanPhamAdapter;
-import com.example.user.banhangonline.untils.NetworkUtils;
+import com.example.user.banhangonline.utils.NetworkUtils;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartDetail;
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartFilter;
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartIdCategory;
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartIdPart;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartDetail;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartFilter;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartIdCategory;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartIdPart;
 
 public class AllSanPhamSearchedActivity extends BaseActivity implements AllSanPhamSearchedContact.View {
 
     @BindView(R.id.recycerview_sp)
     RecyclerView recyclerViewSp;
 
+    @BindView(R.id.pb_loading)
+    ProgressBar pbLoading;
+
     private String filter, idCate, idPart;
 
-    Unbinder unbinder;
     AllSanPhamSearchPresenter mPresenter;
     SanPhamAdapter mAdapter;
 
@@ -45,7 +48,7 @@ public class AllSanPhamSearchedActivity extends BaseActivity implements AllSanPh
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_san_pham);
-        unbinder = ButterKnife.bind(this);
+        ButterKnife.bind(this);
         mPresenter = new AllSanPhamSearchPresenter();
         mPresenter.attachView(this);
         filter = getIntent().getStringExtra(keyStartFilter);
@@ -64,7 +67,7 @@ public class AllSanPhamSearchedActivity extends BaseActivity implements AllSanPh
     private void initAdapter() {
         GridLayoutManager manager = new GridLayoutManager(this, 2);
         recyclerViewSp.setLayoutManager(manager);
-        mAdapter = new SanPhamAdapter(recyclerViewSp, this, mPresenter.getSanPhamList(), new SanPhamAdapter.ISelectPayAdapter() {
+        mAdapter = new SanPhamAdapter(recyclerViewSp, this, getMyLocation(), mPresenter.getSanPhamList(), new SanPhamAdapter.ISelectPayAdapter() {
             @Override
             public void onSelectedSanPham(SanPham sanPham) {
                 if (sanPham != null) {
@@ -78,9 +81,11 @@ public class AllSanPhamSearchedActivity extends BaseActivity implements AllSanPh
         mAdapter.setmOnLoadMore(new SanPhamAdapter.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
+                pbLoading.setVisibility(View.VISIBLE);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        pbLoading.setVisibility(View.GONE);
                         int position = mPresenter.getTotal();
                         if (mPresenter.getSanPhamList().size() > position) {
                             mPresenter.setTotal(position + 10);
@@ -122,7 +127,7 @@ public class AllSanPhamSearchedActivity extends BaseActivity implements AllSanPh
     @Override
     public void getSpSuccess(List<SanPham> searchSPS) {
         if (searchSPS.size() == 0) {
-            showSnackbar("Không có sản phẩm nào");
+            showSnackbar(getString(R.string.dont_have_product));
             dismissDialog();
         }
         if (mAdapter != null) {
@@ -144,7 +149,6 @@ public class AllSanPhamSearchedActivity extends BaseActivity implements AllSanPh
     @Override
     protected void onDestroy() {
         mPresenter.detach();
-        unbinder.unbind();
         super.onDestroy();
     }
 }

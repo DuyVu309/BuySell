@@ -9,23 +9,20 @@ import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
 import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.screen.detail.SanPhamDetailActivity;
-import com.example.user.banhangonline.screen.search.SearchActivity;
 import com.example.user.banhangonline.screen.spAccount.adapter.SanPhamAccountAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartDetail;
-import static com.example.user.banhangonline.untils.KeyPreferUntils.keyStartSPAccount;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartDetail;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartSPAccount;
 
 public class SanPhamAccountActivity extends BaseActivity implements SanPhamAccountContact.View {
 
     @BindView(R.id.recycerview)
     RecyclerView rvSanPhamAccount;
 
-    Unbinder unbinder;
     SanPhamAccountPresenter mPresenter;
     SanPhamAccountAdapter mAdapter;
 
@@ -38,7 +35,7 @@ public class SanPhamAccountActivity extends BaseActivity implements SanPhamAccou
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_san_pham_account);
-        unbinder = ButterKnife.bind(this);
+        ButterKnife.bind(this);
         mPresenter = new SanPhamAccountPresenter();
         mPresenter.attachView(this);
         mPresenter.setEmailId( getIntent().getStringExtra(keyStartSPAccount));
@@ -68,7 +65,7 @@ public class SanPhamAccountActivity extends BaseActivity implements SanPhamAccou
     @Override
     public void getSanPhamSuccess() {
         if (mPresenter.getSanPhamList().size() == 0) {
-            showSnackbar("Không có sản phẩm nào");
+            showSnackbar(getString(R.string.dont_have_product));
 
         }
         if (mAdapter != null) {
@@ -85,13 +82,11 @@ public class SanPhamAccountActivity extends BaseActivity implements SanPhamAccou
 
     @OnClick(R.id.img_arrow_back)
     public void backActivity() {
-        startActivity(new Intent(SanPhamAccountActivity.this, SearchActivity.class));
         finish();
     }
 
     @Override
     protected void onDestroy() {
-        unbinder.unbind();
         mPresenter.detach();
         super.onDestroy();
     }
