@@ -23,9 +23,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/pading_small"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:maxLines="3"
             android:textColor="@color/black"
-            android:textSize="@dimen/title_text_size" />
+            android:textSize="@dimen/default_text_size" />
 
         <TextView
             android:id="@+id/tv_header"

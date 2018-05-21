@@ -29,6 +29,8 @@ public class KeyPreferUntils {
     public static final String keyStartIdCategory = "keyStartIdCategory";
     public static final String keyStartIdPart = "keyStartIdPart";
 
+    public static final String keyStartPhone = "keyStartPhone";
+
     //maps
     public static final String keyStartListAddress = "keyStartListAddress";
 

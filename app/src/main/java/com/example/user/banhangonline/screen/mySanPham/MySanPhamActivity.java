@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -33,8 +32,6 @@ import com.example.user.banhangonline.utils.FileUtils;
 import com.example.user.banhangonline.widget.dialog.DialogChangeAccount;
 
 import java.io.File;
-import java.util.Collections;
-import java.util.Comparator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -213,7 +210,6 @@ public class MySanPhamActivity extends BaseActivity implements
             tvChooseLans.setVisibility(View.GONE);
             File file = FileUtils.convertUriToFile(this, pickedImage);
             if (file != null) {
-                Log.d("TAG SIZE", String.valueOf(imgAvt.getWidth()) + "\n" + imgAvt.getHeight());
                 showCropImageActivity(file.getPath(), imgAvt.getWidth(), imgAvt.getHeight(), true);
             }
         }
@@ -235,12 +231,7 @@ public class MySanPhamActivity extends BaseActivity implements
     public void getListSuccess() {
         if (mPresenter.getSanPhamList() != null) {
             if (mPresenter.getSanPhamList().size() != 0) {
-                Collections.sort(mPresenter.getSanPhamList(), new Comparator<SanPham>() {
-                    @Override
-                    public int compare(SanPham sanPham, SanPham t1) {
-                        return sanPham.getTime().compareTo(t1.getTime());
-                    }
-                });
+
             }
             mAdapter.notifyDataSetChanged();
         }
@@ -256,7 +247,7 @@ public class MySanPhamActivity extends BaseActivity implements
     public void deleteSuscess() {
         mAdapter.notifyDataSetChanged();
         mPresenter.getListSanphamMyAccount(mDataBase);
-        Toast.makeText(this, "Đã xóa", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.da_xoa, Toast.LENGTH_SHORT).show();
         dismissDialog();
     }
 
@@ -302,7 +293,7 @@ public class MySanPhamActivity extends BaseActivity implements
     public void updateInfoSuccess() {
         showSnackbar(getString(R.string.cap_nhat_thanh_cong));
         PreferManager.setNameAccount(this, tvAccountName.getText().toString().trim());
-        PreferManager.setMyAddress(this, tvAccountAdress.getText().toString().trim());
+        PreferManager.setMyAddress(this, !tvAccountAdress.getText().toString().equals("") ? tvAccountAdress.getText().toString().trim() : null);
         PreferManager.setPhoneNumber(this, tvAccountPhone.getText().toString().trim());
         mAdapter.notifyDataSetChanged();
         dismissDialog();

@@ -1,5 +1,7 @@
 package com.example.user.banhangonline.screen.sanphamWithIdCate;
 
+import android.location.Location;
+
 import com.example.user.banhangonline.base.IBasePresenter;
 import com.example.user.banhangonline.base.IBaseView;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +27,7 @@ public interface SanPhamWithIdContact {
 
         void getIdSanPhamFromFireBase(DatabaseReference databaseReference, String idCate, String part);
 
-        void getSanPhamFromFirebase(DatabaseReference databaseReference, String iDCategory, String part);
+        void getSanPhamFromFirebase(DatabaseReference databaseReference, String iDCategory, String part, Location mLocation);
 
         void getListSearchFromFirebase(DatabaseReference databaseReference, String filter, String idCate, String idPart);
     }

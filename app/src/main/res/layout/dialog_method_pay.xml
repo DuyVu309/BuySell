@@ -31,7 +31,7 @@
                     android:layout_gravity="center"
                     android:maxLines="1"
                     android:padding="@dimen/pading_small"
-                    android:text="@string/phuong_thuc_mua"
+                    android:text="@string/phuong_thuc_thanh_toan"
                     android:textColor="@color/white"
                     android:textSize="@dimen/title_text_size" />
             </FrameLayout>
@@ -43,24 +43,24 @@
                 android:background="@color/white">
 
                 <TextView
-                    android:id="@+id/dialog_method_pay_buy"
+                    android:id="@+id/dialog_method_connect_call"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
-                    android:text="@string/tien_hanh_mua_hang"
+                    android:text="@string/goi_dien_truc_tiep"
                     android:padding="@dimen/normal"
                     android:textColor="@color/black"
                     android:background="@drawable/bg_click_tv_white"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/dialog_method_add_cart"
+                    android:id="@+id/dialog_method_connect_sms"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
-                    android:text="@string/them_vao_gio_hang"
+                    android:text="@string/gui_tin_nhan"
                     android:background="@drawable/bg_click_tv_white"
                     android:padding="@dimen/normal"
                     android:textColor="@color/black"
@@ -82,7 +82,7 @@
                     android:maxLines="1"
                     android:minHeight="0dp"
                     android:minWidth="0dp"
-                    android:padding="@dimen/small"
+                    android:padding="@dimen/pading_small"
                     android:text="@string/huy"
                     android:textAllCaps="false"
                     android:textColor="@color/black"

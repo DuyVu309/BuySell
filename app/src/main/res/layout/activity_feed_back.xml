@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="@dimen/pading_small"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/NavIconStyle"
+            android:src="@drawable/ic_dev" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:ellipsize="end"
+                android:text="@string/info_app"
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:id="@+id/tv_fb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:ellipsize="end"
+                android:background="@drawable/bg_click_tv_white"
+                android:text="@string/info_dev"
+                android:textColor="@color/red"
+                android:textSize="@dimen/default_text_size" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/pading_small"
+        android:lineSpacingExtra="@dimen/line_spacing_small"
+        android:text="@string/meesage_feedback"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/default_text_size" />
+
+    <EditText
+        android:id="@+id/edt_subject_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/pading_small"
+        android:backgroundTint="@color/transparent"
+        android:hint="Vấn đề"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/black"
+        android:textSize="@dimen/default_text_size" />
+
+    <EditText
+        android:id="@+id/edt_body_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/pading_small"
+        android:layout_weight="1"
+        android:backgroundTint="@color/transparent"
+        android:gravity="top"
+        android:hint="@string/noi_dung"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/black"
+        android:textSize="@dimen/default_text_size" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="@dimen/pading_small"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/info_us"
+            android:textColor="@color/red"
+            android:textSize="@dimen/default_text_size" />
+
+        <Button
+            android:id="@+id/btn_send_feedback"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/pading_small"
+            android:layout_weight="1"
+            android:background="@drawable/bg_click_button_blue"
+            android:text="Gửi"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</LinearLayout>

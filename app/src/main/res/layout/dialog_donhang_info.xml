@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_small"
+                android:layout_weight="1"
+                android:text="Người mua: "
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:id="@+id/tv_name_nguoi_mua"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_small"
+                android:layout_weight="1"
+                android:text="Địa chỉ: "
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:id="@+id/tv_diachi_nguoi_mua"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:autoLink="map"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_small"
+                android:layout_weight="1"
+                android:text="Đơn hàng: "
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:id="@+id/tv_donhang_nguoi_mua"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_small"
+                android:layout_weight="1"
+                android:text="SDT: "
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:id="@+id/tv_sdt_nguoi_mua"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:autoLink="phone"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_small"
+                android:layout_weight="1"
+                android:text="Số lượng: "
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:id="@+id/tv_soluong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_small"
+                android:layout_weight="1"
+                android:text="Thời gian: "
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:id="@+id/tv_thoi_gian"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/default_text_size" />
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

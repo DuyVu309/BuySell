@@ -1,5 +1,6 @@
 package com.example.user.banhangonline.widget.dialog;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -10,12 +11,14 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.utils.NetworkUtils;
 
@@ -31,6 +34,8 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public class DialogChangeAccount extends Dialog {
     private Context context;
@@ -109,6 +114,7 @@ public class DialogChangeAccount extends Dialog {
                 if (mlistAdress != null) {
                     edtAddress.setText(mlistAdress.get(i));
                     listView.setVisibility(View.INVISIBLE);
+                    hideKeyboard();
                 }
             }
         });
@@ -136,6 +142,20 @@ public class DialogChangeAccount extends Dialog {
             }
         });
     }
+
+    public void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager ipm = (InputMethodManager) context.getSystemService(INPUT_METHOD_SERVICE);
+            ipm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
+        if (getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
+
 
     public interface IOnClickDoneChange {
         void doneChange(String name, String phone, String address);

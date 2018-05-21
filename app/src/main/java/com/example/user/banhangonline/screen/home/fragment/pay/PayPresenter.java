@@ -16,18 +16,9 @@ public class PayPresenter implements PayContact.Presenter {
 
     private List<SanPham> sanPhamList = new ArrayList<>();
     private PayContact.View mView;
-    private int position = 0;
 
     public List<SanPham> getSanPhamList() {
         return sanPhamList;
-    }
-
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
     }
 
     @Override

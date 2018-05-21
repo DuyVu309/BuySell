@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -17,6 +18,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -75,6 +77,18 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
+    protected String getVersionApp(){
+        String version = "";
+
+        try {
+            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+            version = pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return version;
+    }
+
     protected Location getMyLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -96,8 +110,6 @@ public class BaseActivity extends AppCompatActivity {
                 }
                 LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                 location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            } else {
-                showSnackbar(getString(R.string.khong_the_hien_thi_khoang_cach));
             }
         }
     }

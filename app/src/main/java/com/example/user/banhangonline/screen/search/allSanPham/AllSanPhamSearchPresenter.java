@@ -174,31 +174,22 @@ public class AllSanPhamSearchPresenter implements AllSanPhamSearchedContact.Pres
                 }
             });
 
-        } else if (keyList.size() < total + 10) {
+        } else if (keyList.size() < total + 10 + 1) {
             if (!isLoadedWithLittle) {
-                databaseReference.child(keySanPham).orderByKey().startAt(keyList.get(total)).addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        SanPham sanPham = dataSnapshot.getValue(SanPham.class);
-                        if (idCate == null && idPart == null) { //all
-                            if (sanPham.getHeader() != null && sanPham.getHeader().toLowerCase().contains(filter.toLowerCase())) {
-                                sanPhamList.add(sanPham);
-                            } else if (sanPham.getNameNguoiBan() != null && sanPham.getNameNguoiBan().toLowerCase().contains(filter.toLowerCase())) {
-                                sanPhamList.add(sanPham);
-                            }
-                            isLoadedWithLittle = true;
-                        } else if (idCate != null && idPart == null) {
-                            if (sanPham.getIdCategory().equals(idCate)) { //idCate
+                try {
+                    databaseReference.child(keySanPham).orderByKey().startAt(keyList.get(total)).addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                            SanPham sanPham = dataSnapshot.getValue(SanPham.class);
+                            if (idCate == null && idPart == null) { //all
                                 if (sanPham.getHeader() != null && sanPham.getHeader().toLowerCase().contains(filter.toLowerCase())) {
                                     sanPhamList.add(sanPham);
                                 } else if (sanPham.getNameNguoiBan() != null && sanPham.getNameNguoiBan().toLowerCase().contains(filter.toLowerCase())) {
                                     sanPhamList.add(sanPham);
                                 }
                                 isLoadedWithLittle = true;
-                            }
-                        } else if (idCate != null && idPart != null) { //idPart
-                            if (sanPham.getIdCategory() != null && sanPham.getIdPart() != null) {
-                                if (sanPham.getIdCategory().equals(idCate) && sanPham.getIdPart().equals(idPart)) {
+                            } else if (idCate != null && idPart == null) {
+                                if (sanPham.getIdCategory().equals(idCate)) { //idCate
                                     if (sanPham.getHeader() != null && sanPham.getHeader().toLowerCase().contains(filter.toLowerCase())) {
                                         sanPhamList.add(sanPham);
                                     } else if (sanPham.getNameNguoiBan() != null && sanPham.getNameNguoiBan().toLowerCase().contains(filter.toLowerCase())) {
@@ -206,38 +197,48 @@ public class AllSanPhamSearchPresenter implements AllSanPhamSearchedContact.Pres
                                     }
                                     isLoadedWithLittle = true;
                                 }
+                            } else if (idCate != null && idPart != null) { //idPart
+                                if (sanPham.getIdCategory() != null && sanPham.getIdPart() != null) {
+                                    if (sanPham.getIdCategory().equals(idCate) && sanPham.getIdPart().equals(idPart)) {
+                                        if (sanPham.getHeader() != null && sanPham.getHeader().toLowerCase().contains(filter.toLowerCase())) {
+                                            sanPhamList.add(sanPham);
+                                        } else if (sanPham.getNameNguoiBan() != null && sanPham.getNameNguoiBan().toLowerCase().contains(filter.toLowerCase())) {
+                                            sanPhamList.add(sanPham);
+                                        }
+                                        isLoadedWithLittle = true;
+                                    }
+                                }
+                            }
+
+                            if (sanPhamList != null) {
+                                if (mView != null) {
+                                    mView.getSpSuccess(sanPhamList);
+                                }
                             }
                         }
 
-                        if (sanPhamList != null) {
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
                             if (mView != null) {
-                                mView.getSpSuccess(sanPhamList);
+                                mView.getSpError();
                             }
                         }
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        if (mView != null) {
-                            mView.getSpError();
-                        }
-                    }
-                });
-
+                    });
+                } catch (IndexOutOfBoundsException e) { }
             }
         }
     }

@@ -1,30 +1,38 @@
 package com.example.user.banhangonline.screen.thanhToan;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
+import com.example.user.banhangonline.caches.SaveMyPurchased;
 import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.DonHang;
 import com.example.user.banhangonline.model.SanPham;
-import com.example.user.banhangonline.screen.home.HomeActivity;
 import com.example.user.banhangonline.utils.DialogUntils;
 import com.example.user.banhangonline.utils.NetworkUtils;
 import com.example.user.banhangonline.utils.TimeNowUtils;
 import com.example.user.banhangonline.widget.dialog.DialogChangeAddress;
 import com.example.user.banhangonline.widget.dialog.DialogChangePhoneNmber;
+import com.example.user.banhangonline.widget.dialog.DialogMethodConnect;
 import com.example.user.banhangonline.widget.dialog.DialogPositiveNegative;
+
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.example.user.banhangonline.caches.SaveMyPurchased.objectPurchasedToSave;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartDetail;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartPhone;
 
 public class ThanhToanActivity extends BaseActivity implements ThanhToanContact.View {
 
@@ -56,7 +64,11 @@ public class ThanhToanActivity extends BaseActivity implements ThanhToanContact.
     @BindView(R.id.edt_sell_so_luong)
     EditText edtSoLuong;
 
+    @BindView(R.id.btn_thanh_toan)
+    Button btnThanhToan;
+
     ThanhToanPresenter mPresnter;
+    private String phone;
 
     @Override
     public boolean isTransparentStatusBar() {
@@ -70,7 +82,7 @@ public class ThanhToanActivity extends BaseActivity implements ThanhToanContact.
         ButterKnife.bind(this);
         mPresnter = new ThanhToanPresenter();
         mPresnter.attachView(this);
-
+        phone = getIntent().getStringExtra(keyStartPhone);
         mPresnter.setSanPham((SanPham) getIntent().getSerializableExtra(keyStartDetail));
         if (mPresnter.getSanPham() != null) {
             initInfo(mPresnter.getSanPham());
@@ -93,7 +105,7 @@ public class ThanhToanActivity extends BaseActivity implements ThanhToanContact.
         DialogUntils.showChangeBuyAddress(this, tvAddress.getText().toString().trim(), new DialogChangeAddress.IOnDoneChangeAddress() {
             @Override
             public void doneChangeAddress(String address) {
-                PreferManager.setMyAddress(ThanhToanActivity.this, address);
+                PreferManager.setMyAddress(ThanhToanActivity.this, !address.equals("") ? address : null);
                 tvAddress.setText(address);
             }
         });
@@ -138,23 +150,36 @@ public class ThanhToanActivity extends BaseActivity implements ThanhToanContact.
                          && mPresnter.getSanPham().getIdNguoiban() != null
                          && tvAddress.getText().toString().trim() != null
                          && !tvAddress.getText().toString().trim().equals(getString(R.string.dont_address))
-                         && tvSdt.getText().toString().trim() != null
                          && !tvSdt.getText().toString().trim().equals(getString(R.string.dont_phone_number))
-                         && edtSoLuong.getText().toString().trim() != null) {
+                         && !edtSoLuong.getText().toString().trim().equals("")) {
                     showDialog();
-
-                    mPresnter.pushDonHangToFirebase(mDataBase, new DonHang(tvAddress.getText().toString().trim(),
+                    DonHang donHangCart = new DonHang(tvAddress.getText().toString().trim(),
                              mPresnter.getSanPham().getHeader(),
-                             mPresnter.getSanPham().getIdSanPham(),
+                             String.valueOf(Calendar.getInstance().getTimeInMillis()),
                              mPresnter.getSanPham().getIdNguoiban(),
                              PreferManager.getUserID(this),
                              PreferManager.getNameAccount(this),
                              tvSdt.getText().toString().trim(),
                              TimeNowUtils.getTimeNow(),
                              mPresnter.getSanPham().getListFiles().getUrl1(),
-                             null,
                              mPresnter.getSanPham().getGia(),
-                             edtSoLuong.getText().toString().trim()));
+                             edtSoLuong.getText().toString().trim());
+
+                    DonHang donHangPurchased = new DonHang(tvAddress.getText().toString().trim(),
+                             mPresnter.getSanPham().getHeader(),
+                             String.valueOf(Calendar.getInstance().getTimeInMillis()),
+                             mPresnter.getSanPham().getIdNguoiban(),
+                             PreferManager.getUserID(this),
+                             mPresnter.getSanPham().getNameNguoiBan(),
+                             null,
+                             TimeNowUtils.getTimeNow(),
+                             mPresnter.getSanPham().getListFiles().getUrl1(),
+                             mPresnter.getSanPham().getGia(),
+                             edtSoLuong.getText().toString().trim());
+
+                    mPresnter.pushDonHangToFirebase(mDataBase, donHangCart);
+                    objectPurchasedToSave.add(donHangPurchased);
+                    SaveMyPurchased.saveMyPurchasedFile(this, objectPurchasedToSave);
                 } else {
                     showSnackbar(getString(R.string.error_retry));
                 }
@@ -172,15 +197,36 @@ public class ThanhToanActivity extends BaseActivity implements ThanhToanContact.
 
     @Override
     public void pushDonHangSuccess() {
-        showSnackbar(getString(R.string.da_gui));
+        btnThanhToan.setEnabled(false);
+        Toast.makeText(this, getString(R.string.da_gui), Toast.LENGTH_SHORT).show();
         dismissDialog();
-        startActivity(new Intent(ThanhToanActivity.this, HomeActivity.class));
-        finish();
+        DialogUntils.showMethodConnect(this, new DialogMethodConnect.IOnClickChooseMethodPay() {
+            @Override
+            public void onMethodCall() {
+                if (phone != null) {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:" + phone));
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onMethodSMS() {
+                if (phone != null) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + phone));
+                    intent.putExtra("sms_body", mPresnter.getSanPham().getHeader() +
+                             "\n" + mPresnter.getSanPham().getAddress() +
+                             "\n" + getString(R.string.so_luong) + ": " + edtSoLuong.getText().toString().trim() +
+                             "\n" + TimeNowUtils.getTimeNow());
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
     public void pushDonHangError() {
-        showSnackbar(getString(R.string.error_retry));
+        Toast.makeText(this, getString(R.string.error_retry), Toast.LENGTH_SHORT).show();
         dismissDialog();
     }
 

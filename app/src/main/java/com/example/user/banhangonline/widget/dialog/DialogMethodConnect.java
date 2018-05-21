@@ -13,11 +13,11 @@ import android.widget.TextView;
 
 import com.example.user.banhangonline.R;
 
-public class DialogMethodPay extends Dialog{
+public class DialogMethodConnect extends Dialog{
 
     private IOnClickChooseMethodPay mListener;
 
-    public DialogMethodPay(@NonNull Context context,IOnClickChooseMethodPay mListener) {
+    public DialogMethodConnect(@NonNull Context context, IOnClickChooseMethodPay mListener) {
         super(context, R.style.FullscreenDialog);
         this.mListener = mListener;
     }
@@ -35,22 +35,23 @@ public class DialogMethodPay extends Dialog{
 
         setContentView(R.layout.dialog_method_pay);
 
-        TextView tvPayBuy = (TextView) findViewById(R.id.dialog_method_pay_buy);
-        TextView tvAddCart = (TextView) findViewById(R.id.dialog_method_add_cart);
+        TextView tvPayBuy = (TextView) findViewById(R.id.dialog_method_connect_call);
+        TextView tvAddCart = (TextView) findViewById(R.id.dialog_method_connect_sms);
         Button btnCancel = (Button) findViewById(R.id.dialog_method_pay_cancel);
 
         tvPayBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.onMethodPayBuy(DialogMethodPay.this);
+                mListener.onMethodCall();
+                dismiss();
             }
         });
 
         tvAddCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.onMethodAddCart(DialogMethodPay.this);
-
+                mListener.onMethodSMS();
+                dismiss();
             }
         });
 
@@ -63,8 +64,8 @@ public class DialogMethodPay extends Dialog{
     }
 
     public interface IOnClickChooseMethodPay{
-        void onMethodPayBuy(DialogMethodPay dialogMethodPay);
+        void onMethodCall();
 
-        void onMethodAddCart(DialogMethodPay dialogMethodPay);
+        void onMethodSMS();
     }
 }

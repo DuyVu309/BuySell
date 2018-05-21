@@ -19,15 +19,14 @@ import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.screen.detail.adapter.DetailAdapter;
 import com.example.user.banhangonline.screen.thanhToan.ThanhToanActivity;
 import com.example.user.banhangonline.screen.spAccount.SanPhamAccountActivity;
-import com.example.user.banhangonline.utils.DialogUntils;
 import com.example.user.banhangonline.utils.NetworkUtils;
-import com.example.user.banhangonline.widget.dialog.DialogMethodPay;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartDetail;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartPhone;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartSPAccount;
 
 public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetailContact.View {
@@ -61,7 +60,7 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
 
     private SanPhamDetailPresenter mPresenter;
     private DetailAdapter mAdapter;
-    private SanPham sanPham;
+    private String phone;
 
     @Override
     public boolean isTransparentStatusBar() {
@@ -77,8 +76,8 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
         setSupportActionBar(toolbar);
         mPresenter = new SanPhamDetailPresenter();
         mPresenter.attachView(this);
-        sanPham = (SanPham) getIntent().getSerializableExtra(keyStartDetail);
-        if (sanPham != null) {
+        mPresenter.setSanPham((SanPham) getIntent().getSerializableExtra(keyStartDetail));
+        if (mPresenter.getSanPham() != null) {
             initAdapter();
         }
     }
@@ -90,13 +89,13 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
     }
 
     private void initAdapter() {
-        mPresenter.getInfomationWithIdAccount(mDataBase, sanPham.getIdNguoiban());
-        tvTime.setText(sanPham.getTime());
-        tvMota.setText(sanPham.getHeader() + " - " + sanPham.getMota());
-        tvGia.setText(sanPham.getGia());
+        mPresenter.getInfomationWithIdAccount(mDataBase, mPresenter.getSanPham().getIdNguoiban());
+        tvTime.setText(mPresenter.getSanPham().getTime());
+        tvMota.setText(mPresenter.getSanPham().getHeader() + " - " + mPresenter.getSanPham().getMota());
+        tvGia.setText(mPresenter.getSanPham().getGia());
 
         rvImageDetail.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new DetailAdapter(this, sanPham.getListFiles().getListUrl());
+        mAdapter = new DetailAdapter(this, mPresenter.getSanPham().getListFiles().getListUrl());
         rvImageDetail.setAdapter(mAdapter);
     }
 
@@ -108,6 +107,7 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
 
     @Override
     public void getInfoMationSuccess(Account account) {
+        phone = account.getPhoneNumber();
         Glide.with(this).load(account.getUrlAvt()).error(R.drawable.ic_product).into(imgAccount);
         Glide.with(this).load(account.getUrlLanscape()).error(R.drawable.bg_app).into(imgLanscape);
         tvAccoutName.setText(account.getName());
@@ -116,34 +116,26 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
 
     @OnClick(R.id.btn_mua_hang)
     public void clickMuaHang(){
-        DialogUntils.showMethodPay(this, new DialogMethodPay.IOnClickChooseMethodPay() {
-            @Override
-            public void onMethodPayBuy(DialogMethodPay dialogMethodPay) {
-                if (NetworkUtils.isConnected(SanPhamDetailActivity.this)) {
-                    if (sanPham != null) {
-                        Intent intent = new Intent(SanPhamDetailActivity.this, ThanhToanActivity.class);
-                        intent.putExtra(keyStartDetail, sanPham);
-                        startActivity(intent);
-                        dialogMethodPay.dismiss();
-                    }
-                } else {
-                    showNoInternet();
+        if (NetworkUtils.isConnected(SanPhamDetailActivity.this)) {
+            if (mPresenter.getSanPham() != null) {
+                Intent intent = new Intent(SanPhamDetailActivity.this, ThanhToanActivity.class);
+                intent.putExtra(keyStartDetail, mPresenter.getSanPham());
+                if (phone != null) {
+                    intent.putExtra(keyStartPhone, phone);
                 }
+                startActivity(intent);
             }
-
-            @Override
-            public void onMethodAddCart(DialogMethodPay dialogMethodPay) {
-                dialogMethodPay.dismiss();
-            }
-        });
+        } else {
+            showNoInternet();
+        }
     }
 
     @OnClick(R.id.img_account)
     public void startAccount(){
-        if (sanPham != null) {
-            if (sanPham.getIdNguoiban() != null) {
+        if (mPresenter.getSanPham() != null) {
+            if (mPresenter.getSanPham().getIdNguoiban() != null) {
                 Intent intent = new Intent(SanPhamDetailActivity.this, SanPhamAccountActivity.class);
-                intent.putExtra(keyStartSPAccount, sanPham.getIdNguoiban());
+                intent.putExtra(keyStartSPAccount, mPresenter.getSanPham().getIdNguoiban());
                 startActivity(intent);
             }
         }

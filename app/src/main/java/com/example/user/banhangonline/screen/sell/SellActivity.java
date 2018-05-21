@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
@@ -22,8 +23,10 @@ import com.example.user.banhangonline.model.Part;
 import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.screen.home.HomeActivity;
 import com.example.user.banhangonline.screen.library.LibraryActivity;
+import com.example.user.banhangonline.screen.mySanPham.MySanPhamActivity;
 import com.example.user.banhangonline.screen.sell.adapter.ImageAdapter;
 import com.example.user.banhangonline.screen.sell.adapter.SpinnerAdapter;
+import com.example.user.banhangonline.utils.GoogleMapUtils;
 import com.example.user.banhangonline.utils.NetworkUtils;
 import com.example.user.banhangonline.utils.TimeNowUtils;
 import com.example.user.banhangonline.widget.dialog.DialogPositiveNegative;
@@ -233,7 +236,6 @@ public class SellActivity extends BaseActivity implements SellContact.View {
             }
         });
 
-
     }
 
     @OnClick(R.id.spiner_category)
@@ -332,18 +334,38 @@ public class SellActivity extends BaseActivity implements SellContact.View {
     }
 
     private void uploadListFile(String idPart) {
-        mPresenter.upLoadSanPhamToFirebase(mDataBase,
-                 new SanPham(PreferManager.getUserID(this),
-                          PreferManager.getNameAccount(this),
-                          PreferManager.getUserID(this) + Calendar.getInstance().getTimeInMillis(),
-                          mPresenter.getIdCate(),
-                          idPart,
-                          edtHeader.getText().toString().trim(),
-                          edtMota.getText().toString().trim(),
-                          TimeNowUtils.getTimeNow(),
-                          new ListFileImages().getContructor(mPresenter.getListImages(), mPresenter.getListNameImages()),
-                          edtSellGia.getText().toString().trim(),
-                          PreferManager.getMyAddress(this)));
+        GoogleMapUtils.getLatLongFromGivenAddress(this, PreferManager.getMyAddress(this));
+        if (GoogleMapUtils.getLatLng() != null) {
+            mPresenter.upLoadSanPhamToFirebase(mDataBase,
+                     new SanPham(PreferManager.getUserID(this),
+                              PreferManager.getNameAccount(this),
+                              PreferManager.getUserID(this) + Calendar.getInstance().getTimeInMillis(),
+                              mPresenter.getIdCate(),
+                              idPart,
+                              edtHeader.getText().toString().trim(),
+                              edtMota.getText().toString().trim(),
+                              TimeNowUtils.getTimeNow(),
+                              new ListFileImages().getContructor(mPresenter.getListImages(), mPresenter.getListNameImages()),
+                              edtSellGia.getText().toString().trim(),
+                              PreferManager.getMyAddress(this),
+                              GoogleMapUtils.getLatLng().latitude,
+                              GoogleMapUtils.getLatLng().longitude));
+        } else {
+            mPresenter.upLoadSanPhamToFirebase(mDataBase,
+                     new SanPham(PreferManager.getUserID(this),
+                              PreferManager.getNameAccount(this),
+                              PreferManager.getUserID(this) + Calendar.getInstance().getTimeInMillis(),
+                              mPresenter.getIdCate(),
+                              idPart,
+                              edtHeader.getText().toString().trim(),
+                              edtMota.getText().toString().trim(),
+                              TimeNowUtils.getTimeNow(),
+                              new ListFileImages().getContructor(mPresenter.getListImages(), mPresenter.getListNameImages()),
+                              edtSellGia.getText().toString().trim(),
+                              PreferManager.getMyAddress(this),
+                              0, 0));
+        }
+
         dismissDialog();
     }
 
@@ -374,6 +396,7 @@ public class SellActivity extends BaseActivity implements SellContact.View {
 
     @Override
     public void upLoadToFirebaseSuccess() {
+        Toast.makeText(this, getString(R.string.thanh_cong), Toast.LENGTH_SHORT).show();
         PreferManager.setTextHeader(this, "");
         PreferManager.setTextMota(this, "");
         PreferManager.setTextGia(this, "");
@@ -391,16 +414,43 @@ public class SellActivity extends BaseActivity implements SellContact.View {
     public void upLoadImagesSuccess(List<String> listNames) {
         if (mPresenter.getListImages().size() == mPresenter.getListFiles().size()) {
             if (lnPart.getVisibility() != View.VISIBLE) {
-                uploadListFile(null);
+                if (PreferManager.getMyAddress(this).equals(getString(R.string.dont_address))) {
+                    showDialogInitAddress();
+                } else {
+                    uploadListFile(null);
+                }
             }
             if (lnPart.getVisibility() == View.VISIBLE) {
                 if (mPresenter.getIdPart() != null) {
-                    uploadListFile(mPresenter.getIdPart());
+                    if (PreferManager.getMyAddress(this).equals(getString(R.string.dont_address))) {
+                        showDialogInitAddress();
+                    } else {
+                        uploadListFile(mPresenter.getIdPart());
+                    }
                 } else {
                     showSnackbar(getString(R.string.chon_hang_muc));
                 }
             }
         }
+    }
+
+    private void showDialogInitAddress() {
+        showConfirmDialog(getString(R.string.cap_nhat_dia_chi),
+                 getString(R.string.dont_have_address_and_update),
+                 getString(R.string.xac_nhan),
+                 getString(R.string.huy),
+                 new DialogPositiveNegative.IPositiveNegativeDialogListener() {
+                     @Override
+                     public void onClickAnswerPositive(DialogPositiveNegative dialog) {
+                         startActivity(new Intent(SellActivity.this, MySanPhamActivity.class));
+                         finish();
+                     }
+
+                     @Override
+                     public void onClickAnswerNegative(DialogPositiveNegative dialog) {
+                         dialog.dismiss();
+                     }
+                 });
     }
 
     @Override

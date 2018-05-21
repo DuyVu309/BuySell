@@ -1,18 +1,8 @@
 package com.example.user.banhangonline.screen.myGioHang;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
@@ -24,11 +14,9 @@ import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.DonHang;
 import com.example.user.banhangonline.screen.maps.MapsTotalMyCartActivity;
 import com.example.user.banhangonline.screen.myGioHang.adapter.MyGioHangAdapter;
+import com.example.user.banhangonline.utils.DialogUntils;
 import com.example.user.banhangonline.utils.NetworkUtils;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
+import com.example.user.banhangonline.widget.dialog.DialogPositiveNegative;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -41,7 +29,6 @@ import butterknife.OnClick;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartListAddress;
 
 public class MyGioHangActivity extends BaseActivity implements MyGioHangContact.View {
-    private static final int REQUEST_CODE_MY_LOCATION = 1;
 
     @BindView(R.id.rv_my_cart)
     RecyclerView rvMyCart;
@@ -51,9 +38,7 @@ public class MyGioHangActivity extends BaseActivity implements MyGioHangContact.
 
     MyGioHangPresenter mPresenter;
     MyGioHangAdapter mAdapter;
-
-    GoogleMap mMap;
-    Location myLocation;
+    int positonDelete;
 
     @Override
     public boolean isTransparentStatusBar() {
@@ -77,7 +62,7 @@ public class MyGioHangActivity extends BaseActivity implements MyGioHangContact.
                     mPresenter.getAllKeyMyCartFromFirebase(mDataBase, PreferManager.getUserID(this));
                 }
             } else {
-                mPresenter.setmList(SaveMyCart.readCategoryFile(this, mPresenter.getmList()));
+                mPresenter.setmList(SaveMyCart.readMyCartFile(this, mPresenter.getmList()));
                 createAdapter();
                 tvTitle.setText(getString(R.string.don_hang_cua_ban) + " " + mPresenter.getmList().size());
             }
@@ -86,7 +71,6 @@ public class MyGioHangActivity extends BaseActivity implements MyGioHangContact.
     }
 
     private void initAdapter() {
-        initLocation();
         createAdapter();
 
         mAdapter.setmOnLoadMore(new MyGioHangAdapter.OnLoadMoreListener() {
@@ -111,23 +95,34 @@ public class MyGioHangActivity extends BaseActivity implements MyGioHangContact.
         });
     }
 
-    private void initLocation() {
-        if (getMyLocation() != null) {
-            myLocation = getMyLocation();
-        }
-    }
 
     private void createAdapter() {
         rvMyCart.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new MyGioHangAdapter(rvMyCart, this, myLocation, mPresenter.getmList(), new MyGioHangAdapter.IOnClickMyCart() {
+        mAdapter = new MyGioHangAdapter(rvMyCart, this, getMyLocation(), mPresenter.getmList(), new MyGioHangAdapter.IOnClickMyCart() {
             @Override
             public void onClickMyCart(DonHang donHang) {
-
+                DialogUntils.showDonHangInfo(MyGioHangActivity.this, donHang);
             }
 
             @Override
-            public void onOptionSelectedMyCart(DonHang donHang) {
+            public void onOptionSelectedMyCart(int postion, final DonHang donHang) {
+                positonDelete = postion;
+                showConfirmDialog(getString(R.string.xoa_don_hang),
+                         getString(R.string.xac_nhan_xoa_don_hang),
+                         getString(R.string.xac_nhan),
+                         getString(R.string.huy),
+                         new DialogPositiveNegative.IPositiveNegativeDialogListener() {
+                             @Override
+                             public void onClickAnswerPositive(DialogPositiveNegative dialog) {
+                                 mPresenter.deleteDonHang(mDataBase, donHang);
+                                 dialog.dismiss();
+                             }
 
+                             @Override
+                             public void onClickAnswerNegative(DialogPositiveNegative dialog) {
+                                 dialog.dismiss();
+                             }
+                         });
             }
         });
         rvMyCart.setAdapter(mAdapter);
@@ -164,7 +159,6 @@ public class MyGioHangActivity extends BaseActivity implements MyGioHangContact.
                 if (mPresenter.getmListKey().size() != 0) {
                     mPresenter.getListCartFromFirebase(mDataBase);
                 } else if (mPresenter.getmListKey().size() == 0) {
-                    showSnackbar(getString(R.string.dont_have_product));
                     dismissDialog();
                 }
             }
@@ -187,7 +181,7 @@ public class MyGioHangActivity extends BaseActivity implements MyGioHangContact.
             dismissDialog();
         }
         if (mAdapter != null) {
-            SaveMyCart.saveCategoryFile(this, mPresenter.getmList());
+            SaveMyCart.saveMyCartFile(this, mPresenter.getmList());
             tvTitle.setText(getString(R.string.don_hang_cua_ban) + " (" + mPresenter.getmList().size() + ")");
             mAdapter.notifyDataSetChanged();
             dismissDialog();
@@ -197,6 +191,21 @@ public class MyGioHangActivity extends BaseActivity implements MyGioHangContact.
     @Override
     public void getCartError() {
         dismissDialog();
+    }
+
+    @Override
+    public void deleteDonHangSuccess() {
+        showSnackbar(getString(R.string.da_xoa));
+        mPresenter.getmList().remove(positonDelete);
+        mAdapter.notifyItemRemoved(positonDelete);
+        mAdapter.notifyItemRangeChanged(positonDelete, mPresenter.getmList().size());
+        tvTitle.setText(getString(R.string.don_hang_cua_ban) + " (" + mPresenter.getmList().size() + ")");
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void deleteDonHangError() {
+        showSnackbar(getString(R.string.error_retry));
     }
 
     @Override

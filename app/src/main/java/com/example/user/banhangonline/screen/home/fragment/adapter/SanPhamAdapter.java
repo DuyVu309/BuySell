@@ -29,6 +29,7 @@ public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private static final int VIEW_TYPE_SANPHAM = 1;
     private static final int VIEW_TYPE_LOADING = 2;
+
     private Context context;
     private Location mLocation;
     private List<SanPham> mList;
@@ -119,32 +120,31 @@ public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         if (mList.get(position) instanceof SanPham) {
-            SanPham sanPham = mList.get(position);
+            final SanPham sanPham = mList.get(position);
             final SanPhamViewHolder viewHolder = (SanPhamViewHolder) holder;
             String url = mList.get(position).getListFiles().getUrl1();
             Glide.with(context).load(url).centerCrop().into(viewHolder.imgSanPham);
             viewHolder.tvHeaderSanPham.setText(sanPham.getHeader());
             viewHolder.tvGiaSp.setText(sanPham.getGia());
 
-            if (sanPham.getAddress() != null) {
-                GoogleMapUtils.getLatLongFromGivenAddress(context, sanPham.getAddress());
-                LatLng latLng = GoogleMapUtils.getLatLng();
-                if (mLocation != null && latLng != null) {
-                    try {
-                        new Directions(mLocation.getLatitude(), mLocation.getLongitude(), latLng.latitude, latLng.longitude, new Directions.DirectionsListener() {
-                            @Override
-                            public void onDirectionSuccess(List<Route> routes) {
-                                for (Route route : routes) {
-                                    viewHolder.tvDistance.setText("Cách " + route.distance);
-                                }
+            LatLng endLatLng = new LatLng(sanPham.getLatitude(), sanPham.getLongitude());
+            if (mLocation != null && endLatLng != null) {
+                try {
+                    new Directions(mLocation.getLatitude(), mLocation.getLongitude(), endLatLng.latitude, endLatLng.longitude, new Directions.DirectionsListener() {
+                        @Override
+                        public void onDirectionSuccess(List<Route> routes) {
+                            for (Route route : routes) {
+                                viewHolder.tvDistance.setText("Cách " + route.distance);
                             }
-                        }).execute();
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
+                        }
+                    }).execute();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
                 }
+            } else {
+                viewHolder.tvDistance.setVisibility(View.GONE);
             }
         }
     }
@@ -160,6 +160,7 @@ public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public interface ISelectPayAdapter {
         void onSelectedSanPham(SanPham sanPham);
+
     }
 
     public interface OnLoadMoreListener {

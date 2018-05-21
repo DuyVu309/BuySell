@@ -1,7 +1,6 @@
 package com.example.user.banhangonline.screen.sanphamWithIdCate;
 
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -24,8 +24,11 @@ import com.example.user.banhangonline.screen.detail.SanPhamDetailActivity;
 import com.example.user.banhangonline.screen.home.fragment.adapter.SanPhamAdapter;
 import com.example.user.banhangonline.screen.sanphamWithIdCate.adapter.SearchAdapter;
 import com.example.user.banhangonline.utils.NetworkUtils;
+import com.example.user.banhangonline.utils.SortPlacesUtils;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,6 +40,7 @@ import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartDetai
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartFilter;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartIdCategory;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartIdPart;
+import static com.example.user.banhangonline.utils.KeyUntils.keyIdCateThoiTrang;
 
 public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithIdContact.View {
     private Part part;
@@ -61,9 +65,6 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
 
     SanPhamWithIdPresenter mPresenter;
     GridLayoutManager manager;
-    List<Object> filteredList;
-
-    Location myLocation;
 
     @Override
     public boolean isTransparentStatusBar() {
@@ -77,8 +78,14 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
         ButterKnife.bind(this);
         mPresenter = new SanPhamWithIdPresenter();
         mPresenter.attachView(this);
+        mPresenter.setContext(this);
         part = (Part) getIntent().getSerializableExtra(keyIdSanPham);
         if (part != null) {
+            if (part.getIDCategory().equals(keyIdCateThoiTrang)) {
+                if (part.getIDPart() == null) {
+                    return;
+                }
+            }
             initData();
         }
     }
@@ -97,7 +104,6 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
 
     private void initAdapterSearch() {
         rvSearch.setLayoutManager(new LinearLayoutManager(this));
-        filteredList = new ArrayList<>();
         mAdapterSr = new SearchAdapter(this, mPresenter.getSearchList(), new SearchAdapter.IOnClickSearch() {
             @Override
             public void onClickSanPham(Object searchSP) {
@@ -137,12 +143,9 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
     }
 
     private void initAdapterSp() {
-        if (getMyLocation() != null) {
-            myLocation = getMyLocation();
-        }
         manager = new GridLayoutManager(this, 2);
         recyclerViewSp.setLayoutManager(manager);
-        mAdapter = new SanPhamAdapter(recyclerViewSp, this, myLocation, mPresenter.getSanPhamList(), new SanPhamAdapter.ISelectPayAdapter() {
+        mAdapter = new SanPhamAdapter(recyclerViewSp, this, getMyLocation(), mPresenter.getSanPhamList(), new SanPhamAdapter.ISelectPayAdapter() {
             @Override
             public void onSelectedSanPham(SanPham sanPham) {
                 if (sanPham != null) {
@@ -165,7 +168,7 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
                         if (mPresenter.getSanPhamList().size() > position) {
                             mPresenter.setTotal(position + 10);
                         }
-                        mPresenter.getSanPhamFromFirebase(mDataBase, part.getIDCategory(), part.getIDPart());
+                        mPresenter.getSanPhamFromFirebase(mDataBase, part.getIDCategory(), part.getIDPart(), getMyLocation());
                         mAdapter.setLoaded();
                     }
                 }, 1000);
@@ -192,16 +195,14 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
         } else {
             showNoInternet();
         }
-
     }
 
     @Override
     public void getKeySuccess() {
         if (mPresenter.getKeyList() != null) {
             if (mPresenter.getKeyList().size() != 0) {
-                mPresenter.getSanPhamFromFirebase(mDataBase, part.getIDCategory(), part.getIDPart());
+                mPresenter.getSanPhamFromFirebase(mDataBase, part.getIDCategory(), part.getIDPart(), getMyLocation());
             } else if (mPresenter.getKeyList().size() == 0) {
-                showSnackbar(getString(R.string.dont_have_product));
                 dismissDialog();
             }
         }
@@ -215,8 +216,10 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
     @Override
     public void getSpSuccess() {
         if (mAdapter != null) {
+            if (mPresenter.getSanPhamList().size() == 0) {
+                showSnackbar(getString(R.string.dont_have_product));
+            }
             mAdapter.notifyDataSetChanged();
-            mAdapterSr.notifyDataSetChanged();
             dismissDialog();
         }
 
@@ -237,6 +240,20 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
     @Override
     public void getSearchError() {
         showSnackbar(getString(R.string.error));
+    }
+
+    @OnClick(R.id.img_scan)
+    public void recentScan() {
+        if (mPresenter.getSanPhamList() != null) {
+            try {
+                Collections.sort(mPresenter.getSanPhamList(), new SortPlacesUtils(new LatLng(getMyLocation().getLatitude(), getMyLocation().getLongitude())));
+            } catch (NullPointerException e) {
+
+            }
+            if (mAdapter != null) {
+                mAdapter.notifyDataSetChanged();
+            }
+        }
     }
 
     @Override

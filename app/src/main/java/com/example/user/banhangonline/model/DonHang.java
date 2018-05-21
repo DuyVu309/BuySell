@@ -15,7 +15,6 @@ public class DonHang implements Serializable {
     private String soDienThoai;
     private String thoiGian;
     private String urlImg;
-    private String distance;
     private String gia;
     private String soLuong;
 
@@ -26,8 +25,7 @@ public class DonHang implements Serializable {
                    String idDonHang, String idNguoiBan,
                    String idNguoiMua, String nameNguoiMua,
                    String soDienThoai, String thoiGian,
-                   String urlImg, String distance,
-                   String gia, String soLuong) {
+                   String urlImg, String gia, String soLuong) {
         this.diaChi = diaChi;
         this.header = header;
         this.idDonHang = idDonHang;
@@ -37,7 +35,6 @@ public class DonHang implements Serializable {
         this.soDienThoai = soDienThoai;
         this.thoiGian = thoiGian;
         this.urlImg = urlImg;
-        this.distance = distance;
         this.gia = gia;
         this.soLuong = soLuong;
     }
@@ -112,14 +109,6 @@ public class DonHang implements Serializable {
 
     public void setUrlImg(String urlImg) {
         this.urlImg = urlImg;
-    }
-
-    public String getDistance() {
-        return distance;
-    }
-
-    public void setDistance(String distance) {
-        this.distance = distance;
     }
 
     public String getGia() {

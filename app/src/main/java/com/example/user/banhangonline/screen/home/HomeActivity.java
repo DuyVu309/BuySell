@@ -11,15 +11,18 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
 import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.Account;
+import com.example.user.banhangonline.screen.feedback.FeedBackActivity;
 import com.example.user.banhangonline.screen.home.adapter.HomePagerAdapter;
 import com.example.user.banhangonline.screen.myGioHang.MyGioHangActivity;
 import com.example.user.banhangonline.screen.mySanPham.MySanPhamActivity;
+import com.example.user.banhangonline.screen.purchased.MyPurchasedActivity;
 import com.example.user.banhangonline.screen.search.SearchActivity;
 import com.example.user.banhangonline.screen.sell.SellActivity;
 import com.example.user.banhangonline.utils.NetworkUtils;
@@ -69,8 +72,17 @@ public class HomeActivity extends BaseActivity implements
     @BindView(R.id.tv_cai_dat)
     TextView tvSetting;
 
+    @BindView(R.id.tv_tinh_nang_vip)
+    TextView tvTinhNangVip;
+
+    @BindView(R.id.tv_feedback)
+    TextView tvFeedback;
+
     @BindView(R.id.tv_trang_ca_nhan)
     TextView tvMyAccount;
+
+    @BindView(R.id.tv_version_app)
+    TextView tvVersionApp;
 
     @BindView(R.id.tv_dang_xuat)
     TextView tvDangXuat;
@@ -129,6 +141,7 @@ public class HomeActivity extends BaseActivity implements
         if (email != null) {
             tvDangXuat.append("(" + email + ")");
         }
+        tvVersionApp.setText(getString(R.string.phien_ban) + " " + getVersionApp());
     }
 
     private void initFontTitle() {
@@ -167,10 +180,11 @@ public class HomeActivity extends BaseActivity implements
                     dialog.dismiss();
                 }
             });
-        }
-        if (PreferManager.getIDBuySell(this) != null) {
+        } else if (PreferManager.getIDBuySell(this) != null) {
             if (PreferManager.getIDBuySell(this).equals(keyAccountSell)) {
                 startActivity(new Intent(HomeActivity.this, MyGioHangActivity.class));
+            } else if (PreferManager.getIDBuySell(this).equals(keyAccountBuy)){
+                startActivity(new Intent(HomeActivity.this, MyPurchasedActivity.class));
             }
         }
     }
@@ -192,23 +206,39 @@ public class HomeActivity extends BaseActivity implements
     @OnClick(R.id.tv_trang_chu)
     public void onClickTrangchu() {
         tvTrangChu.setSelected(true);
-        disableSelected(tvNotify, tvSetting, tvMyAccount);
+        disableSelected(tvNotify, tvSetting, tvMyAccount, tvTinhNangVip, tvFeedback);
         drawerLayout.closeDrawer(lnOpenDrawer);
     }
 
     @OnClick(R.id.tv_thong_bao)
     public void onClickThongBao() {
         tvNotify.setSelected(true);
-        disableSelected(tvTrangChu, tvMyAccount, tvSetting);
+        disableSelected(tvTrangChu, tvMyAccount, tvSetting, tvTinhNangVip, tvFeedback);
         drawerLayout.closeDrawer(lnOpenDrawer);
     }
 
     @OnClick(R.id.tv_cai_dat)
     public void onClickSetting() {
         tvSetting.setSelected(true);
-        disableSelected(tvTrangChu, tvMyAccount, tvNotify);
+        disableSelected(tvTrangChu, tvMyAccount, tvNotify, tvTinhNangVip, tvFeedback);
         drawerLayout.closeDrawer(lnOpenDrawer);
 
+    }
+
+    @OnClick(R.id.tv_tinh_nang_vip)
+    public void onClickVIP() {
+        tvTinhNangVip.setSelected(true);
+        disableSelected(tvTrangChu, tvMyAccount, tvNotify, tvSetting, tvFeedback);
+        drawerLayout.closeDrawer(lnOpenDrawer);
+        Toast.makeText(this, R.string.vip_dang_phat_trien, Toast.LENGTH_SHORT).show();
+    }
+
+    @OnClick(R.id.tv_feedback)
+    public void feedback() {
+        tvFeedback.setSelected(true);
+        disableSelected(tvTrangChu, tvMyAccount, tvNotify, tvSetting, tvTinhNangVip);
+        drawerLayout.closeDrawer(lnOpenDrawer);
+        startActivity(new Intent(HomeActivity.this, FeedBackActivity.class));
     }
 
     @OnClick(R.id.tv_trang_ca_nhan)
@@ -245,7 +275,7 @@ public class HomeActivity extends BaseActivity implements
     @OnClick(R.id.tv_dang_xuat)
     public void onClickDangXuat() {
         if (PreferManager.getIsLogin(this)) {
-            showConfirmDialog("Bạn có chắc chắn muốn đăng xuất hay không?", new DialogPositiveNegative.IPositiveNegativeDialogListener() {
+            showConfirmDialog(getString(R.string.ban_muon_dang_xuat_khong), new DialogPositiveNegative.IPositiveNegativeDialogListener() {
                 @Override
                 public void onClickAnswerPositive(DialogPositiveNegative dialog) {
                     PreferManager.setIsLogin(HomeActivity.this, false);

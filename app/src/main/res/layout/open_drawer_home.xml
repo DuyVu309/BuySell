@@ -45,74 +45,67 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_trang_chu"
+                style="@style/normalText"
+                android:layout_margin="@dimen/pading_small"
+                android:drawableLeft="@drawable/ic_home"
+                android:text="@string/trang_chu" />
+
+            <TextView
+                android:id="@+id/tv_trang_ca_nhan"
+                style="@style/normalText"
+                android:layout_margin="@dimen/pading_small"
+                android:drawableLeft="@drawable/ic_face"
+                android:text="@string/trang_ca_nhan" />
+
+            <TextView
+                android:id="@+id/tv_thong_bao"
+
+                style="@style/normalText"
+                android:layout_margin="@dimen/pading_small"
+                android:drawableLeft="@drawable/ic_notifications"
+                android:text="@string/thong_bao" />
+
+            <TextView
+                android:id="@+id/tv_cai_dat"
+
+                style="@style/normalText"
+                android:layout_margin="@dimen/pading_small"
+                android:drawableLeft="@drawable/ic_settings"
+                android:text="@string/cai_dat" />
+
+            <TextView
+                android:id="@+id/tv_tinh_nang_vip"
+
+                style="@style/normalText"
+                android:layout_margin="@dimen/pading_small"
+                android:drawableLeft="@drawable/ic_vip"
+                android:text="@string/tinh_nang_vip" />
+
+            <TextView
+                android:id="@+id/tv_feedback"
+                style="@style/normalText"
+                android:layout_margin="@dimen/pading_small"
+                android:drawableLeft="@drawable/ic_feedback"
+                android:text="@string/phan_hoi" />
+
+            <TextView
+                android:id="@+id/tv_dang_xuat"
+                style="@style/normalText"
+                android:layout_margin="@dimen/pading_small"
+                android:drawableLeft="@drawable/ic_logout"
+                android:text="@string/dang_xuat" />
+
+            <TextView
+                android:id="@+id/tv_version_app"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="@dimen/pading_small">
-
-                <TextView
-                    android:id="@+id/tv_trang_chu"
-                    style="@style/normalText"
-                    android:drawableLeft="@drawable/ic_home"
-                    android:text="@string/trang_chu" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="@dimen/pading_small">
-
-                <TextView
-                    android:id="@+id/tv_trang_ca_nhan"
-                    style="@style/normalText"
-                    android:drawableLeft="@drawable/ic_face"
-                    android:text="@string/trang_ca_nhan" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="@dimen/pading_small">
-
-                <TextView
-                    android:id="@+id/tv_thong_bao"
-                    style="@style/normalText"
-                    android:drawableLeft="@drawable/ic_notifications"
-                    android:text="@string/thong_bao" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="@dimen/pading_small">
-
-                <TextView
-                    android:id="@+id/tv_cai_dat"
-                    style="@style/normalText"
-                    android:drawableLeft="@drawable/ic_settings"
-                    android:text="@string/cai_dat" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="@dimen/pading_small">
-
-                <TextView
-                    android:id="@+id/tv_dang_xuat"
-                    style="@style/normalText"
-                    android:drawableLeft="@drawable/ic_logout"
-                    android:text="@string/dang_xuat" />
-            </LinearLayout>
-
+                android:layout_margin="@dimen/pading_normal"
+                android:textColor="@color/black"
+                android:textSize="@dimen/small_text_size" />
         </LinearLayout>
+
     </android.support.v4.widget.NestedScrollView>
 
 

@@ -1,20 +1,14 @@
 package com.example.user.banhangonline.screen.myGioHang.adapter;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -108,7 +102,7 @@ public class MyGioHangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    mlisenter.onOptionSelectedMyCart(mList.get(getAdapterPosition()));
+                    mlisenter.onOptionSelectedMyCart(getAdapterPosition(), mList.get(getAdapterPosition()));
                     return false;
                 }
             });
@@ -160,6 +154,9 @@ public class MyGioHangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             viewHolder.tvAddressMyCart.setText(donHang.getDiaChi());
             viewHolder.tvTimeMyCart.setText(donHang.getThoiGian());
             viewHolder.tvTenNguoiMuaMyCart.setText(donHang.getNameNguoiMua());
+            if (donHang.getSoDienThoai() == null) {
+                viewHolder.tvPhoneMyCart.setVisibility(View.GONE);
+            }
             viewHolder.tvPhoneMyCart.setText(donHang.getSoDienThoai());
             viewHolder.tvMyCartGia.setText("Giá: " + donHang.getGia());
             viewHolder.tvMyCartSoLuong.setText("Số lượng: " + donHang.getSoLuong());
@@ -180,6 +177,8 @@ public class MyGioHangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
+                } else {
+                    viewHolder.tvDistance.setVisibility(View.GONE);
                 }
             }
 
@@ -201,7 +200,7 @@ public class MyGioHangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public interface IOnClickMyCart {
         void onClickMyCart(DonHang donHang);
 
-        void onOptionSelectedMyCart(DonHang donHang);
+        void onOptionSelectedMyCart(int postion, DonHang donHang);
 
     }
 

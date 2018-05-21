@@ -18,6 +18,8 @@ public class SanPham implements Serializable, Comparator<SanPham> {
     private ListFileImages listFiles;
     private String gia;
     private String address;
+    private double latitude;
+    private double longitude;
 
     public SanPham() {
     }
@@ -27,7 +29,8 @@ public class SanPham implements Serializable, Comparator<SanPham> {
                    String idPart, String header,
                    String mota, String time,
                    ListFileImages listFiles, String gia,
-                   String address) {
+                   String address,
+                   double latitude, double longitude) {
         this.idNguoiban = idNguoiban;
         this.nameNguoiBan = nameNguoiBan;
         this.idSanPham = idSanPham;
@@ -39,8 +42,9 @@ public class SanPham implements Serializable, Comparator<SanPham> {
         this.listFiles = listFiles;
         this.gia = gia;
         this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
-
 
     public String getIdNguoiban() {
         return idNguoiban;
@@ -130,8 +134,26 @@ public class SanPham implements Serializable, Comparator<SanPham> {
         this.address = address;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
     @Override
     public int compare(SanPham sanPham, SanPham t1) {
-        return sanPham.getTime().compareTo(t1.getTime());
+        return 0;
     }
+
+
 }

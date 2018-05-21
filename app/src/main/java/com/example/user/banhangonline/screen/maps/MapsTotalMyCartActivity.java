@@ -1,15 +1,10 @@
 package com.example.user.banhangonline.screen.maps;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.widget.TextView;
 
 import com.example.user.banhangonline.R;
@@ -37,13 +32,10 @@ import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartListA
 
 public class MapsTotalMyCartActivity extends BaseActivity implements OnMapReadyCallback {
 
-    private static final int REQUEST_CODE_MY_LOCATION = 1;
-
     @BindView(R.id.tv_map_total_mycart)
     TextView tvMapTotal;
 
     private GoogleMap mMap;
-    private double longitudeMyLocation, latitudeMyLocation;
 
     private List<String> listAddress = new ArrayList<>();
     private List<Polyline> listPolylinePaths = new ArrayList<>();
@@ -70,10 +62,8 @@ public class MapsTotalMyCartActivity extends BaseActivity implements OnMapReadyC
         GoogleMapUtils.getLatLongFromGivenListAddress(this, listAddress);
         if (GoogleMapUtils.getListPoint() != null) {
             for (final LatLng lng : GoogleMapUtils.getListPoint()) {
-
-
                 try {
-                    new Directions(latitudeMyLocation, longitudeMyLocation, lng.latitude, lng.longitude, new Directions.DirectionsListener() {
+                    new Directions(getMyLocation().getLatitude(), getMyLocation().getLongitude(), lng.latitude, lng.longitude, new Directions.DirectionsListener() {
                         @Override
                         public void onDirectionSuccess(List<Route> routes) {
                             for (Route route : routes) {
@@ -93,7 +83,6 @@ public class MapsTotalMyCartActivity extends BaseActivity implements OnMapReadyC
             }
         }
 
-
         tvMapTotal.setText(getString(R.string.tong_so_dia_diem) + " (" + listAddress.size() + ")");
     }
 
@@ -107,64 +96,12 @@ public class MapsTotalMyCartActivity extends BaseActivity implements OnMapReadyC
     }
 
     private void setUpMyLocation() {
-        String s[] = {android.Manifest.permission.ACCESS_FINE_LOCATION};
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            mMap.setMyLocationEnabled(true);
-        } else {
-            ActivityCompat.requestPermissions(this, s, REQUEST_CODE_MY_LOCATION);
-        }
-
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(getMyLocation().getLatitude(), getMyLocation().getLongitude()), 16));
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+        mMap.setMyLocationEnabled(true);
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
-        Location myLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-        longitudeMyLocation = myLocation.getLongitude();
-        latitudeMyLocation = myLocation.getLatitude();
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(longitudeMyLocation, latitudeMyLocation), 16));
-
-    }
-
-    private final LocationListener locationListener = new LocationListener() {
-        public void onLocationChanged(Location location) {
-            longitudeMyLocation = location.getLongitude();
-            latitudeMyLocation = location.getLatitude();
-        }
-
-        @Override
-        public void onStatusChanged(String s, int i, Bundle bundle) {
-
-        }
-
-        @Override
-        public void onProviderEnabled(String s) {
-
-        }
-
-        @Override
-        public void onProviderDisabled(String s) {
-
-        }
-    };
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == REQUEST_CODE_MY_LOCATION) {
-            if (permissions.length == 1 &&
-                     permissions[0] == Manifest.permission.ACCESS_FINE_LOCATION &&
-                     grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    return;
-                }
-                mMap.setMyLocationEnabled(true);
-            } else {
-
-            }
-        }
     }
 
     @Override

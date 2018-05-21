@@ -100,6 +100,7 @@
     <string name="tien_hanh_mua_hang">Tiến hành mua hàng ngay</string>
     <string name="them_vao_gio_hang">Thêm vào giỏ hàng</string>
     <string name="phuong_thuc_mua">Phương thức mua hàng</string>
+    <string name="phuong_thuc_thanh_toan">Phương thức liên hệ</string>
 
     <string name="thay_doi_dia_chi">Thay đổi địa chỉ</string>
     <string name="thay_doi_sdt">Thay đổi số điện thoại</string>
@@ -116,5 +117,24 @@
     <string name="khong_the_hien_thi_khoang_cach">Không thể hiện thị khoảng cách</string>
     <string name="gia">Giá</string>
     <string name="so_luong">Số lượng</string>
+    <string name="cap_nhat_dia_chi">Cập nhật địa chỉ</string>
+    <string name="dont_have_address_and_update">Chưa có địa chỉ, cập nhật địa chỉ?</string>
+    <string name="da_xoa">Đã xóa</string>
+    <string name="xoa_don_hang">Xoá đơn hàng</string>
+    <string name="xac_nhan_xoa_don_hang">Bạn có muốn xóa đơn hàng này không</string>
+    <string name="goi_dien_truc_tiep">Gọi điện trực tiếp</string>
+    <string name="gui_tin_nhan">Gửi tin nhắn</string>
+    <string name="tinh_nang_vip">Tính năng VIP</string>
+    <string name="vip_dang_phat_trien">Tính năng này đang phát triển</string>
+    <string name="noi_dung">Nội dung</string>
+    <string name="meesage_feedback">Cảm ơn vì bạn đã quan tâm tới ứng dụng của chúng tôi, hãy gửi cho chúng tôi biết vấn đề bạn đang mắc phải. Sẽ rất tuyệt vời nếu bạn có ý tưởng hay. Xin cảm ơn!</string>
+
+    <string name="phan_hoi">Phản hồi</string>
+    <string name="phien_ban">Phiên bản:</string>
+
+    <string name="info_dev">https://www.facebook.com/vuduy309</string>
+    <string name="info_app">Ứng dụng được tạo bởi: VuDuy309</string>
+    <string name="info_us">Email chúng tôi: BuySellVN309@gmail.com</string>
+    <string name="ban_muon_dang_xuat_khong">Bạn có chắc chắn muốn đăng xuất hay không?</string>
 
 </resources>

@@ -14,6 +14,7 @@ import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.screen.mySanPham.MySanPhamActivity;
 import com.example.user.banhangonline.screen.sell.adapter.ImageAdapter;
+import com.example.user.banhangonline.utils.GoogleMapUtils;
 import com.example.user.banhangonline.utils.NetworkUtils;
 
 import java.io.File;
@@ -106,20 +107,44 @@ public class ChangeSanPhamActivity extends BaseActivity implements ChangeSanPham
     @OnClick(R.id.btn_luu)
     public void updateSp() {
         if (NetworkUtils.isConnected(this)) {
-            if (edtHeader.getText().length() < 255 && edtMota.getText().length() > 0) {
-                mPresenter.updateSanPham(mDataBase, new SanPham(sanPham.getIdNguoiban(),
-                         sanPham.getNameNguoiBan(),
-                         sanPham.getIdSanPham(),
-                         sanPham.getIdCategory(),
-                         sanPham.getIdPart(),
-                         edtHeader.getText().toString().trim(),
-                         edtMota.getText().toString().trim(),
-                         sanPham.getTime(),
-                         sanPham.getListFiles(),
-                         edtGia.getText().toString().trim(),
-                         PreferManager.getMyAddress(this)));
+            GoogleMapUtils.getLatLongFromGivenAddress(this, PreferManager.getMyAddress(this));
+            if (GoogleMapUtils.getLatLng() != null) {
+                if (edtHeader.getText().length() < 255 && edtMota.getText().length() > 0) {
+                    mPresenter.updateSanPham(mDataBase, new SanPham(sanPham.getIdNguoiban(),
+                             sanPham.getNameNguoiBan(),
+                             sanPham.getIdSanPham(),
+                             sanPham.getIdCategory(),
+                             sanPham.getIdPart(),
+                             edtHeader.getText().toString().trim(),
+                             edtMota.getText().toString().trim(),
+                             sanPham.getTime(),
+                             sanPham.getListFiles(),
+                             edtGia.getText().toString().trim(),
+                             PreferManager.getMyAddress(this),
+                             GoogleMapUtils.getLatLng().latitude,
+                             GoogleMapUtils.getLatLng().longitude));
+                } else {
+                    showSnackbar(getString(R.string.error_and_check));
+                }
+
+
             } else {
-                showSnackbar(getString(R.string.error_and_check));
+                if (edtHeader.getText().length() < 255 && edtMota.getText().length() > 0) {
+                    mPresenter.updateSanPham(mDataBase, new SanPham(sanPham.getIdNguoiban(),
+                             sanPham.getNameNguoiBan(),
+                             sanPham.getIdSanPham(),
+                             sanPham.getIdCategory(),
+                             sanPham.getIdPart(),
+                             edtHeader.getText().toString().trim(),
+                             edtMota.getText().toString().trim(),
+                             sanPham.getTime(),
+                             sanPham.getListFiles(),
+                             edtGia.getText().toString().trim(),
+                             PreferManager.getMyAddress(this)
+                             , 0, 0));
+                } else {
+                    showSnackbar(getString(R.string.error_and_check));
+                }
             }
         } else showNoInternet();
 

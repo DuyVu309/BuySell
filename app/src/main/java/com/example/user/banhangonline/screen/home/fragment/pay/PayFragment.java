@@ -1,9 +1,16 @@
 package com.example.user.banhangonline.screen.home.fragment.pay;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,12 +24,14 @@ import com.example.user.banhangonline.model.Categories;
 import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.screen.detail.SanPhamDetailActivity;
 import com.example.user.banhangonline.screen.home.fragment.adapter.SanPhamAdapter;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Collections;
 import java.util.Comparator;
 
+import static com.example.user.banhangonline.AppConstants.REQUEST_CODE_LOCATION;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartDetail;
 
 public class PayFragment extends Fragment implements PayContact.View {
@@ -33,6 +42,7 @@ public class PayFragment extends Fragment implements PayContact.View {
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     private SanPhamAdapter mAdapter;
     private PayPresenter mPresenter;
+    private Location location;
 
     public static PayFragment newInstance(Categories categories) {
         PayFragment fragment = new PayFragment();
@@ -60,6 +70,7 @@ public class PayFragment extends Fragment implements PayContact.View {
         rotateLoading = (ProgressBar) view.findViewById(R.id.rotate_loading);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         if (categories != null) {
+            initLocation();
             initAdapter();
         }
         return view;
@@ -67,15 +78,27 @@ public class PayFragment extends Fragment implements PayContact.View {
 
     private void initAdapter() {
         mPresenter.loadSanPhamFromFirebase(mDatabase, categories.getId());
-        mAdapter = new SanPhamAdapter(recyclerView, getActivity(), null, mPresenter.getSanPhamList(), new SanPhamAdapter.ISelectPayAdapter() {
+        mAdapter = new SanPhamAdapter(recyclerView, getActivity(), location, mPresenter.getSanPhamList(), new SanPhamAdapter.ISelectPayAdapter() {
             @Override
             public void onSelectedSanPham(SanPham sanPham) {
                 Intent intent = new Intent(getActivity(), SanPhamDetailActivity.class);
                 intent.putExtra(keyStartDetail, sanPham);
                 startActivity(intent);
             }
+
         });
         recyclerView.setAdapter(mAdapter);
+    }
+
+    private void initLocation() {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+            location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        } else {
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
+            }
+        }
     }
 
 
@@ -101,5 +124,18 @@ public class PayFragment extends Fragment implements PayContact.View {
     public void onDestroy() {
         mPresenter.detach();
         super.onDestroy();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CODE_LOCATION) {
+            if (permissions.length > 0 && permissions[0] == Manifest.permission.ACCESS_FINE_LOCATION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+                location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            }
+        }
     }
 }

@@ -100,7 +100,7 @@ public class SearchActivity extends BaseActivity implements SearchContact.View {
     public void searchAccount() {
         if (!edtSearchAccount.getText().toString().trim().isEmpty()) {
             Intent intent = new Intent(SearchActivity.this, SearchAccountActivity.class);
-            intent.putExtra(keyStartAccount, edtSearchAccount.getText().toString());
+            intent.putExtra(keyStartAccount, edtSearchAccount.getText().toString().trim());
             startActivity(intent);
         }
     }

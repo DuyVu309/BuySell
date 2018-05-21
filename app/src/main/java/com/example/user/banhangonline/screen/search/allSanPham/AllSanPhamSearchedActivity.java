@@ -14,6 +14,7 @@ import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.screen.detail.SanPhamDetailActivity;
 import com.example.user.banhangonline.screen.home.fragment.adapter.SanPhamAdapter;
 import com.example.user.banhangonline.utils.NetworkUtils;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
@@ -77,6 +78,7 @@ public class AllSanPhamSearchedActivity extends BaseActivity implements AllSanPh
                     finish();
                 }
             }
+
         });
         mAdapter.setmOnLoadMore(new SanPhamAdapter.OnLoadMoreListener() {
             @Override
@@ -108,7 +110,6 @@ public class AllSanPhamSearchedActivity extends BaseActivity implements AllSanPh
                 if (mPresenter.getKeyList().size() != 0) {
                     mPresenter.getAllSpWithFilterFromFirebase(mDataBase, filter, idCate, idPart);
                 } else if (mPresenter.getKeyList().size() == 0) {
-                    showSnackbar(getString(R.string.dont_have_product));
                     dismissDialog();
                 }
             }

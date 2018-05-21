@@ -3,10 +3,12 @@ package com.example.user.banhangonline.utils;
 import android.content.Context;
 
 import com.example.user.banhangonline.R;
+import com.example.user.banhangonline.model.DonHang;
 import com.example.user.banhangonline.widget.dialog.DialogChangeAccount;
 import com.example.user.banhangonline.widget.dialog.DialogChangeAddress;
 import com.example.user.banhangonline.widget.dialog.DialogChangePhoneNmber;
-import com.example.user.banhangonline.widget.dialog.DialogMethodPay;
+import com.example.user.banhangonline.widget.dialog.DialogDonHangInfo;
+import com.example.user.banhangonline.widget.dialog.DialogMethodConnect;
 import com.example.user.banhangonline.widget.dialog.DialogOk;
 import com.example.user.banhangonline.widget.dialog.DialogPositiveNegative;
 import com.example.user.banhangonline.widget.dialog.DialogProgress;
@@ -49,8 +51,8 @@ public class DialogUntils {
         dialogChangeAccount.show();
     }
 
-    public static void showMethodPay(Context context, DialogMethodPay.IOnClickChooseMethodPay listener) {
-        DialogMethodPay dialogMethodPay = new DialogMethodPay(context, listener);
+    public static void showMethodConnect(Context context, DialogMethodConnect.IOnClickChooseMethodPay listener) {
+        DialogMethodConnect dialogMethodPay = new DialogMethodConnect(context, listener);
         dialogMethodPay.show();
     }
 
@@ -62,6 +64,11 @@ public class DialogUntils {
     public static void showChangeBuyPhoneNumber(Context context, String phoneNumber, DialogChangePhoneNmber.IOnDoneChangeBuyPhoneNumber listener) {
         DialogChangePhoneNmber dialogChangePhoneNmber = new DialogChangePhoneNmber(context, phoneNumber, listener);
         dialogChangePhoneNmber.show();
+    }
+
+    public static void showDonHangInfo(Context context, DonHang donHang) {
+        DialogDonHangInfo dialogDonHangInfo = new DialogDonHangInfo(context, donHang);
+        dialogDonHangInfo.show();
     }
 
 }
