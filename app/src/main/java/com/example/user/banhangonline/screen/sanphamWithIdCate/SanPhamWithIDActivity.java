@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -27,9 +26,7 @@ import com.example.user.banhangonline.utils.NetworkUtils;
 import com.example.user.banhangonline.utils.SortPlacesUtils;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -78,7 +75,6 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
         ButterKnife.bind(this);
         mPresenter = new SanPhamWithIdPresenter();
         mPresenter.attachView(this);
-        mPresenter.setContext(this);
         part = (Part) getIntent().getSerializableExtra(keyIdSanPham);
         if (part != null) {
             if (part.getIDCategory().equals(keyIdCateThoiTrang)) {
@@ -168,7 +164,7 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
                         if (mPresenter.getSanPhamList().size() > position) {
                             mPresenter.setTotal(position + 10);
                         }
-                        mPresenter.getSanPhamFromFirebase(mDataBase, part.getIDCategory(), part.getIDPart(), getMyLocation());
+                        mPresenter.getSanPhamFromFirebase(mDataBase, part.getIDCategory(), part.getIDPart());
                         mAdapter.setLoaded();
                     }
                 }, 1000);
@@ -201,7 +197,7 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
     public void getKeySuccess() {
         if (mPresenter.getKeyList() != null) {
             if (mPresenter.getKeyList().size() != 0) {
-                mPresenter.getSanPhamFromFirebase(mDataBase, part.getIDCategory(), part.getIDPart(), getMyLocation());
+                mPresenter.getSanPhamFromFirebase(mDataBase, part.getIDCategory(), part.getIDPart());
             } else if (mPresenter.getKeyList().size() == 0) {
                 dismissDialog();
             }
@@ -216,13 +212,10 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
     @Override
     public void getSpSuccess() {
         if (mAdapter != null) {
-            if (mPresenter.getSanPhamList().size() == 0) {
-                showSnackbar(getString(R.string.dont_have_product));
-            }
             mAdapter.notifyDataSetChanged();
             dismissDialog();
         }
-
+        dismissDialog();
     }
 
     @Override
@@ -242,18 +235,33 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
         showSnackbar(getString(R.string.error));
     }
 
-    @OnClick(R.id.img_scan)
-    public void recentScan() {
-        if (mPresenter.getSanPhamList() != null) {
+    @Override
+    public void getRecentSpSuccess() {
+        if (mAdapter != null) {
             try {
-                Collections.sort(mPresenter.getSanPhamList(), new SortPlacesUtils(new LatLng(getMyLocation().getLatitude(), getMyLocation().getLongitude())));
+                Collections.sort(mPresenter.getRecentSpList(), new SortPlacesUtils(new LatLng(getMyLocation().getLatitude(), getMyLocation().getLongitude())));
             } catch (NullPointerException e) {
-
             }
-            if (mAdapter != null) {
-                mAdapter.notifyDataSetChanged();
-            }
+            mAdapter.notifyDataSetChanged();
         }
+        dismissDialog();
+    }
+
+    @OnClick(R.id.tv_scan)
+    public void recentScan() {
+        showDialog();
+        mPresenter.getRecentSpFromFirebase(mDataBase, part.getIDCategory(), part.getIDPart(), getMyLocation());
+        mAdapter = new SanPhamAdapter(recyclerViewSp, this, getMyLocation(), mPresenter.getRecentSpList(), new SanPhamAdapter.ISelectPayAdapter() {
+            @Override
+            public void onSelectedSanPham(SanPham sanPham) {
+                if (sanPham != null) {
+                    Intent intent = new Intent(SanPhamWithIDActivity.this, SanPhamDetailActivity.class);
+                    intent.putExtra(keyStartDetail, sanPham);
+                    startActivity(intent);
+                }
+            }
+        });
+        recyclerViewSp.setAdapter(mAdapter);
     }
 
     @Override

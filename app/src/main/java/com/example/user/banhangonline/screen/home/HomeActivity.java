@@ -66,12 +66,6 @@ public class HomeActivity extends BaseActivity implements
     @BindView(R.id.tv_trang_chu)
     TextView tvTrangChu;
 
-    @BindView(R.id.tv_thong_bao)
-    TextView tvNotify;
-
-    @BindView(R.id.tv_cai_dat)
-    TextView tvSetting;
-
     @BindView(R.id.tv_tinh_nang_vip)
     TextView tvTinhNangVip;
 
@@ -183,7 +177,7 @@ public class HomeActivity extends BaseActivity implements
         } else if (PreferManager.getIDBuySell(this) != null) {
             if (PreferManager.getIDBuySell(this).equals(keyAccountSell)) {
                 startActivity(new Intent(HomeActivity.this, MyGioHangActivity.class));
-            } else if (PreferManager.getIDBuySell(this).equals(keyAccountBuy)){
+            } else if (PreferManager.getIDBuySell(this).equals(keyAccountBuy)) {
                 startActivity(new Intent(HomeActivity.this, MyPurchasedActivity.class));
             }
         }
@@ -206,29 +200,14 @@ public class HomeActivity extends BaseActivity implements
     @OnClick(R.id.tv_trang_chu)
     public void onClickTrangchu() {
         tvTrangChu.setSelected(true);
-        disableSelected(tvNotify, tvSetting, tvMyAccount, tvTinhNangVip, tvFeedback);
+        disableSelected(tvMyAccount, tvTinhNangVip, tvFeedback);
         drawerLayout.closeDrawer(lnOpenDrawer);
-    }
-
-    @OnClick(R.id.tv_thong_bao)
-    public void onClickThongBao() {
-        tvNotify.setSelected(true);
-        disableSelected(tvTrangChu, tvMyAccount, tvSetting, tvTinhNangVip, tvFeedback);
-        drawerLayout.closeDrawer(lnOpenDrawer);
-    }
-
-    @OnClick(R.id.tv_cai_dat)
-    public void onClickSetting() {
-        tvSetting.setSelected(true);
-        disableSelected(tvTrangChu, tvMyAccount, tvNotify, tvTinhNangVip, tvFeedback);
-        drawerLayout.closeDrawer(lnOpenDrawer);
-
     }
 
     @OnClick(R.id.tv_tinh_nang_vip)
     public void onClickVIP() {
         tvTinhNangVip.setSelected(true);
-        disableSelected(tvTrangChu, tvMyAccount, tvNotify, tvSetting, tvFeedback);
+        disableSelected(tvTrangChu, tvMyAccount, tvFeedback);
         drawerLayout.closeDrawer(lnOpenDrawer);
         Toast.makeText(this, R.string.vip_dang_phat_trien, Toast.LENGTH_SHORT).show();
     }
@@ -236,7 +215,7 @@ public class HomeActivity extends BaseActivity implements
     @OnClick(R.id.tv_feedback)
     public void feedback() {
         tvFeedback.setSelected(true);
-        disableSelected(tvTrangChu, tvMyAccount, tvNotify, tvSetting, tvTinhNangVip);
+        disableSelected(tvTrangChu, tvMyAccount, tvTinhNangVip);
         drawerLayout.closeDrawer(lnOpenDrawer);
         startActivity(new Intent(HomeActivity.this, FeedBackActivity.class));
     }
@@ -244,7 +223,7 @@ public class HomeActivity extends BaseActivity implements
     @OnClick(R.id.tv_trang_ca_nhan)
     public void onTrangCaNhan() {
         tvMyAccount.setSelected(true);
-        disableSelected(tvTrangChu, tvNotify, tvSetting);
+        disableSelected(tvTrangChu, tvTinhNangVip, tvFeedback);
         drawerLayout.closeDrawer(lnOpenDrawer);
         if (PreferManager.getIsLogin(this)) {
             if (PreferManager.getUserID(this) != null) {

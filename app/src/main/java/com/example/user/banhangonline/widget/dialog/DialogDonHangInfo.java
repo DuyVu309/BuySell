@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.user.banhangonline.R;
@@ -38,6 +39,7 @@ public class DialogDonHangInfo extends Dialog {
         TextView tvName = (TextView) findViewById(R.id.tv_name_nguoi_mua);
         TextView tvDiaChi = (TextView) findViewById(R.id.tv_diachi_nguoi_mua);
         TextView tvDonHang = (TextView) findViewById(R.id.tv_donhang_nguoi_mua);
+        LinearLayout ln_sdt = (LinearLayout) findViewById(R.id.ln_sdt);
         TextView tvSdt = (TextView) findViewById(R.id.tv_sdt_nguoi_mua);
         TextView tvSoLuong = (TextView) findViewById(R.id.tv_soluong);
         TextView tvThoiGian = (TextView) findViewById(R.id.tv_thoi_gian);
@@ -46,7 +48,11 @@ public class DialogDonHangInfo extends Dialog {
             tvName.setText(donHang.getNameNguoiMua());
             tvDiaChi.setText(donHang.getDiaChi());
             tvDonHang.setText(donHang.getHeader());
-            tvSdt.setText(donHang.getSoDienThoai());
+            if (tvSdt.getText() != null) {
+                tvSdt.setText(donHang.getSoDienThoai());
+            } else {
+                ln_sdt.setVisibility(View.GONE);
+            }
             tvSoLuong.setText(donHang.getSoLuong());
             tvThoiGian.setText(donHang.getThoiGian());
         }

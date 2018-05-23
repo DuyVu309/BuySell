@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -335,7 +334,7 @@ public class SellActivity extends BaseActivity implements SellContact.View {
 
     private void uploadListFile(String idPart) {
         GoogleMapUtils.getLatLongFromGivenAddress(this, PreferManager.getMyAddress(this));
-        if (GoogleMapUtils.getLatLng() != null) {
+        if (GoogleMapUtils.getLatLong() != null) {
             mPresenter.upLoadSanPhamToFirebase(mDataBase,
                      new SanPham(PreferManager.getUserID(this),
                               PreferManager.getNameAccount(this),
@@ -348,8 +347,8 @@ public class SellActivity extends BaseActivity implements SellContact.View {
                               new ListFileImages().getContructor(mPresenter.getListImages(), mPresenter.getListNameImages()),
                               edtSellGia.getText().toString().trim(),
                               PreferManager.getMyAddress(this),
-                              GoogleMapUtils.getLatLng().latitude,
-                              GoogleMapUtils.getLatLng().longitude));
+                              GoogleMapUtils.getLatLong().latitude,
+                              GoogleMapUtils.getLatLong().longitude));
         } else {
             mPresenter.upLoadSanPhamToFirebase(mDataBase,
                      new SanPham(PreferManager.getUserID(this),

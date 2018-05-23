@@ -1,8 +1,6 @@
 package com.example.user.banhangonline.model;
 
 import com.google.firebase.database.IgnoreExtraProperties;
-
-import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

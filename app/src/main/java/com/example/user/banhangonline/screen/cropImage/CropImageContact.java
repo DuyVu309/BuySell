@@ -1,7 +1,6 @@
 package com.example.user.banhangonline.screen.cropImage;
 
 import android.graphics.Bitmap;
-
 import com.example.user.banhangonline.base.IBasePresenter;
 import com.example.user.banhangonline.base.IBaseView;
 import com.example.user.banhangonline.model.Account;

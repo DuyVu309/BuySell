@@ -1,21 +1,33 @@
 package com.example.user.banhangonline.screen.spAccount;
 
+import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.model.SanPham;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.user.banhangonline.utils.KeyUntils.keyAccount;
 import static com.example.user.banhangonline.utils.KeyUntils.keySanPham;
 
 public class SanPhamAccountPresenter implements SanPhamAccountContact.Presenter {
 
     SanPhamAccountContact.View mView;
-    private String emailId ;
+    private Account account;
+    private String emailId;
     private List<SanPham> sanPhamList;
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 
     public String getEmailId() {
         return emailId;
@@ -31,6 +43,7 @@ public class SanPhamAccountPresenter implements SanPhamAccountContact.Presenter 
 
     @Override
     public void attachView(SanPhamAccountContact.View View) {
+        account = new Account();
         sanPhamList = new ArrayList<>();
         mView = View;
     }
@@ -43,6 +56,33 @@ public class SanPhamAccountPresenter implements SanPhamAccountContact.Presenter 
     @Override
     public boolean isViewAttached() {
         return mView != null;
+    }
+
+    @Override
+    public void getInfoAccount(DatabaseReference databaseReference, final String userId) {
+        if (!isViewAttached()) return;
+        databaseReference.child(keyAccount).child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Account account = dataSnapshot.getValue(Account.class);
+                if (account != null) {
+                    if (account.getUserId().equals(userId)) {
+                        setAccount(account);
+                    }
+
+                    if (mView != null) {
+                        mView.getInfoSuccess();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                if (mView != null) {
+                    mView.getInfoError();
+                }
+            }
+        });
     }
 
     @Override

@@ -10,10 +10,6 @@ public interface MyGioHangContact {
     //san pham minh da mua
     interface View extends IBaseView {
 
-        void getAllKeySuccess();
-
-        void getAllKeyError();
-
         void getCartSuccess();
 
         void getCartError();
@@ -24,8 +20,6 @@ public interface MyGioHangContact {
     }
 
     interface Presenter extends IBasePresenter<View> {
-
-        void getAllKeyMyCartFromFirebase(DatabaseReference databaseReference, String idNguoiBan);
 
         void getListCartFromFirebase(DatabaseReference databaseReference);
 

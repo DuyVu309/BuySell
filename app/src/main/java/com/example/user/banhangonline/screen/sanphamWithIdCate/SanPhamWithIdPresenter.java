@@ -1,38 +1,30 @@
 package com.example.user.banhangonline.screen.sanphamWithIdCate;
 
-import android.content.Context;
 import android.location.Location;
-
 import com.example.user.banhangonline.model.SanPham;
-import com.example.user.banhangonline.model.maps.Directions;
-import com.example.user.banhangonline.model.maps.Route;
 import com.example.user.banhangonline.model.search.SearchSP;
-import com.example.user.banhangonline.utils.GoogleMapUtils;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.user.banhangonline.utils.KeyUntils.keySanPham;
 
 public class SanPhamWithIdPresenter implements SanPhamWithIdContact.Presenter {
-
-    private Context context;
-    private List<SanPham> sanPhamList = new ArrayList<>();
-    private List<String> keyList = new ArrayList<>();
-    private List<Object> searchList = new ArrayList<>();
+    private List<SanPham> recentSpList;
+    private List<SanPham> sanPhamList;
+    private List<String> keyList;
+    private List<Object> searchList;
     boolean isLoadedWithLittle = false;
     private SanPhamWithIdContact.View mView;
     private int total = 0;
 
-    public void setContext(Context context) {
-        this.context = context;
+    public List<SanPham> getRecentSpList() {
+        return recentSpList;
     }
 
     public List<SanPham> getSanPhamList() {
@@ -58,11 +50,15 @@ public class SanPhamWithIdPresenter implements SanPhamWithIdContact.Presenter {
     @Override
     public void attachView(SanPhamWithIdContact.View View) {
         mView = View;
+        recentSpList = new ArrayList<>();
+        sanPhamList = new ArrayList<>();
+        keyList = new ArrayList<>();
+        searchList = new ArrayList<>();
     }
 
     @Override
     public void detach() {
-
+        mView = null;
     }
 
     @Override
@@ -110,7 +106,7 @@ public class SanPhamWithIdPresenter implements SanPhamWithIdContact.Presenter {
     }
 
     @Override
-    public void getSanPhamFromFirebase(final DatabaseReference databaseReference, final String idCate, final String idPart, final Location mLocation) {
+    public void getSanPhamFromFirebase(final DatabaseReference databaseReference, final String idCate, final String idPart) {
         if (!isViewAttached()) return;
         if (keyList.size() >= total + 10) {
             databaseReference.child(keySanPham).orderByKey().startAt(keyList.get(total)).endAt(keyList.get(total + 9)).addChildEventListener(new ChildEventListener() {
@@ -275,5 +271,57 @@ public class SanPhamWithIdPresenter implements SanPhamWithIdContact.Presenter {
         });
 
 
+    }
+
+    @Override
+    public void getRecentSpFromFirebase(DatabaseReference databaseReference, final String idCate, final String idPart, Location location) {
+        if (!isViewAttached()) return;
+        recentSpList.clear();
+        databaseReference.child(keySanPham).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                SanPham sanPham = dataSnapshot.getValue(SanPham.class);
+                if (sanPham != null) {
+                    if (idPart != null && sanPham.getIdPart() != null) {
+                        if (sanPham.getIdCategory().equals(idCate)) {
+                            if (sanPham.getIdPart().equals(idPart)) {
+                                recentSpList.add(sanPham);
+                            }
+                        }
+                    } else {
+                        if (sanPham.getIdCategory().equals(idCate)) {
+                            recentSpList.add(sanPham);
+                        }
+                    }
+                }
+                if (sanPhamList != null) {
+                    if (mView != null) {
+                        mView.getRecentSpSuccess();
+                    }
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                if (mView != null) {
+                    mView.getSpError();
+                }
+            }
+        });
     }
 }

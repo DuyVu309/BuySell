@@ -24,8 +24,7 @@
                 android:id="@+id/img_sanpham"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/bg_be_gai" />
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:id="@+id/tv_gia_sanpham"

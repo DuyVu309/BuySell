@@ -11,11 +11,27 @@
         android:orientation="horizontal"
         android:padding="@dimen/pading_small">
 
-        <ImageView
-            android:id="@+id/img_my_cart"
+        <FrameLayout
             android:layout_width="@dimen/width_image_donhang"
-            android:layout_height="@dimen/height_image_donhang"
-            android:scaleType="centerCrop" />
+            android:layout_height="@dimen/height_image_donhang">
+
+
+            <ImageView
+                android:id="@+id/img_my_cart"
+                android:layout_width="@dimen/width_image_donhang"
+                android:layout_height="@dimen/height_image_donhang"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/tv_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/pading_small"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/default_text_size" />
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,8 +72,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@color/blue"
                     android:singleLine="true"
                     android:textColor="@color/black"
+                    android:textIsSelectable="true"
                     android:textSize="@dimen/default_text_size" />
 
                 <TextView
@@ -85,21 +103,21 @@
             android:layout_weight="1"
             android:backgroundTint="@color/transparent"
             android:gravity="center"
-            android:textColor="@color/black"
             android:padding="@dimen/pading_small"
             android:singleLine="true"
+            android:textColor="@color/black"
             android:textSize="@dimen/default_text_size" />
 
         <TextView
             android:id="@+id/tv_my_cart_so_luong"
             android:layout_width="0dp"
-            android:textColor="@color/black"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/transparent"
             android:gravity="center"
             android:inputType="number"
             android:singleLine="true"
+            android:textColor="@color/black"
             android:textSize="@dimen/default_text_size" />
     </LinearLayout>
 
@@ -135,6 +153,7 @@
             android:padding="@dimen/pading_small"
             android:textColor="@color/red"
             android:textColorLink="@color/red"
+            android:textIsSelectable="true"
             android:textSize="@dimen/default_text_size"
             android:textStyle="bold" />
     </LinearLayout>

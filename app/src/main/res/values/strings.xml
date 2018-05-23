@@ -88,6 +88,7 @@
     <string name="dont_have_product">Không có sản phẩm</string>
     <string name="dont_have_account">Không có tài khoản</string>
     <string name="san_pham">Sản phẩm</string>
+    <string name="san_pham_doanh_nghiep">Sản phẩm doanh nghiệp</string>
     <string name="select_photo">Select photo</string>
 
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
@@ -136,5 +137,6 @@
     <string name="info_app">Ứng dụng được tạo bởi: VuDuy309</string>
     <string name="info_us">Email chúng tôi: BuySellVN309@gmail.com</string>
     <string name="ban_muon_dang_xuat_khong">Bạn có chắc chắn muốn đăng xuất hay không?</string>
+    <string name="scanning">Đang quét </string>
 
 </resources>

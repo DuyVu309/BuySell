@@ -2,7 +2,6 @@ package com.example.user.banhangonline.screen.search;
 
 import com.example.user.banhangonline.base.IBasePresenter;
 import com.example.user.banhangonline.base.IBaseView;
-import com.example.user.banhangonline.model.search.SearchSP;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.List;

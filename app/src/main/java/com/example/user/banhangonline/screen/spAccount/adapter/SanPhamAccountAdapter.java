@@ -2,7 +2,6 @@ package com.example.user.banhangonline.screen.spAccount.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +12,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.model.SanPham;
-import com.example.user.banhangonline.screen.home.fragment.adapter.SanPhamAdapter;
-
 import java.util.List;
 
 import butterknife.BindView;

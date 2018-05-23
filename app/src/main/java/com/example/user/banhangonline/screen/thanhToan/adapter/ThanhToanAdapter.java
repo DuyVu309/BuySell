@@ -2,12 +2,8 @@ package com.example.user.banhangonline.screen.thanhToan.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +18,6 @@ import com.example.user.banhangonline.model.DonHang;
 import com.example.user.banhangonline.model.SanPham;
 
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

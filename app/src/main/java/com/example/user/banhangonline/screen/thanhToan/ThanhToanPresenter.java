@@ -1,7 +1,6 @@
 package com.example.user.banhangonline.screen.thanhToan;
 
 import android.support.annotation.NonNull;
-
 import com.example.user.banhangonline.model.DonHang;
 import com.example.user.banhangonline.model.SanPham;
 import com.google.android.gms.tasks.OnCompleteListener;

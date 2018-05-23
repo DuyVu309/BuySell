@@ -1,4 +1,4 @@
-package com.example.user.banhangonline.screen.myGioHang;
+package com.example.user.banhangonline.screen.purchased;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,34 +12,33 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.user.banhangonline.utils.KeyUntils.keyDonHang;
 
-public class MyGioHangPresenter implements MyGioHangContact.Presenter {
-    private MyGioHangContact.View mView;
+public class MyPurchasedPresenter implements MyPurchasedContact.Presenter {
+
+    MyPurchasedContact.View mView;
     private Context context;
-    private List<DonHang> mList;
+    private List<DonHang> donHangList;
 
     public void setContext(Context context) {
         this.context = context;
     }
 
-
-    public List<DonHang> getmList() {
-        return mList;
+    public List<DonHang> getDonHangList() {
+        return donHangList;
     }
 
-    public void setmList(List<DonHang> mList) {
-        this.mList = mList;
+    public void setDonHangList(List<DonHang> donHangList) {
+        this.donHangList = donHangList;
     }
 
     @Override
-    public void attachView(MyGioHangContact.View View) {
+    public void attachView(MyPurchasedContact.View View) {
+        donHangList = new ArrayList<>();
         mView = View;
-        mList = new ArrayList<>();
     }
 
     @Override
@@ -53,26 +52,26 @@ public class MyGioHangPresenter implements MyGioHangContact.Presenter {
     }
 
     @Override
-    public void getListCartFromFirebase(DatabaseReference databaseReference) {
+    public void getListPurchsedFromFirebase(DatabaseReference databaseReference) {
         if (!isViewAttached()) return;
         if (context == null) return;
-        mList.clear();
+        donHangList.clear();
         databaseReference.child(keyDonHang).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 DonHang donHang = dataSnapshot.getValue(DonHang.class);
                 if (donHang != null) {
                     if (donHang.getIdNguoiBan() != null && PreferManager.getUserID(context) != null) {
-                        if (donHang.getIdNguoiBan().equals(PreferManager.getUserID(context))) {
-                            mList.add(donHang);
+                        if (donHang.getIdNguoiMua().equals(PreferManager.getUserID(context))) {
+                            donHangList.add(donHang);
                         }
                     }
                 }
 
 
-                if (mList != null) {
+                if (donHangList != null) {
                     if (mView != null) {
-                        mView.getCartSuccess();
+                        mView.getPurchsedSuccess();
                     }
                 }
             }
@@ -95,15 +94,15 @@ public class MyGioHangPresenter implements MyGioHangContact.Presenter {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 if (mView != null) {
-                    mView.getCartError();
+                    mView.getPurchsedError();
                 }
             }
         });
     }
 
-
     @Override
-    public void deleteDonHang(final DatabaseReference databaseReference, final DonHang donHang) {
+    public void deletePurchsed(final DatabaseReference databaseReference, final DonHang donHang) {
+        if (!isViewAttached()) return;
         if (!isViewAttached()) return;
         if (donHang == null) return;
         databaseReference.child(keyDonHang).addValueEventListener(new ValueEventListener() {
@@ -111,19 +110,19 @@ public class MyGioHangPresenter implements MyGioHangContact.Presenter {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     DonHang donHang1 = snapshot.getValue(DonHang.class);
-                    if (PreferManager.getUserID(context).equals(donHang.getIdNguoiBan())) {
+                    if (PreferManager.getUserID(context).equals(donHang.getIdNguoiMua())) {
                         if (donHang1.getIdDonHang().equals(donHang.getIdDonHang())) {
                             databaseReference.child(keyDonHang).child(snapshot.getKey()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         if (mView != null) {
-                                            mView.deleteDonHangSuccess();
+                                            mView.deletePurchsedSuccess();
                                             return;
                                         }
                                     } else {
                                         if (mView != null) {
-                                            mView.deleteDonHangError();
+                                            mView.deletePurchsedError();
                                         }
                                     }
                                 }
@@ -139,8 +138,5 @@ public class MyGioHangPresenter implements MyGioHangContact.Presenter {
 
             }
         });
-
     }
-
-
 }

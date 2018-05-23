@@ -15,7 +15,6 @@ import com.example.user.banhangonline.model.search.SearchAccount;
 import com.example.user.banhangonline.model.search.SearchSP;
 
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

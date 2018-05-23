@@ -69,11 +69,11 @@
             android:layout_marginRight="@dimen/pading_normal"
             app:cardCornerRadius="@dimen/card_corner_radius_normal">
 
-            <Button
+            <TextView
                 android:id="@+id/tv_add_image"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/btn_ok_height"
-                android:background="@color/blue_window"
+                android:background="@color/blue"
                 android:drawableLeft="@drawable/ic_add_image"
                 android:drawablePadding="@dimen/pading_small"
                 android:padding="@dimen/pading_small"

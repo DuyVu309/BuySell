@@ -3,7 +3,6 @@ package com.example.user.banhangonline.screen.search.account;
 import android.content.Context;
 import android.location.Location;
 import android.util.Log;
-import android.view.View;
 
 import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.model.maps.Directions;
@@ -201,7 +200,7 @@ public class SearchAccountPresenter implements SearchAccountContact.Presenter {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Account account = dataSnapshot.getValue(Account.class);
                 GoogleMapUtils.getLatLongFromGivenAddress(context, account.getAddress());
-                LatLng endLatLng = GoogleMapUtils.getLatLng();
+                LatLng endLatLng = GoogleMapUtils.getLatLong();
                 if (mLocation != null && endLatLng != null) {
                     try {
                         new Directions(mLocation.getLatitude(), mLocation.getLongitude(), endLatLng.latitude, endLatLng.longitude, new Directions.DirectionsListener() {

@@ -35,33 +35,18 @@ public class MyGioHangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private List<DonHang> mList;
     private IOnClickMyCart mlisenter;
 
-    boolean isLoading;
-    private OnLoadMoreListener mOnLoadMore;
-
-    public void setmOnLoadMore(OnLoadMoreListener mOnLoadMore) {
-        this.mOnLoadMore = mOnLoadMore;
-    }
-
-    public MyGioHangAdapter(RecyclerView recyclerView, Context mContext, Location mLocation, List<DonHang> mList, IOnClickMyCart mlisenter) {
+    public MyGioHangAdapter(Context mContext, Location mLocation, List<DonHang> mList, IOnClickMyCart mlisenter) {
         this.mContext = mContext;
         this.mLocation = mLocation;
         this.mList = mList;
         this.mlisenter = mlisenter;
-        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (!isLoading && linearLayoutManager.getItemCount() <= linearLayoutManager.findLastVisibleItemPosition() + 5) {
-                    if (mOnLoadMore != null)
-                        mOnLoadMore.onLoadMore();
-                    isLoading = true;
-                }
-            }
-        });
     }
 
     public class MyGioHangViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.tv_position)
+        TextView tvPosition;
+
         @BindView(R.id.img_my_cart)
         ImageView imgMyCart;
 
@@ -104,6 +89,13 @@ public class MyGioHangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 public boolean onLongClick(View view) {
                     mlisenter.onOptionSelectedMyCart(getAdapterPosition(), mList.get(getAdapterPosition()));
                     return false;
+                }
+            });
+
+            tvTenNguoiMuaMyCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mlisenter.onClickInfoAccount(mList.get(getAdapterPosition()));
                 }
             });
         }
@@ -149,6 +141,7 @@ public class MyGioHangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         if (mList.get(position) instanceof DonHang) {
             final MyGioHangViewHolder viewHolder = (MyGioHangViewHolder) holder;
             DonHang donHang = mList.get(position);
+            viewHolder.tvPosition.setText("" + (position + 1));
             Glide.with(mContext).load(donHang.getUrlImg()).into(viewHolder.imgMyCart);
             viewHolder.tvHeaderMyCart.setText(donHang.getHeader());
             viewHolder.tvAddressMyCart.setText(donHang.getDiaChi());
@@ -163,7 +156,7 @@ public class MyGioHangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
             if (donHang.getDiaChi() != null) {
                 GoogleMapUtils.getLatLongFromGivenAddress(mContext, donHang.getDiaChi());
-                LatLng latLng = GoogleMapUtils.getLatLng();
+                LatLng latLng = GoogleMapUtils.getLatLong();
                 if (mLocation != null && latLng != null) {
                     try {
                         new Directions(mLocation.getLatitude(), mLocation.getLongitude(), latLng.latitude, latLng.longitude, new Directions.DirectionsListener() {
@@ -188,23 +181,17 @@ public class MyGioHangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
-    public void setLoaded() {
-        isLoading = false;
-    }
-
     @Override
     public int getItemCount() {
         return mList != null ? mList.size() : 0;
     }
 
     public interface IOnClickMyCart {
+
         void onClickMyCart(DonHang donHang);
 
         void onOptionSelectedMyCart(int postion, DonHang donHang);
 
-    }
-
-    public interface OnLoadMoreListener {
-        void onLoadMore();
+        void onClickInfoAccount(DonHang donHang);
     }
 }

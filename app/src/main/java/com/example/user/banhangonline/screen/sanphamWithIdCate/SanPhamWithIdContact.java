@@ -21,14 +21,18 @@ public interface SanPhamWithIdContact {
         void getSearchSuccess();
 
         void getSearchError();
+
+        void getRecentSpSuccess();
     }
 
     interface Presenter extends IBasePresenter<View> {
 
         void getIdSanPhamFromFireBase(DatabaseReference databaseReference, String idCate, String part);
 
-        void getSanPhamFromFirebase(DatabaseReference databaseReference, String iDCategory, String part, Location mLocation);
+        void getSanPhamFromFirebase(DatabaseReference databaseReference, String iDCategory, String part);
 
         void getListSearchFromFirebase(DatabaseReference databaseReference, String filter, String idCate, String idPart);
+
+        void getRecentSpFromFirebase(DatabaseReference databaseReference, String iDCategory, String part, Location location);
     }
 }

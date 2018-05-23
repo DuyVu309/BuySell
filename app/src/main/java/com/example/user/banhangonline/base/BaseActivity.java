@@ -18,14 +18,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.screen.login.LoginActivity;

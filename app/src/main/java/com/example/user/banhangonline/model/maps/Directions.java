@@ -2,7 +2,6 @@ package com.example.user.banhangonline.model.maps;
 
 import android.os.AsyncTask;
 
-import com.example.user.banhangonline.R;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.PolyUtil;
 

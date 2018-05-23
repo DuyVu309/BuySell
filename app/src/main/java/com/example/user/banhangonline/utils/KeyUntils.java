@@ -13,6 +13,7 @@ public class KeyUntils {
     public static final String keyID = "idBS";
     public static final String keyName = "name";
     public static final String keyPhone = "phoneNumber";
+    public static final String keyAddress = "address";
     //end account
 
     //start category

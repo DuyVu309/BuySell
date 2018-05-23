@@ -15,7 +15,6 @@ import com.example.user.banhangonline.utils.NetworkUtils;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

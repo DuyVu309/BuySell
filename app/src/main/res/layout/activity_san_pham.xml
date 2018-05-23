@@ -38,12 +38,18 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/default_text_size" />
 
-                <ImageView
-                    android:id="@+id/img_scan"
-                    style="@style/NavIconStyle"
+                <TextView
+                    android:id="@+id/tv_scan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/nav_bar_height"
                     android:layout_margin="@dimen/pading_small"
-                    android:src="@drawable/ic_scan"
-                    android:tint="@color/white" />
+                    android:background="@drawable/bg_back_activity"
+                    android:drawableLeft="@drawable/ic_scan"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/default_text_size"
+                    android:drawablePadding="@dimen/pading_small"
+                    android:text="Quét quanh đây" />
 
             </LinearLayout>
 

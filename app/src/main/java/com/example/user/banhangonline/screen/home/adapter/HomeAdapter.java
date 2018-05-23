@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.model.Part;
-import com.example.user.banhangonline.model.Pay;
-
 import java.util.List;
 
 import butterknife.BindView;

@@ -1,7 +1,6 @@
 package com.example.user.banhangonline.screen.login;
 
 import android.util.Log;
-
 import com.example.user.banhangonline.base.BasePresenter;
 
 public class LoginPresenter extends BasePresenter implements LoginContact.Presenter {

@@ -14,6 +14,8 @@ import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.DonHang;
 import com.example.user.banhangonline.screen.maps.MapsTotalMyCartActivity;
 import com.example.user.banhangonline.screen.myGioHang.adapter.MyGioHangAdapter;
+import com.example.user.banhangonline.screen.purchased.MyPurchasedActivity;
+import com.example.user.banhangonline.screen.spAccount.SanPhamAccountActivity;
 import com.example.user.banhangonline.utils.DialogUntils;
 import com.example.user.banhangonline.utils.NetworkUtils;
 import com.example.user.banhangonline.widget.dialog.DialogPositiveNegative;
@@ -27,6 +29,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartListAddress;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartSPAccount;
 
 public class MyGioHangActivity extends BaseActivity implements MyGioHangContact.View {
 
@@ -37,8 +40,8 @@ public class MyGioHangActivity extends BaseActivity implements MyGioHangContact.
     TextView tvTitle;
 
     MyGioHangPresenter mPresenter;
-    MyGioHangAdapter mAdapter;
-    int positonDelete;
+    private MyGioHangAdapter mAdapter;
+    private int positonDelete;
 
     @Override
     public boolean isTransparentStatusBar() {
@@ -56,56 +59,29 @@ public class MyGioHangActivity extends BaseActivity implements MyGioHangContact.
 
         if (PreferManager.getUserID(this) != null) {
             if (NetworkUtils.isConnected(this)) {
-                mPresenter.getListCartFromFirebase(mDataBase);
                 if (mPresenter.getmList() != null) {
+                    mPresenter.getListCartFromFirebase(mDataBase);
                     initAdapter();
-                    mPresenter.getAllKeyMyCartFromFirebase(mDataBase, PreferManager.getUserID(this));
                 }
             } else {
                 mPresenter.setmList(SaveMyCart.readMyCartFile(this, mPresenter.getmList()));
-                createAdapter();
-                tvTitle.setText(getString(R.string.don_hang_cua_ban) + " " + mPresenter.getmList().size());
+                initAdapter();
+                tvTitle.setText(getString(R.string.don_hang_cua_ban) + " (" + mPresenter.getmList().size() + ")");
             }
         }
 
     }
 
     private void initAdapter() {
-        createAdapter();
-
-        mAdapter.setmOnLoadMore(new MyGioHangAdapter.OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                mPresenter.getmList().add(null);
-                mAdapter.notifyItemInserted(mPresenter.getmList().size() - 1);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mPresenter.getmList().remove(mPresenter.getmList().size() - 1);
-                        mAdapter.notifyItemRemoved(mPresenter.getmList().size());
-                        int position = mPresenter.getTotal();
-                        if (mPresenter.getmList().size() > position) {
-                            mPresenter.setTotal(position + 10);
-                        }
-                        mPresenter.getListCartFromFirebase(mDataBase);
-                        mAdapter.setLoaded();
-                    }
-                }, 1000);
-            }
-        });
-    }
-
-
-    private void createAdapter() {
         rvMyCart.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new MyGioHangAdapter(rvMyCart, this, getMyLocation(), mPresenter.getmList(), new MyGioHangAdapter.IOnClickMyCart() {
+        mAdapter = new MyGioHangAdapter(this, getMyLocation(), mPresenter.getmList(), new MyGioHangAdapter.IOnClickMyCart() {
             @Override
             public void onClickMyCart(DonHang donHang) {
                 DialogUntils.showDonHangInfo(MyGioHangActivity.this, donHang);
             }
 
             @Override
-            public void onOptionSelectedMyCart(int postion, final DonHang donHang) {
+            public void onOptionSelectedMyCart(final int postion, final DonHang donHang) {
                 positonDelete = postion;
                 showConfirmDialog(getString(R.string.xoa_don_hang),
                          getString(R.string.xac_nhan_xoa_don_hang),
@@ -114,7 +90,11 @@ public class MyGioHangActivity extends BaseActivity implements MyGioHangContact.
                          new DialogPositiveNegative.IPositiveNegativeDialogListener() {
                              @Override
                              public void onClickAnswerPositive(DialogPositiveNegative dialog) {
-                                 mPresenter.deleteDonHang(mDataBase, donHang);
+                                 if (NetworkUtils.isConnected(MyGioHangActivity.this)) {
+                                     mPresenter.deleteDonHang(mDataBase, donHang);
+                                 } else {
+                                     showNoInternet();
+                                 }
                                  dialog.dismiss();
                              }
 
@@ -123,6 +103,15 @@ public class MyGioHangActivity extends BaseActivity implements MyGioHangContact.
                                  dialog.dismiss();
                              }
                          });
+            }
+
+            @Override
+            public void onClickInfoAccount(DonHang donHang) {
+                if (donHang.getIdNguoiBan() != null) {
+                    Intent intent = new Intent(MyGioHangActivity.this, SanPhamAccountActivity.class);
+                    intent.putExtra(keyStartSPAccount, donHang.getIdNguoiMua());
+                    startActivity(intent);
+                }
             }
         });
         rvMyCart.setAdapter(mAdapter);
@@ -144,34 +133,12 @@ public class MyGioHangActivity extends BaseActivity implements MyGioHangContact.
             }
         }
 
-        if (address != null) {
+        if (address.size() == mPresenter.getmList().size()) {
             Intent intent = new Intent(MyGioHangActivity.this, MapsTotalMyCartActivity.class);
             intent.putExtra(keyStartListAddress, (Serializable) address);
             startActivity(intent);
         }
 
-    }
-
-    @Override
-    public void getAllKeySuccess() {
-        if (NetworkUtils.isConnected(this)) {
-            if (mPresenter.getmListKey() != null) {
-                if (mPresenter.getmListKey().size() != 0) {
-                    mPresenter.getListCartFromFirebase(mDataBase);
-                } else if (mPresenter.getmListKey().size() == 0) {
-                    dismissDialog();
-                }
-            }
-        } else {
-            dismissDialog();
-            showNoInternet();
-        }
-    }
-
-    @Override
-    public void getAllKeyError() {
-        showSnackbar(getString(R.string.error_retry));
-        dismissDialog();
     }
 
     @Override

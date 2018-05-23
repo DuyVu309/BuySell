@@ -16,12 +16,10 @@ import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.model.maps.Directions;
 import com.example.user.banhangonline.model.maps.Route;
-import com.example.user.banhangonline.utils.GoogleMapUtils;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

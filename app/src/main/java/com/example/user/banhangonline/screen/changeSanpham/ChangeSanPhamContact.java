@@ -13,17 +13,11 @@ public interface ChangeSanPhamContact {
         void updateSanPhamSuccess();
 
         void updateSanPhamError();
-
-        void updateListImageSuccess();
-
-        void updateListImageError();
     }
 
     interface Presenter extends IBasePresenter<View> {
 
         void updateSanPham(DatabaseReference databaseReference,SanPham sanPham);
-
-        void updateListImage(StorageReference storageReference, SanPham sanPham);
     }
 
 }

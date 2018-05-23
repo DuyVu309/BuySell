@@ -24,7 +24,6 @@ import com.example.user.banhangonline.model.Categories;
 import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.screen.detail.SanPhamDetailActivity;
 import com.example.user.banhangonline.screen.home.fragment.adapter.SanPhamAdapter;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 

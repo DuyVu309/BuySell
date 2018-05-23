@@ -33,6 +33,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.example.user.banhangonline.utils.KeyUntils.keyAccount;
+import static com.example.user.banhangonline.utils.KeyUntils.keyAddress;
 import static com.example.user.banhangonline.utils.KeyUntils.keyID;
 import static com.example.user.banhangonline.utils.KeyUntils.keyName;
 import static com.example.user.banhangonline.utils.KeyUntils.keyPhone;
@@ -63,7 +64,7 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
     private boolean isAvaialbeUser = false;
     private boolean isAvaialbePassword = false;
     private String email, password;
-    private String idBuySell, name, phoneNumber;
+    private String idBuySell, name, phoneNumber, address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,6 +199,7 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
                                     idBuySell = dataSnapshot.child(keyID).getValue(String.class);
                                     name = dataSnapshot.child(keyName).getValue(String.class);
                                     phoneNumber = dataSnapshot.child(keyPhone).getValue(String.class);
+                                    address = dataSnapshot.child(keyAddress).getValue(String.class);
 
                                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                     if (email != null && idBuySell != null && name != null && phoneNumber != null) {
@@ -207,6 +209,9 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
                                         PreferManager.setUserID(LoginActivity.this, mAuth.getCurrentUser().getUid());
                                         PreferManager.setNameAccount(LoginActivity.this, name);
                                         PreferManager.setPhoneNumber(LoginActivity.this, phoneNumber);
+                                        if (address != null) {
+                                            PreferManager.setMyAddress(LoginActivity.this, address);
+                                        }
                                         startActivity(intent);
                                         finish();
                                         dismissDialog();

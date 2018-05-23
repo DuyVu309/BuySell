@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frm_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/transparent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@color/blue"
+        android:orientation="horizontal">
+
+        <ProgressBar
+            android:indeterminateTint="@color/white"
+            android:layout_margin="@dimen/pading_small"
+            android:layout_width="@dimen/nav_bar_height_small"
+            android:layout_height="@dimen/nav_bar_height_small" />
+
+        <TextView
+            android:id="@+id/tv_scanning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/blue"
+            android:clickable="false"
+            android:padding="@dimen/pading_small"
+            android:text="@string/scanning"
+            android:textColor="@color/white"
+            android:textSize="@dimen/small_text_size" />
+
+    </LinearLayout>
+
+</FrameLayout>

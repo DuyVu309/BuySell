@@ -3,19 +3,15 @@ package com.example.user.banhangonline.screen.loader;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.screen.home.HomeActivity;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 public class SplashActivity extends AppCompatActivity {
 

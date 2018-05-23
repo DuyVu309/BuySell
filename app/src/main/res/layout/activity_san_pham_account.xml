@@ -1,40 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_toolbar"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/pading_small">
+        android:background="@color/white">
 
-        <ImageView
-            android:id="@+id/img_arrow_back"
-            style="@style/NavIconStyle"
-            android:src="@drawable/ic_arrow_back" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingLeft="10dp"
-            android:text="Sản phẩm doanh nghiệp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/default_text_size" />
-
-    </LinearLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycerview"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </FrameLayout>
-</LinearLayout>
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_toolbar"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/pading_small"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <ImageView
+                android:id="@+id/img_arrow_back"
+                style="@style/NavIconStyle"
+                android:src="@drawable/ic_arrow_back" />
+
+            <TextView
+                android:id="@+id/tv_title_buy_sell"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:text="@string/san_pham_doanh_nghiep"
+                android:textColor="@color/white"
+                android:textSize="@dimen/default_text_size" />
+
+        </LinearLayout>
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentScrim="@color/blue"
+            app:layout_collapseMode="parallax"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_scrollFlags="scroll|enterAlways">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_scrollFlags="scroll|enterAlways">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp">
+
+                        <ImageView
+                            android:id="@+id/img_my_account"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:scaleType="centerCrop" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="150dp"
+                        android:background="@color/white">
+
+                        <ImageView
+                            android:id="@+id/img_avt"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="2dp"
+                            android:scaleType="centerCrop" />
+
+                    </FrameLayout>
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_account_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/pading_small"
+                    android:backgroundTint="@color/transparent"
+                    android:enabled="false"
+                    android:text="Vũ Đình Duy"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/title_text_size" />
+
+                <TextView
+                    android:id="@+id/tv_account_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/pading_small"
+                    android:backgroundTint="@color/transparent"
+                    android:drawableLeft="@drawable/ic_phone_black"
+                    android:drawablePadding="@dimen/pading_small"
+                    android:enabled="false"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/small_text_size" />
+
+                <TextView
+                    android:id="@+id/tv_account_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/pading_small"
+                    android:backgroundTint="@color/transparent"
+                    android:drawableLeft="@drawable/ic_place_black"
+                    android:drawablePadding="@dimen/pading_small"
+                    android:ellipsize="end"
+                    android:enabled="false"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/default_text_size" />
+
+            </LinearLayout>
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+</android.support.design.widget.CoordinatorLayout>

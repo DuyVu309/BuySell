@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
-import com.example.user.banhangonline.caches.SaveMyPurchased;
 import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.DonHang;
 import com.example.user.banhangonline.model.SanPham;
@@ -30,7 +29,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.example.user.banhangonline.caches.SaveMyPurchased.objectPurchasedToSave;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartDetail;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartPhone;
 
@@ -164,22 +162,7 @@ public class ThanhToanActivity extends BaseActivity implements ThanhToanContact.
                              mPresnter.getSanPham().getListFiles().getUrl1(),
                              mPresnter.getSanPham().getGia(),
                              edtSoLuong.getText().toString().trim());
-
-                    DonHang donHangPurchased = new DonHang(tvAddress.getText().toString().trim(),
-                             mPresnter.getSanPham().getHeader(),
-                             String.valueOf(Calendar.getInstance().getTimeInMillis()),
-                             mPresnter.getSanPham().getIdNguoiban(),
-                             PreferManager.getUserID(this),
-                             mPresnter.getSanPham().getNameNguoiBan(),
-                             null,
-                             TimeNowUtils.getTimeNow(),
-                             mPresnter.getSanPham().getListFiles().getUrl1(),
-                             mPresnter.getSanPham().getGia(),
-                             edtSoLuong.getText().toString().trim());
-
                     mPresnter.pushDonHangToFirebase(mDataBase, donHangCart);
-                    objectPurchasedToSave.add(donHangPurchased);
-                    SaveMyPurchased.saveMyPurchasedFile(this, objectPurchasedToSave);
                 } else {
                     showSnackbar(getString(R.string.error_retry));
                 }

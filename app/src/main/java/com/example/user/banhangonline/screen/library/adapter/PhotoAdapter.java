@@ -12,8 +12,6 @@ import com.afollestad.dragselectrecyclerview.DragSelectRecyclerView;
 import com.afollestad.dragselectrecyclerview.DragSelectRecyclerViewAdapter;
 import com.bumptech.glide.Glide;
 import com.example.user.banhangonline.R;
-import com.example.user.banhangonline.views.SquareImageView;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;

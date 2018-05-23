@@ -1,11 +1,7 @@
 package com.example.user.banhangonline.model;
 
-import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
-
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 @IgnoreExtraProperties
 public class Account implements Serializable{

@@ -2,7 +2,6 @@ package com.example.user.banhangonline.screen.maps;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.widget.TextView;
@@ -12,14 +11,12 @@ import com.example.user.banhangonline.base.BaseActivity;
 import com.example.user.banhangonline.model.maps.Directions;
 import com.example.user.banhangonline.model.maps.Route;
 import com.example.user.banhangonline.utils.GoogleMapUtils;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -55,7 +52,6 @@ public class MapsTotalMyCartActivity extends BaseActivity implements OnMapReadyC
                  .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         listAddress = getIntent().getStringArrayListExtra(keyStartListAddress);
-
     }
 
     private void initMarkerInGoogleMap() {
@@ -67,11 +63,6 @@ public class MapsTotalMyCartActivity extends BaseActivity implements OnMapReadyC
                         @Override
                         public void onDirectionSuccess(List<Route> routes) {
                             for (Route route : routes) {
-                                PolylineOptions polylineOptions = new PolylineOptions().geodesic(true).color(Color.RED).width(12);
-                                for (int i = 0; i < route.points.size(); i++) {
-                                    polylineOptions.add(route.points.get(i));
-                                }
-                                listPolylinePaths.add(mMap.addPolyline(polylineOptions));
                                 mMap.addMarker(new MarkerOptions().position(route.endLocation).title(route.endAddress));
 
                             }
@@ -96,12 +87,10 @@ public class MapsTotalMyCartActivity extends BaseActivity implements OnMapReadyC
     }
 
     private void setUpMyLocation() {
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(getMyLocation().getLatitude(), getMyLocation().getLongitude()), 16));
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         mMap.setMyLocationEnabled(true);
-
     }
 
     @Override

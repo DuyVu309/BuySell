@@ -20,14 +20,14 @@ import java.util.List;
 public class GoogleMapUtils {
 
     private static List<LatLng> listPoint = new ArrayList<>();
-    private static LatLng latLng;
+    private static LatLng latLong;
 
     public static List<LatLng> getListPoint() {
         return listPoint;
     }
 
-    public static LatLng getLatLng() {
-        return latLng;
+    public static LatLng getLatLong() {
+        return latLong;
     }
 
     public static void getLatLongFromGivenListAddress(Context context, List<String> youraddress) {
@@ -70,14 +70,12 @@ public class GoogleMapUtils {
 
         @Override
         protected void onCancelled() {
-            // TODO Auto-generated method stub
             super.onCancelled();
             this.cancel(true);
         }
 
         @Override
         protected StringBuilder doInBackground(Void... params) {
-            // TODO Auto-generated method stub
             try {
                 HttpURLConnection conn = null;
                 StringBuilder jsonResults = new StringBuilder();
@@ -138,8 +136,6 @@ public class GoogleMapUtils {
     }
 
     public static void getLatLongFromGivenAddress(Context context, String youraddress) {
-        String uri = "http://maps.google.com/maps/api/geocode/json?address=" +
-                 youraddress + "&key=AIzaSyDCUDjlQqJRaapcRmtdb2l7uTQh4J2oK8Q";
         try {
             Geocoder selected_place_geocoder = new Geocoder(context);
             List<Address> address;
@@ -152,7 +148,7 @@ public class GoogleMapUtils {
                 Address location = address.get(0);
                 double lat = location.getLatitude();
                 double lng = location.getLongitude();
-                latLng = new LatLng(lat, lng);
+                latLong = new LatLng(lat, lng);
             }
 
         } catch (Exception e) {
@@ -175,14 +171,12 @@ public class GoogleMapUtils {
 
         @Override
         protected void onCancelled() {
-            // TODO Auto-generated method stub
             super.onCancelled();
             this.cancel(true);
         }
 
         @Override
         protected StringBuilder doInBackground(Void... params) {
-            // TODO Auto-generated method stub
             try {
                 HttpURLConnection conn = null;
                 StringBuilder jsonResults = new StringBuilder();
@@ -232,7 +226,7 @@ public class GoogleMapUtils {
 
                 String lng_helper = location_jsonObj.getString("lng");
                 double lng = Double.valueOf(lng_helper);
-                latLng = new LatLng(lat, lng);
+                latLong = new LatLng(lat, lng);
             } catch (JSONException e) {
                 e.printStackTrace();
 

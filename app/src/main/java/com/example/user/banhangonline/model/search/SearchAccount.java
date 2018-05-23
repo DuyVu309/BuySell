@@ -1,6 +1,8 @@
 package com.example.user.banhangonline.model.search;
 
-public class SearchAccount {
+import java.io.Serializable;
+
+public class SearchAccount implements Serializable{
     private String urlAvt;
     private String nameAc;
 

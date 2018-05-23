@@ -1,7 +1,6 @@
 package com.example.user.banhangonline.utils;
 
 import android.content.Context;
-
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.model.DonHang;
 import com.example.user.banhangonline.widget.dialog.DialogChangeAccount;
@@ -70,5 +69,4 @@ public class DialogUntils {
         DialogDonHangInfo dialogDonHangInfo = new DialogDonHangInfo(context, donHang);
         dialogDonHangInfo.show();
     }
-
 }

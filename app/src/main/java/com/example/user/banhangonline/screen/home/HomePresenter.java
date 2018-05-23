@@ -1,6 +1,5 @@
 package com.example.user.banhangonline.screen.home;
 
-
 import android.content.Context;
 
 import com.example.user.banhangonline.base.BasePresenter;
