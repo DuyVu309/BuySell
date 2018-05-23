@@ -65,8 +65,7 @@ public class ListImagesCartAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ImagesViewholder viewholder = (ImagesViewholder) holder;
         Glide.with(context).load(mList.get(position))
-                 .centerCrop()
-                 .error(R.drawable.ic_no_image).into(viewholder.imgPhoto);
+                 .centerCrop().into(viewholder.imgPhoto);
     }
 
     @Override
