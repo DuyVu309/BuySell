@@ -34,7 +34,6 @@
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:text="Đồ ăn vặt"
                     android:textColor="@color/white"
                     android:textSize="@dimen/default_text_size" />
 
@@ -49,7 +48,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/default_text_size"
                     android:drawablePadding="@dimen/pading_small"
-                    android:text="Quét quanh đây" />
+                    android:text="@string/quet_quanh_day" />
 
             </LinearLayout>
 

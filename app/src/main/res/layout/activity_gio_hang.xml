@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_back_activity"
-            android:text="Thông báo mua hàng"
+            android:text="@string/thong_bao_mua_hang"
             android:textColor="@color/white"
             android:textSize="@dimen/default_text_size" />
     </LinearLayout>

@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingLeft="10dp"
-            android:text="Chỉnh sửa bài viết"
+            android:text="@string/chinh_sua_bai_viet"
             android:textColor="@color/white"
             android:textSize="@dimen/default_text_size" />
 
@@ -69,7 +69,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tiêu đề : "
+            android:text="@string/tieu_de"
             android:textColor="@color/black"
             android:textSize="@dimen/default_text_size" />
 
@@ -93,7 +93,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mô tả :  "
+            android:text="@string/mo_ta"
             android:textColor="@color/black"
             android:textSize="@dimen/default_text_size" />
 
@@ -119,7 +119,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Giá: "
+            android:text="@string/gia_sell"
             android:textColor="@color/black"
             android:textSize="@dimen/default_text_size" />
 

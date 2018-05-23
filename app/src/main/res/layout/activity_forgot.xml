@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/pading_normal"
                 android:background="@drawable/bg_button_signin_after"
-                android:text="Tiếp tục"
+                android:text="@string/tiep_tuc"
                 android:textColor="@color/white" />
         </LinearLayout>
 

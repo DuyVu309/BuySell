@@ -263,6 +263,7 @@ public class HomeActivity extends BaseActivity implements
                     PreferManager.setUserID(HomeActivity.this, null);
                     PreferManager.setNameAccount(HomeActivity.this, null);
                     PreferManager.setPhoneNumber(HomeActivity.this, null);
+                    PreferManager.setMyAddress(HomeActivity.this, null);
                     logoutUser();
                 }
 

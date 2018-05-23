@@ -135,8 +135,36 @@
 
     <string name="info_dev">https://www.facebook.com/vuduy309</string>
     <string name="info_app">Ứng dụng được tạo bởi: VuDuy309</string>
-    <string name="info_us">Email chúng tôi: BuySellVN309@gmail.com</string>
+    <string name="info_us">Email chúng tôi: buysellvn309@gmail.com</string>
     <string name="ban_muon_dang_xuat_khong">Bạn có chắc chắn muốn đăng xuất hay không?</string>
     <string name="scanning">Đang quét </string>
+    <string name="da_gui_toi_email_cua_ban">Đã gửi tới email của bạn</string>
+    <string name="chi_duoc_chon_bon_anh">Chỉ được chọn tối đa 4 ảnh</string>
+    <string name="gui">Gửi</string>
+    <string name="chinh_sua_bai_viet">Chỉnh sửa bài viết</string>
+    <string name="tieu_de">Tiêu đề :</string>
+    <string name="mo_ta">Mô tả :</string>
+    <string name="gia_sell">Giá:</string>
+    <string name="van_de">Vấn đề</string>
+    <string name="tiep_tuc">Tiếp tục</string>
+    <string name="thong_bao_mua_hang">Thông báo mua hàng</string>
+    <string name="so_dien_thoai">Số điện thoại</string>
+    <string name="gui_ma">Gửi mã</string>
+    <string name="xac_nhan">Xác nhận</string>
+    <string name="quet_quanh_day">Quét quanh đây</string>
+    <string name="tim_kiem">Tìm kiếm</string>
+    <string name="tim_kiem_san_pham">Tìm kiếm sản phẩm</string>
+    <string name="tim_kiem_doanh_nghiep">Tìm kiếm doanh nghiệp</string>
+    <string name="doanh_nghiep">Doanh nghiệp</string>
+    <string name="thay_doi_thong_tin">Thay đổi thông tin</string>
+    <string name="ten_change_info">Tên :</string>
+    <string name="sdt_change_info">Số điện thoại :</string>
+    <string name="dia_chi_change_info">Địa chỉ :</string>
+    <string name="nguoi_mua">Người mua:</string>
+    <string name="dia_chi_info_cart">Địa chỉ:</string>
+    <string name="don_hang_info_cart">Đơn hàng:</string>
+    <string name="sdt_cart">SDT:</string>
+    <string name="so_luong_cart">Số lượng:</string>
+    <string name="thoi_gian_cart">Thời gian:</string>
 
 </resources>

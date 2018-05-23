@@ -165,7 +165,7 @@ public class LibraryActivity extends BaseActivity implements LibraryContact.View
                 finish();
                 dismissDialog();
             } else {
-                showSnackbar("Chỉ được chọn tối đa 4 ảnh");
+                showSnackbar(getString(R.string.chi_duoc_chon_bon_anh));
                 dismissDialog();
             }
         }

@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/pading_normal"
                 android:padding="@dimen/pading_small"
-                android:text="Thay đổi thông tin"
+                android:text="@string/thay_doi_thong_tin"
                 android:textColor="@color/white"
                 android:textSize="@dimen/default_text_size" />
 
@@ -50,7 +50,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Tên :"
+                android:text="@string/ten_change_info"
                 android:textColor="@color/black"
                 android:textSize="@dimen/default_text_size" />
 
@@ -78,7 +78,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Số điện thoại :"
+                android:text="@string/sdt_change_info"
                 android:textColor="@color/black"
                 android:textSize="@dimen/default_text_size" />
 
@@ -106,7 +106,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Địa chỉ :"
+                android:text="@string/dia_chi_change_info"
                 android:textColor="@color/black"
                 android:textSize="@dimen/default_text_size" />
 
@@ -143,7 +143,7 @@
                 android:layout_weight="1"
                 android:background="@color/red"
                 android:padding="@dimen/pading_small"
-                android:text="Hủy"
+                android:text="@string/huy"
                 android:textColor="@color/white"
                 android:textSize="@dimen/default_text_size" />
 
@@ -155,7 +155,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_button_click_white"
                 android:padding="@dimen/pading_small"
-                android:text="Xong"
+                android:text="@string/xac_nhan"
                 android:textColor="@color/blue"
                 android:textSize="@dimen/default_text_size" />
         </LinearLayout>

@@ -27,7 +27,6 @@
             android:paddingBottom="@dimen/pading_normal"
             android:paddingLeft="@dimen/pading_normal"
             android:paddingTop="@dimen/pading_normal"
-            android:text="Bim bim"
             android:textColor="@color/black"
             android:textSize="@dimen/default_text_size" />
     </LinearLayout>

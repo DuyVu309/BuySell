@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingLeft="10dp"
-                android:text="Tìm kiếm"
+                android:text="@string/tim_kiem"
                 android:textColor="@color/white"
                 android:textSize="@dimen/default_text_size" />
 
@@ -54,7 +54,7 @@
                 android:drawableLeft="@drawable/ic_add_shopping"
                 android:drawablePadding="@dimen/pading_small"
                 android:ellipsize="end"
-                android:hint="Tìm kiếm sản phẩm"
+                android:hint="@string/tim_kiem_san_pham"
                 android:inputType="textFilter"
                 android:paddingLeft="@dimen/pading_small"
                 android:paddingRight="@dimen/nav_bar_height"
@@ -86,7 +86,7 @@
                 android:drawableLeft="@drawable/ic_product"
                 android:drawablePadding="@dimen/pading_small"
                 android:ellipsize="end"
-                android:hint="Tìm kiếm doanh nghiệp"
+                android:hint="@string/tim_kiem_doanh_nghiep"
                 android:inputType="textFilter"
                 android:paddingLeft="@dimen/pading_small"
                 android:paddingRight="@dimen/nav_bar_height"

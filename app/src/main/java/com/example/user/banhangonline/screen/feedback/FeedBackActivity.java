@@ -36,7 +36,7 @@ public class FeedBackActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_send_feedback)
     public void sendFeedBack() {
-        String to = "BuySelVN309@gmail.com";
+        String to = "buysellvn309@gmail.com";
         String subject = edtSubject.getText().toString();
         String message = edtBody.getText().toString();
 

@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/pading_small"
                 android:layout_weight="1"
-                android:text="Người mua: "
+                android:text="@string/nguoi_mua"
                 android:textColor="@color/black"
                 android:textSize="@dimen/default_text_size" />
 
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/pading_small"
                 android:layout_weight="1"
-                android:text="Địa chỉ: "
+                android:text="@string/dia_chi_info_cart"
                 android:textColor="@color/black"
                 android:textSize="@dimen/default_text_size" />
 
@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/pading_small"
                 android:layout_weight="1"
-                android:text="Đơn hàng: "
+                android:text="@string/don_hang_info_cart"
                 android:textColor="@color/black"
                 android:textSize="@dimen/default_text_size" />
 
@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/pading_small"
                 android:layout_weight="1"
-                android:text="SDT: "
+                android:text="@string/sdt_cart"
                 android:textColor="@color/black"
                 android:textSize="@dimen/default_text_size" />
 
@@ -133,7 +133,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/pading_small"
                 android:layout_weight="1"
-                android:text="Số lượng: "
+                android:text="@string/so_luong_cart"
                 android:textColor="@color/black"
                 android:textSize="@dimen/default_text_size" />
 
@@ -160,7 +160,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/pading_small"
                 android:layout_weight="1"
-                android:text="Thời gian: "
+                android:text="@string/thoi_gian_cart"
                 android:textColor="@color/black"
                 android:textSize="@dimen/default_text_size" />
 

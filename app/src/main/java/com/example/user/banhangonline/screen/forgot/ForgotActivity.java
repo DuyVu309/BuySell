@@ -67,7 +67,7 @@ public class ForgotActivity extends BaseActivity implements ForgotContact.View {
     @Override
     public void resetPasswordSuccess() {
         dismissDialog();
-        showSnackbar("Đã gửi tới email của bạn");
+        showSnackbar(getString(R.string.da_gui_toi_email_cua_ban));
         finish();
     }
 

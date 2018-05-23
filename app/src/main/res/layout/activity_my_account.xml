@@ -103,7 +103,6 @@
                     android:layout_margin="@dimen/pading_small"
                     android:backgroundTint="@color/transparent"
                     android:enabled="false"
-                    android:text="Vũ Đình Duy"
                     android:textColor="@color/black"
                     android:textSize="@dimen/title_text_size" />
 

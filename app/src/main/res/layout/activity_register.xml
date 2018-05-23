@@ -326,7 +326,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/pading_normal"
-                android:text="Số điện thoại"
+                android:text="@string/so_dien_thoai"
                 android:textColor="@color/black"
                 android:textSize="@dimen/default_text_size" />
 
@@ -354,7 +354,7 @@
 
                 <Button
                     android:id="@+id/btn_send_code"
-                    android:text="Gửi mã"
+                    android:text="@string/gui_ma"
                     android:layout_marginLeft="@dimen/pading_small"
                     android:layout_marginRight="@dimen/pading_small"
                     android:textColor="@color/white"
@@ -377,7 +377,7 @@
 
                 <Button
                     android:id="@+id/btn_vevify_code"
-                    android:text="Xác nhận"
+                    android:text="@string/xac_nhan"
                     android:enabled="false"
                     android:textSize="@dimen/small_text_size"
                     android:layout_marginRight="@dimen/pading_small"

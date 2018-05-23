@@ -412,7 +412,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
                                          edtPasswordSell.getText().toString().trim(),
                                          edtConfirmPasswordSell.getText().toString().trim());
                             } else {
-                                showSnackbar("Mật khẩu không trùng khớp");
+                                showSnackbar(getString(R.string.mat_khau_khong_trung_khop));
                             }
 
                         }
