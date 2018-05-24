@@ -282,7 +282,6 @@ public class MySanPhamActivity extends BaseActivity implements
         Glide.with(this).load(account.getUrlLanscape()).error(R.drawable.bg_app).into(imgMyLanscape);
         Glide.with(this).load(account.getUrlAvt()).into(imgAvt);
         PreferManager.setMyAddress(this, account.getAddress() != null ? account.getAddress() : null);
-
     }
 
     @Override

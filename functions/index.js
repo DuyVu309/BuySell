@@ -17,7 +17,7 @@ exports.sendNotification = functions.database.ref('/notifications/messages/{push
             return Promise.all(promises);
         }
 
-        const getInstanceIdPromise = admin.database().ref(`/users/${receiverUid}/instanceId`).once('value');
+        const getInstanceIdPromise = admin.database().ref('/Account/${userId}/').once('value');
         const getReceiverUidPromise = admin.auth().getUser(receiverUid);
 
         return Promise.all([getInstanceIdPromise, getReceiverUidPromise]).then(results => {

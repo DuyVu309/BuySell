@@ -138,7 +138,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-         ButterKnife.bind(this);
+        ButterKnife.bind(this);
         mPresenter = new RegisPresenter();
         mPresenter.attachView(this);
         mPresenter.onCreate();
@@ -470,23 +470,23 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mDataBase.child(keyAccount).child(mAuth.getCurrentUser().getUid()).setValue(new Account("",
-                             email,
-                             keyAccountBuy,
-                             edtFullName.getText().toString().trim(),
-                             PreferManager.getPhoneNumber(RegisterActivity.this),
-                             "",
-                             "",
-                             "",
-                             "",
-                             getString(R.string.dont_address)))
-                             .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                 @Override
-                                 public void onComplete(@NonNull Task<Void> task) {
-                                     if (task.isSuccessful()) {
-                                         mAuth.createUserWithEmailAndPassword(edtmailBuy.getText().toString().trim(), edtPasswordBuy.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    mAuth.createUserWithEmailAndPassword(email, edtPasswordBuy.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                mDataBase.child(keyAccount).child(mAuth.getCurrentUser().getUid()).setValue(new Account(mAuth.getCurrentUser().getUid(),
+                                         email,
+                                         keyAccountBuy,
+                                         edtFullName.getText().toString().trim(),
+                                         PreferManager.getPhoneNumber(RegisterActivity.this),
+                                         "",
+                                         "",
+                                         "",
+                                         "",
+                                         getString(R.string.dont_address)))
+                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                              @Override
-                                             public void onComplete(@NonNull Task<AuthResult> task) {
+                                             public void onComplete(@NonNull Task<Void> task) {
                                                  if (task.isSuccessful()) {
                                                      Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                                      intent.putExtra(KeyUntils.keyEmailRegister, edtmailBuy.getText().toString().trim());
@@ -495,18 +495,17 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
                                                      finish();
                                                      dismissDialog();
                                                      showSnackbar(getResources().getString(R.string.error_and_check));
-
                                                  } else {
                                                      showSnackbar(getResources().getString(R.string.error_and_check));
                                                      dismissDialog();
+
                                                  }
                                              }
                                          });
-                                     } else {
-                                         showSnackbar(getResources().getString(R.string.error_and_check));
-                                     }
-                                 }
-                             });
+                            }
+                        }
+                    });
+
 
                 }
             }, 1000);
@@ -523,14 +522,14 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
     @Override
     public void registerSellSuccess() {
         final String email = edtEmailRegisterSell.getText().toString().trim();
-        if (email == null) return;;
+        if (email == null) return;
         if (NetworkUtils.isConnected(this)) {
             mAuth.createUserWithEmailAndPassword(edtEmailRegisterSell.getText().toString().trim(),
                      edtPasswordSell.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        mDataBase.child(keyAccount).child(mAuth.getCurrentUser().getUid()).setValue(new Account("",
+                        mDataBase.child(keyAccount).child(mAuth.getCurrentUser().getUid()).setValue(new Account(mAuth.getCurrentUser().getUid(),
                                  email,
                                  keyAccountSell,
                                  edtTenDoanhNghiep.getText().toString().trim(),

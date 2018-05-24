@@ -52,7 +52,9 @@ public class SanPhamDetailPresenter implements SanPhamDetailContact.Presenter {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                mView.getInfomationError();
+                if (mView != null) {
+                    mView.getInfomationError();
+                }
             }
         });
     }

@@ -334,7 +334,22 @@ public class SellActivity extends BaseActivity implements SellContact.View {
 
     private void uploadListFile(String idPart) {
         GoogleMapUtils.getLatLongFromGivenAddress(this, PreferManager.getMyAddress(this));
-        if (GoogleMapUtils.getLatLong() != null) {
+        if (GoogleMapUtils.getLatLong() == null) {
+            mPresenter.upLoadSanPhamToFirebase(mDataBase,
+                     new SanPham(PreferManager.getUserID(this),
+                              PreferManager.getNameAccount(this),
+                              PreferManager.getUserID(this) + Calendar.getInstance().getTimeInMillis(),
+                              mPresenter.getIdCate(),
+                              idPart,
+                              edtHeader.getText().toString().trim(),
+                              edtMota.getText().toString().trim(),
+                              TimeNowUtils.getTimeNow(),
+                              new ListFileImages().getContructor(mPresenter.getListImages(), mPresenter.getListNameImages()),
+                              edtSellGia.getText().toString().trim(),
+                              PreferManager.getMyAddress(this),
+                              getMyLocation().getLatitude(),
+                              getMyLocation().getLongitude()));
+        } else {
             mPresenter.upLoadSanPhamToFirebase(mDataBase,
                      new SanPham(PreferManager.getUserID(this),
                               PreferManager.getNameAccount(this),
@@ -349,20 +364,6 @@ public class SellActivity extends BaseActivity implements SellContact.View {
                               PreferManager.getMyAddress(this),
                               GoogleMapUtils.getLatLong().latitude,
                               GoogleMapUtils.getLatLong().longitude));
-        } else {
-            mPresenter.upLoadSanPhamToFirebase(mDataBase,
-                     new SanPham(PreferManager.getUserID(this),
-                              PreferManager.getNameAccount(this),
-                              PreferManager.getUserID(this) + Calendar.getInstance().getTimeInMillis(),
-                              mPresenter.getIdCate(),
-                              idPart,
-                              edtHeader.getText().toString().trim(),
-                              edtMota.getText().toString().trim(),
-                              TimeNowUtils.getTimeNow(),
-                              new ListFileImages().getContructor(mPresenter.getListImages(), mPresenter.getListNameImages()),
-                              edtSellGia.getText().toString().trim(),
-                              PreferManager.getMyAddress(this),
-                              0, 0));
         }
 
         dismissDialog();

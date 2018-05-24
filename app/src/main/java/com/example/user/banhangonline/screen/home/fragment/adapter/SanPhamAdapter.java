@@ -16,10 +16,12 @@ import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.model.maps.Directions;
 import com.example.user.banhangonline.model.maps.Route;
+import com.example.user.banhangonline.utils.GoogleMapUtils;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -126,24 +128,47 @@ public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             Glide.with(context).load(url).centerCrop().into(viewHolder.imgSanPham);
             viewHolder.tvHeaderSanPham.setText(sanPham.getHeader());
             viewHolder.tvGiaSp.setText(sanPham.getGia());
-
-            LatLng endLatLng = new LatLng(sanPham.getLatitude(), sanPham.getLongitude());
-            if (mLocation != null && endLatLng != null) {
-                try {
-                    new Directions(mLocation.getLatitude(), mLocation.getLongitude(), endLatLng.latitude, endLatLng.longitude, new Directions.DirectionsListener() {
-                        @Override
-                        public void onDirectionSuccess(List<Route> routes) {
-                            for (Route route : routes) {
-                                viewHolder.tvDistance.setText("Cách " + route.distance);
-                            }
+            if (sanPham.getLatitude() == 0 || sanPham.getLongitude() == 0) { // get latlng from address
+                if (sanPham.getAddress() != null) {
+                    GoogleMapUtils.getLatLongFromGivenAddress(context, sanPham.getAddress());
+                    LatLng endLatLng = GoogleMapUtils.getLatLong();
+                    if (mLocation != null && endLatLng != null) {
+                        try {
+                            new Directions(mLocation.getLatitude(), mLocation.getLongitude(), endLatLng.latitude, endLatLng.longitude, new Directions.DirectionsListener() {
+                                @Override
+                                public void onDirectionSuccess(List<Route> routes) {
+                                    for (Route route : routes) {
+                                        viewHolder.tvDistance.setText("Cách " + route.distance);
+                                    }
+                                }
+                            }).execute();
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
                         }
-                    }).execute();
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+                    } else {
+                        viewHolder.tvDistance.setVisibility(View.GONE);
+                    }
                 }
-            } else {
-                viewHolder.tvDistance.setVisibility(View.GONE);
+            } else { //get latlng from database
+                LatLng endLatLng = new LatLng(sanPham.getLatitude(), sanPham.getLongitude());
+                if (mLocation != null && endLatLng != null) {
+                    try {
+                        new Directions(mLocation.getLatitude(), mLocation.getLongitude(), endLatLng.latitude, endLatLng.longitude, new Directions.DirectionsListener() {
+                            @Override
+                            public void onDirectionSuccess(List<Route> routes) {
+                                for (Route route : routes) {
+                                    viewHolder.tvDistance.setText("Cách " + route.distance);
+                                }
+                            }
+                        }).execute();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    viewHolder.tvDistance.setVisibility(View.GONE);
+                }
             }
+
         }
     }
 
