@@ -48,6 +48,7 @@ public class MapsTotalMyCartActivity extends BaseActivity implements OnMapReadyC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps_total_my_cart);
         ButterKnife.bind(this);
+        showDialog();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                  .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -86,6 +87,7 @@ public class MapsTotalMyCartActivity extends BaseActivity implements OnMapReadyC
             }
         }
         tvMapTotal.setText(getString(R.string.tong_so_dia_diem) + " (" + listAddress.size() + ")");
+        dismissDialog();
     }
 
     @Override

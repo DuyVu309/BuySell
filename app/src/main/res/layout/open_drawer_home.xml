@@ -66,12 +66,12 @@
                 <!--android:drawableLeft="@drawable/ic_notifications"-->
                 <!--android:text="@string/thong_bao" />-->
 
-            <!--<TextView-->
-                <!--android:id="@+id/tv_cai_dat"-->
-                <!--style="@style/normalText"-->
-                <!--android:layout_margin="@dimen/pading_small"-->
-                <!--android:drawableLeft="@drawable/ic_settings"-->
-                <!--android:text="@string/cai_dat" />-->
+            <TextView
+                android:id="@+id/tv_cai_dat"
+                style="@style/normalText"
+                android:layout_margin="@dimen/pading_small"
+                android:drawableLeft="@drawable/ic_settings"
+                android:text="@string/cai_dat" />
 
             <TextView
                 android:id="@+id/tv_tinh_nang_vip"

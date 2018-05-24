@@ -118,31 +118,27 @@
         <!-- [END firebase_iid_service] -->
 
         <activity android:name=".screen.showImage.ShowImageActivity" />
-
         <activity
             android:name=".screen.thanhToan.ThanhToanActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".screen.myGioHang.MyGioHangActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".screen.maps.MapsTotalMyCartActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".screen.feedback.FeedBackActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".screen.purchased.MyPurchasedActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".screen.setting.SettingActivity"></activity>
     </application>
 
 </manifest>

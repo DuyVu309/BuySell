@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.user.banhangonline.R;
+import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.model.maps.Directions;
 import com.example.user.banhangonline.model.maps.Route;
@@ -128,44 +129,47 @@ public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             Glide.with(context).load(url).centerCrop().into(viewHolder.imgSanPham);
             viewHolder.tvHeaderSanPham.setText(sanPham.getHeader());
             viewHolder.tvGiaSp.setText(sanPham.getGia());
-            if (sanPham.getAddress() != null) {
-                GoogleMapUtils.getLatLongFromGivenAddress(context, sanPham.getAddress());
-                LatLng endLatLng = GoogleMapUtils.getLatLong();
-                if (mLocation != null && endLatLng != null) {
-                    try {
-                        new Directions(mLocation.getLatitude(), mLocation.getLongitude(), endLatLng.latitude, endLatLng.longitude, new Directions.DirectionsListener() {
-                            @Override
-                            public void onDirectionSuccess(List<Route> routes) {
-                                for (Route route : routes) {
-                                    viewHolder.tvDistance.setText("Cách " + route.distance);
-                                }
-                            }
-                        }).execute();
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    if (mLocation != null && sanPham.getLatitude() != 0 && sanPham.getLongitude() != 0) {
-                        LatLng latLng = new LatLng(sanPham.getLatitude(), sanPham.getLongitude());
-                        if (mLocation != null && latLng != null) {
-                            try {
-                                new Directions(mLocation.getLatitude(), mLocation.getLongitude(), latLng.latitude, latLng.longitude, new Directions.DirectionsListener() {
-                                    @Override
-                                    public void onDirectionSuccess(List<Route> routes) {
-                                        for (Route route : routes) {
-                                            viewHolder.tvDistance.setText("Cách " + route.distance);
-                                        }
+            if (PreferManager.getIsShowDistanceSell(context)) {
+                if (sanPham.getAddress() != null) {
+                    GoogleMapUtils.getLatLongFromGivenAddress(context, sanPham.getAddress());
+                    LatLng endLatLng = GoogleMapUtils.getLatLong();
+                    if (mLocation != null && endLatLng != null) {
+                        try {
+                            new Directions(mLocation.getLatitude(), mLocation.getLongitude(), endLatLng.latitude, endLatLng.longitude, new Directions.DirectionsListener() {
+                                @Override
+                                public void onDirectionSuccess(List<Route> routes) {
+                                    for (Route route : routes) {
+                                        viewHolder.tvDistance.setText("Cách " + route.distance);
                                     }
-                                }).execute();
-                            } catch (UnsupportedEncodingException e) {
-                                e.printStackTrace();
+                                }
+                            }).execute();
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        if (mLocation != null && sanPham.getLatitude() != 0 && sanPham.getLongitude() != 0) {
+                            LatLng latLng = new LatLng(sanPham.getLatitude(), sanPham.getLongitude());
+                            if (mLocation != null && latLng != null) {
+                                try {
+                                    new Directions(mLocation.getLatitude(), mLocation.getLongitude(), latLng.latitude, latLng.longitude, new Directions.DirectionsListener() {
+                                        @Override
+                                        public void onDirectionSuccess(List<Route> routes) {
+                                            for (Route route : routes) {
+                                                viewHolder.tvDistance.setText("Cách " + route.distance);
+                                            }
+                                        }
+                                    }).execute();
+                                } catch (UnsupportedEncodingException e) {
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                viewHolder.tvDistance.setVisibility(View.GONE);
                             }
-                        } else {
-                            viewHolder.tvDistance.setVisibility(View.GONE);
                         }
                     }
                 }
             }
+
         }
     }
 

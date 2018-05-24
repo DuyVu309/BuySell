@@ -165,5 +165,7 @@
     <string name="sdt_cart">SDT:</string>
     <string name="so_luong_cart">Số lượng:</string>
     <string name="thoi_gian_cart">Thời gian:</string>
+    <string name="quang_duong_mua_hang">Quãng đường khi mua hàng</string>
+    <string name="quang_duong_gio_hang">Quãng đường trong giỏ hàng</string>
 
 </resources>

@@ -17,6 +17,8 @@ import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.Account;
 import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.screen.detail.SanPhamDetailActivity;
+import com.example.user.banhangonline.screen.mySanPham.MySanPhamActivity;
+import com.example.user.banhangonline.screen.showImage.ShowImageActivity;
 import com.example.user.banhangonline.screen.spAccount.adapter.SanPhamAccountAdapter;
 
 import butterknife.BindView;
@@ -25,6 +27,7 @@ import butterknife.OnClick;
 
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartDetail;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartSPAccount;
+import static com.example.user.banhangonline.utils.KeyUntils.keyShowImage;
 
 public class SanPhamAccountActivity extends BaseActivity implements SanPhamAccountContact.View {
 
@@ -88,6 +91,19 @@ public class SanPhamAccountActivity extends BaseActivity implements SanPhamAccou
         rvSanPhamAccount.setAdapter(mAdapter);
     }
 
+    @OnClick(R.id.img_avt)
+    public void showImageAvt() {
+        Intent intent = new Intent(SanPhamAccountActivity.this, ShowImageActivity.class);
+        intent.putExtra(keyShowImage, mPresenter.getAccount().getUrlAvt());
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.img_my_account)
+    public void showImageLans() {
+        Intent intent = new Intent(SanPhamAccountActivity.this, ShowImageActivity.class);
+        intent.putExtra(keyShowImage, mPresenter.getAccount().getUrlLanscape());
+        startActivity(intent);
+    }
 
     @Override
     public void getInfoSuccess() {

@@ -34,5 +34,10 @@ public class KeyPreferUntils {
     //maps
     public static final String keyStartListAddress = "keyStartListAddress";
 
+    //setting
+    public static final String keyShowDistanceSell = "keyShowDistanceSell";
+    public static final String keyShowDistanceCart = "keyShowDistanceCart";
+
+
 
 }
