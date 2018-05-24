@@ -1,6 +1,7 @@
 package com.example.user.banhangonline.screen.thanhToan;
 
 import android.support.annotation.NonNull;
+
 import com.example.user.banhangonline.model.DonHang;
 import com.example.user.banhangonline.model.SanPham;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -9,7 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 
 import static com.example.user.banhangonline.utils.KeyUntils.keyDonHang;
 
-public class ThanhToanPresenter implements ThanhToanContact.Presenter{
+public class ThanhToanPresenter implements ThanhToanContact.Presenter {
 
     ThanhToanContact.View mView;
 
@@ -49,7 +50,9 @@ public class ThanhToanPresenter implements ThanhToanContact.Presenter{
                         mView.pushDonHangSuccess();
                     }
                 } else {
-                    mView.pushDonHangError();
+                    if (mView != null) {
+                        mView.pushDonHangError();
+                    }
                 }
             }
         });

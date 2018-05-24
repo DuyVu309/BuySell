@@ -104,9 +104,14 @@ public class RegisPresenter extends BasePresenter implements RegisterContact.Pre
                  && email.endsWith(".com")
                  && password.length() >= 6
                  && confirmpassword.equals(password)) {
-            mView.registerBuySuccess();
+            if (mView != null) {
+                mView.registerBuySuccess();
+            }
         } else {
-            mView.registerBuyError();
+            if (mView != null) {
+                mView.registerBuyError();
+            }
+
         }
     }
 
@@ -119,9 +124,13 @@ public class RegisPresenter extends BasePresenter implements RegisterContact.Pre
                  && password.length() >= 6
                  && confirmPassword.equals(password)
                  && phone.length() > 8) {
-            mView.registerSellSuccess();
+            if (mView != null) {
+                mView.registerSellSuccess();
+            }
         } else {
-            mView.registerSellError();
+            if (mView != null) {
+                mView.registerSellError();
+            }
         }
     }
 
@@ -162,10 +171,15 @@ public class RegisPresenter extends BasePresenter implements RegisterContact.Pre
                          @Override
                          public void onComplete(@NonNull Task<AuthResult> task) {
                              if (task.isSuccessful()) {
-                                 mView.codevalid();
+                                 if (mView != null) {
+                                     mView.codevalid();
+                                 }
+
                              } else {
                                  if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                     mView.codeInvalid();
+                                     if (mView != null) {
+                                         mView.codeInvalid();
+                                     }
                                  }
                              }
                          }

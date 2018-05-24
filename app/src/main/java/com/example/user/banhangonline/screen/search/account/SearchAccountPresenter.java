@@ -198,25 +198,25 @@ public class SearchAccountPresenter implements SearchAccountContact.Presenter {
         databaseReference.child(keyAccount).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Account account = dataSnapshot.getValue(Account.class);
-                GoogleMapUtils.getLatLongFromGivenAddress(context, account.getAddress());
-                LatLng endLatLng = GoogleMapUtils.getLatLong();
-                if (mLocation != null && endLatLng != null) {
-                    try {
-                        new Directions(mLocation.getLatitude(), mLocation.getLongitude(), endLatLng.latitude, endLatLng.longitude, new Directions.DirectionsListener() {
-                            @Override
-                            public void onDirectionSuccess(List<Route> routes) {
-                                for (Route route : routes) {
-                                    Log.d("TAG route", route.distance);
-                                }
-                            }
-                        }).execute();
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-
-                }
+//                Account account = dataSnapshot.getValue(Account.class);
+//                GoogleMapUtils.getLatLongFromGivenAddress(context, account.getAddress());
+//                LatLng endLatLng = GoogleMapUtils.getLatLong();
+//                if (mLocation != null && endLatLng != null) {
+//                    try {
+//                        new Directions(mLocation.getLatitude(), mLocation.getLongitude(), endLatLng.latitude, endLatLng.longitude, new Directions.DirectionsListener() {
+//                            @Override
+//                            public void onDirectionSuccess(List<Route> routes) {
+//                                for (Route route : routes) {
+//                                    Log.d("TAG route", route.distance);
+//                                }
+//                            }
+//                        }).execute();
+//                    } catch (UnsupportedEncodingException e) {
+//                        e.printStackTrace();
+//                    }
+//                } else {
+//
+//                }
             }
 
             @Override

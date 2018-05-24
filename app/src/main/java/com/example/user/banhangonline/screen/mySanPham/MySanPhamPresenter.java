@@ -129,9 +129,13 @@ public class MySanPhamPresenter extends BasePresenter implements MySanPhamContac
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            mView.deleteSuscess();
+                            if (mView != null) {
+                                mView.deleteSuscess();
+                            }
                         } else {
-                            mView.deleteError();
+                            if (mView != null) {
+                                mView.deleteError();
+                            }
                         }
                     }
                 });
@@ -177,7 +181,9 @@ public class MySanPhamPresenter extends BasePresenter implements MySanPhamContac
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                mView.getInfroError();
+                if (mView != null) {
+                    mView.getInfroError();
+                }
             }
         });
     }

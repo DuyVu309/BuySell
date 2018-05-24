@@ -192,10 +192,13 @@ public class SellPresenter extends BasePresenter implements SellContact.Presente
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    mView.upLoadToFirebaseSuccess();
+                    if (mView != null) {
+                        mView.upLoadToFirebaseSuccess();
+                    }
                 } else {
-                    mView.upLoadToFirebaseError();
-
+                    if (mView != null) {
+                        mView.upLoadToFirebaseError();
+                    }
                 }
             }
         });
