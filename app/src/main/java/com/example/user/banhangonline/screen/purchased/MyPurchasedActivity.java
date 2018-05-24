@@ -58,7 +58,9 @@ public class MyPurchasedActivity extends BaseActivity implements MyPurchasedCont
             showNoInternet();
             mPresenter.setDonHangList(SaveMyCart.readMyCartFile(this, mPresenter.getDonHangList()));
             initAdapter();
-            tvTitle.setText(getString(R.string.don_hang_cua_ban) + " (" + mPresenter.getDonHangList().size() + ")");
+            if (mPresenter.getDonHangList() != null) {
+                tvTitle.setText(getString(R.string.don_hang_cua_ban) + " (" + mPresenter.getDonHangList().size() + ")");
+            }
 
         }
     }
@@ -124,7 +126,9 @@ public class MyPurchasedActivity extends BaseActivity implements MyPurchasedCont
     public void getPurchsedSuccess() {
         if (mAdapter != null) {
             SaveMyCart.saveMyCartFile(this, mPresenter.getDonHangList());
-            tvTitle.setText(getString(R.string.don_hang_cua_ban) + " (" + mPresenter.getDonHangList().size() + ")");
+            if (mPresenter.getDonHangList() != null) {
+                tvTitle.setText(getString(R.string.don_hang_cua_ban) + " (" + mPresenter.getDonHangList().size() + ")");
+            }
             mAdapter.notifyDataSetChanged();
             dismissDialog();
         }
@@ -141,7 +145,9 @@ public class MyPurchasedActivity extends BaseActivity implements MyPurchasedCont
         mPresenter.getDonHangList().remove(positonDelete);
         mAdapter.notifyItemRemoved(positonDelete);
         mAdapter.notifyItemRangeChanged(positonDelete, mPresenter.getDonHangList().size());
-        tvTitle.setText(getString(R.string.don_hang_cua_ban) + " (" + mPresenter.getDonHangList().size() + ")");
+        if (mPresenter.getDonHangList() != null) {
+            tvTitle.setText(getString(R.string.don_hang_cua_ban) + " (" + mPresenter.getDonHangList().size() + ")");
+        }
         mAdapter.notifyDataSetChanged();
     }
 

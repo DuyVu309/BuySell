@@ -169,9 +169,28 @@ public class MyGioHangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         }).execute();
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
+                        viewHolder.tvDistance.setVisibility(View.GONE);
                     }
                 } else {
-                    viewHolder.tvDistance.setVisibility(View.GONE);
+                    if (mLocation != null && donHang.getLatitude() != 0 && donHang.getLongitude() != 0) {
+                        if (mLocation != null) {
+                            try {
+                                new Directions(mLocation.getLatitude(), mLocation.getLongitude(), donHang.getLatitude(), donHang.getLongitude(), new Directions.DirectionsListener() {
+                                    @Override
+                                    public void onDirectionSuccess(List<Route> routes) {
+                                        for (Route route : routes) {
+                                            viewHolder.tvDistance.setText("Cách " + route.distance);
+                                        }
+                                    }
+                                }).execute();
+                            } catch (UnsupportedEncodingException e1) {
+                                e1.printStackTrace();
+                                viewHolder.tvDistance.setVisibility(View.GONE);
+                            }
+                        } else {
+                            viewHolder.tvDistance.setVisibility(View.GONE);
+                        }
+                    }
                 }
             }
 

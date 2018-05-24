@@ -151,18 +151,39 @@ public class ThanhToanActivity extends BaseActivity implements ThanhToanContact.
                          && !tvSdt.getText().toString().trim().equals(getString(R.string.dont_phone_number))
                          && !edtSoLuong.getText().toString().trim().equals("")) {
                     showDialog();
-                    DonHang donHangCart = new DonHang(tvAddress.getText().toString().trim(),
-                             mPresnter.getSanPham().getHeader(),
-                             String.valueOf(Calendar.getInstance().getTimeInMillis()),
-                             mPresnter.getSanPham().getIdNguoiban(),
-                             PreferManager.getUserID(this),
-                             PreferManager.getNameAccount(this),
-                             tvSdt.getText().toString().trim(),
-                             TimeNowUtils.getTimeNow(),
-                             mPresnter.getSanPham().getListFiles().getUrl1(),
-                             mPresnter.getSanPham().getGia(),
-                             edtSoLuong.getText().toString().trim());
-                    mPresnter.pushDonHangToFirebase(mDataBase, donHangCart);
+                    if (getMyLocation() != null) {
+                        DonHang donHangCart = new DonHang(tvAddress.getText().toString().trim(),
+                                 mPresnter.getSanPham().getHeader(),
+                                 String.valueOf(Calendar.getInstance().getTimeInMillis()),
+                                 mPresnter.getSanPham().getIdNguoiban(),
+                                 PreferManager.getUserID(this),
+                                 PreferManager.getNameAccount(this),
+                                 tvSdt.getText().toString().trim(),
+                                 TimeNowUtils.getTimeNow(),
+                                 mPresnter.getSanPham().getListFiles().getUrl1(),
+                                 mPresnter.getSanPham().getGia(),
+                                 edtSoLuong.getText().toString().trim(),
+                                 getMyLocation().getLatitude(),
+                                 getMyLocation().getLongitude());
+                        mPresnter.pushDonHangToFirebase(mDataBase, donHangCart);
+                    } else {
+                        DonHang donHangCart = new DonHang(tvAddress.getText().toString().trim(),
+                                 mPresnter.getSanPham().getHeader(),
+                                 String.valueOf(Calendar.getInstance().getTimeInMillis()),
+                                 mPresnter.getSanPham().getIdNguoiban(),
+                                 PreferManager.getUserID(this),
+                                 PreferManager.getNameAccount(this),
+                                 tvSdt.getText().toString().trim(),
+                                 TimeNowUtils.getTimeNow(),
+                                 mPresnter.getSanPham().getListFiles().getUrl1(),
+                                 mPresnter.getSanPham().getGia(),
+                                 edtSoLuong.getText().toString().trim(),
+                                 0,
+                                 0);
+                        mPresnter.pushDonHangToFirebase(mDataBase, donHangCart);
+                    }
+
+
                 } else {
                     showSnackbar(getString(R.string.error_retry));
                 }

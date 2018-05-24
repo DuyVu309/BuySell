@@ -128,29 +128,9 @@ public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             Glide.with(context).load(url).centerCrop().into(viewHolder.imgSanPham);
             viewHolder.tvHeaderSanPham.setText(sanPham.getHeader());
             viewHolder.tvGiaSp.setText(sanPham.getGia());
-            if (sanPham.getLatitude() == 0 || sanPham.getLongitude() == 0) { // get latlng from address
-                if (sanPham.getAddress() != null) {
-                    GoogleMapUtils.getLatLongFromGivenAddress(context, sanPham.getAddress());
-                    LatLng endLatLng = GoogleMapUtils.getLatLong();
-                    if (mLocation != null && endLatLng != null) {
-                        try {
-                            new Directions(mLocation.getLatitude(), mLocation.getLongitude(), endLatLng.latitude, endLatLng.longitude, new Directions.DirectionsListener() {
-                                @Override
-                                public void onDirectionSuccess(List<Route> routes) {
-                                    for (Route route : routes) {
-                                        viewHolder.tvDistance.setText("Cách " + route.distance);
-                                    }
-                                }
-                            }).execute();
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        viewHolder.tvDistance.setVisibility(View.GONE);
-                    }
-                }
-            } else { //get latlng from database
-                LatLng endLatLng = new LatLng(sanPham.getLatitude(), sanPham.getLongitude());
+            if (sanPham.getAddress() != null) {
+                GoogleMapUtils.getLatLongFromGivenAddress(context, sanPham.getAddress());
+                LatLng endLatLng = GoogleMapUtils.getLatLong();
                 if (mLocation != null && endLatLng != null) {
                     try {
                         new Directions(mLocation.getLatitude(), mLocation.getLongitude(), endLatLng.latitude, endLatLng.longitude, new Directions.DirectionsListener() {
@@ -165,10 +145,27 @@ public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         e.printStackTrace();
                     }
                 } else {
-                    viewHolder.tvDistance.setVisibility(View.GONE);
+                    if (mLocation != null && sanPham.getLatitude() != 0 && sanPham.getLongitude() != 0) {
+                        LatLng latLng = new LatLng(sanPham.getLatitude(), sanPham.getLongitude());
+                        if (mLocation != null && latLng != null) {
+                            try {
+                                new Directions(mLocation.getLatitude(), mLocation.getLongitude(), latLng.latitude, latLng.longitude, new Directions.DirectionsListener() {
+                                    @Override
+                                    public void onDirectionSuccess(List<Route> routes) {
+                                        for (Route route : routes) {
+                                            viewHolder.tvDistance.setText("Cách " + route.distance);
+                                        }
+                                    }
+                                }).execute();
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            viewHolder.tvDistance.setVisibility(View.GONE);
+                        }
+                    }
                 }
             }
-
         }
     }
 

@@ -17,6 +17,8 @@ public class DonHang implements Serializable {
     private String urlImg;
     private String gia;
     private String soLuong;
+    private double latitude;
+    private double longitude;
 
     public DonHang() {
     }
@@ -25,7 +27,8 @@ public class DonHang implements Serializable {
                    String idDonHang, String idNguoiBan,
                    String idNguoiMua, String nameNguoiMua,
                    String soDienThoai, String thoiGian,
-                   String urlImg, String gia, String soLuong) {
+                   String urlImg, String gia, String soLuong,
+                   double latitude, double longitude) {
         this.diaChi = diaChi;
         this.header = header;
         this.idDonHang = idDonHang;
@@ -37,6 +40,8 @@ public class DonHang implements Serializable {
         this.urlImg = urlImg;
         this.gia = gia;
         this.soLuong = soLuong;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getDiaChi() {
@@ -125,5 +130,21 @@ public class DonHang implements Serializable {
 
     public void setSoLuong(String soLuong) {
         this.soLuong = soLuong;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }

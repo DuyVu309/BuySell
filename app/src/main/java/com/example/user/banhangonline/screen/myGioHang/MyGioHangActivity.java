@@ -1,7 +1,6 @@
 package com.example.user.banhangonline.screen.myGioHang;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,13 +11,14 @@ import com.example.user.banhangonline.base.BaseActivity;
 import com.example.user.banhangonline.caches.SaveMyCart;
 import com.example.user.banhangonline.interactor.prefer.PreferManager;
 import com.example.user.banhangonline.model.DonHang;
+import com.example.user.banhangonline.model.maps.Places;
 import com.example.user.banhangonline.screen.maps.MapsTotalMyCartActivity;
 import com.example.user.banhangonline.screen.myGioHang.adapter.MyGioHangAdapter;
-import com.example.user.banhangonline.screen.purchased.MyPurchasedActivity;
 import com.example.user.banhangonline.screen.spAccount.SanPhamAccountActivity;
 import com.example.user.banhangonline.utils.DialogUntils;
 import com.example.user.banhangonline.utils.NetworkUtils;
 import com.example.user.banhangonline.widget.dialog.DialogPositiveNegative;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -124,18 +124,18 @@ public class MyGioHangActivity extends BaseActivity implements MyGioHangContact.
 
     @OnClick(R.id.img_maps)
     public void startActivtyMaps() {
-        List<String> address = new ArrayList<>();
+        List<Places> places = new ArrayList<>();
         for (DonHang donHang : mPresenter.getmList()) {
             if (donHang != null) {
                 if (donHang.getDiaChi() != null) {
-                    address.add(donHang.getDiaChi());
+                    places.add(new Places(donHang.getDiaChi(), donHang.getLatitude(), donHang.getLongitude()));
                 }
             }
         }
 
-        if (address.size() == mPresenter.getmList().size()) {
+        if (places.size() == mPresenter.getmList().size()) {
             Intent intent = new Intent(MyGioHangActivity.this, MapsTotalMyCartActivity.class);
-            intent.putExtra(keyStartListAddress, (Serializable) address);
+            intent.putExtra(keyStartListAddress, (Serializable) places);
             startActivity(intent);
         }
 

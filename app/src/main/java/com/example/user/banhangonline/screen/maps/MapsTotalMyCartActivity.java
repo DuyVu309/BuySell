@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
 import com.example.user.banhangonline.model.maps.Directions;
+import com.example.user.banhangonline.model.maps.Places;
 import com.example.user.banhangonline.model.maps.Route;
 import com.example.user.banhangonline.utils.GoogleMapUtils;
 import com.google.android.gms.maps.GoogleMap;
@@ -34,8 +35,7 @@ public class MapsTotalMyCartActivity extends BaseActivity implements OnMapReadyC
 
     private GoogleMap mMap;
 
-    private List<String> listAddress = new ArrayList<>();
-    private List<Polyline> listPolylinePaths = new ArrayList<>();
+    private List<Places> listAddress = new ArrayList<>();
 
 
     @Override
@@ -51,29 +51,40 @@ public class MapsTotalMyCartActivity extends BaseActivity implements OnMapReadyC
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                  .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        listAddress = getIntent().getStringArrayListExtra(keyStartListAddress);
+        listAddress = (List<Places>) getIntent().getSerializableExtra(keyStartListAddress);
     }
 
     private void initMarkerInGoogleMap() {
-        GoogleMapUtils.getLatLongFromGivenListAddress(this, listAddress);
-        if (GoogleMapUtils.getListPoint() != null) {
-            for (final LatLng lng : GoogleMapUtils.getListPoint()) {
-                try {
-                    new Directions(getMyLocation().getLatitude(), getMyLocation().getLongitude(), lng.latitude, lng.longitude, new Directions.DirectionsListener() {
-                        @Override
-                        public void onDirectionSuccess(List<Route> routes) {
-                            for (Route route : routes) {
-                                mMap.addMarker(new MarkerOptions().position(route.endLocation).title(route.endAddress));
+        for (int i = 0; i < listAddress.size(); i++) {
+            if (listAddress.get(i).getAddress() != null) { //add marker from address
+                GoogleMapUtils.getLatLongFromGivenAddress(this, listAddress.get(i).getAddress());
+                LatLng latLng = GoogleMapUtils.getLatLong();
+                if (getMyLocation() != null && latLng != null) {
+                    try {
+                        new Directions(getMyLocation().getLatitude(), getMyLocation().getLongitude(), latLng.latitude, latLng.longitude, new Directions.DirectionsListener() {
+                            @Override
+                            public void onDirectionSuccess(List<Route> routes) {
+                                for (Route route : routes) {
+                                    mMap.addMarker(new MarkerOptions().position(route.endLocation).title(route.endAddress));
 
+                                }
                             }
-                        }
-                    }).execute();
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+                        }).execute();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+
+
+                    }
+                } else {
+                    if (listAddress.get(i).getLatitude() != 0 //add marker with latlong
+                             && listAddress.get(i).getLongitude() != 0) {
+                        mMap.addMarker(new MarkerOptions().position(new LatLng(listAddress.get(i).getLatitude(), listAddress.get(i).getLongitude())));
+
+                    }
                 }
+
             }
         }
-
         tvMapTotal.setText(getString(R.string.tong_so_dia_diem) + " (" + listAddress.size() + ")");
     }
 
