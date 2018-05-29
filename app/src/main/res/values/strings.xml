@@ -12,10 +12,10 @@
     <string name="no_internet">Không có kết nối mạng, vui lòng kiểm tra lại</string>
     <string name="sign_in">Đăng nhập</string>
     <string name="forgot">Quên mật khẩu?</string>
-    <string name="new_to_buy_sell">New to Buy-Sell ?</string>
+    <string name="new_to_buy_sell">Tạo mới Buy-Sell?</string>
 
     <string name="email">Email</string>
-    <string name="email_adress">Email Adress</string>
+    <string name="email_adress">Địa chỉ Email</string>
     <string name="email_avaliable_or_er">Email không hợp lệ hoặc đã tồn tại</string>
     <string name="email_avaliable_or_fail">Email không hợp lệ hoặc sai mật khẩu</string>
     <string name="dia_chi_email">Địa chỉ email</string>
@@ -88,10 +88,8 @@
     <string name="dont_have_account">Không có tài khoản</string>
     <string name="san_pham">Sản phẩm</string>
     <string name="san_pham_doanh_nghiep">Sản phẩm doanh nghiệp</string>
-    <string name="select_photo">Select photo</string>
 
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
-    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
     <string name="xem_truoc_anh">Xem trước ảnh</string>
     <string name="xac_nhan_call">Bạn có muốn gọi tới số điện thoại"\n" </string>
     <string name="thay_doi">Thay đổi</string>
