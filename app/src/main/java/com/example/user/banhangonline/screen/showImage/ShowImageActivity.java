@@ -1,8 +1,11 @@
 package com.example.user.banhangonline.screen.showImage;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
@@ -11,6 +14,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
+import com.example.user.banhangonline.views.ZoomPhoto;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,7 +24,7 @@ import static com.example.user.banhangonline.utils.KeyUntils.keyShowImage;
 
 public class ShowImageActivity extends BaseActivity {
     @BindView(R.id.img_show)
-    ImageView imgShow;
+    ZoomPhoto imgShow;
 
     @BindView(R.id.pg_loading)
     ProgressBar pbLoading;
