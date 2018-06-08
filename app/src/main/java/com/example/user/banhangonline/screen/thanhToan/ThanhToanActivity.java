@@ -152,7 +152,8 @@ public class ThanhToanActivity extends BaseActivity implements ThanhToanContact.
                          && !edtSoLuong.getText().toString().trim().equals("")) {
                     showDialog();
                     if (getMyLocation() != null) {
-                        DonHang donHangCart = new DonHang(tvAddress.getText().toString().trim(),
+                        DonHang donHangCart = new DonHang(
+                                 tvAddress.getText().toString().trim(),
                                  mPresnter.getSanPham().getHeader(),
                                  String.valueOf(Calendar.getInstance().getTimeInMillis()),
                                  mPresnter.getSanPham().getIdNguoiban(),

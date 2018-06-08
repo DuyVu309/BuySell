@@ -23,12 +23,19 @@ public class DonHang implements Serializable {
     public DonHang() {
     }
 
-    public DonHang(String diaChi, String header,
-                   String idDonHang, String idNguoiBan,
-                   String idNguoiMua, String nameNguoiMua,
-                   String soDienThoai, String thoiGian,
-                   String urlImg, String gia, String soLuong,
-                   double latitude, double longitude) {
+    public DonHang(String diaChi,
+                   String header,
+                   String idDonHang,
+                   String idNguoiBan,
+                   String idNguoiMua,
+                   String nameNguoiMua,
+                   String soDienThoai,
+                   String thoiGian,
+                   String urlImg,
+                   String gia,
+                   String soLuong,
+                   double latitude,
+                   double longitude) {
         this.diaChi = diaChi;
         this.header = header;
         this.idDonHang = idDonHang;
@@ -147,4 +154,5 @@ public class DonHang implements Serializable {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
+
 }

@@ -5,7 +5,6 @@ import java.io.Serializable;
 
 @IgnoreExtraProperties
 public class Account implements Serializable{
-
     private String userId;
     private String emailId;
     private String idBS;
@@ -20,9 +19,16 @@ public class Account implements Serializable{
     public Account() {
     }
 
-    public Account(String userId, String emailId, String idBS, String name,
-                   String phoneNumber, String urlAvt, String nameAvt, String urlLanscape,
-                   String nameLans, String address) {
+    public Account(String userId,
+                   String emailId,
+                   String idBS,
+                   String name,
+                   String phoneNumber,
+                   String urlAvt,
+                   String nameAvt,
+                   String urlLanscape,
+                   String nameLans,
+                   String address) {
         this.userId = userId;
         this.emailId = emailId;
         this.idBS = idBS;

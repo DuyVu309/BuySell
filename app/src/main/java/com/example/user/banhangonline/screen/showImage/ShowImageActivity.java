@@ -1,11 +1,7 @@
 package com.example.user.banhangonline.screen.showImage;
 
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
@@ -14,6 +10,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.base.BaseActivity;
+import com.example.user.banhangonline.views.PullBackLayout;
 import com.example.user.banhangonline.views.ZoomPhoto;
 
 import butterknife.BindView;
@@ -22,18 +19,21 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 
 import static com.example.user.banhangonline.utils.KeyUntils.keyShowImage;
 
-public class ShowImageActivity extends BaseActivity {
+public class ShowImageActivity extends BaseActivity implements PullBackLayout.Callback {
     @BindView(R.id.img_show)
     ZoomPhoto imgShow;
 
     @BindView(R.id.pg_loading)
     ProgressBar pbLoading;
 
+    @BindView(R.id.puller)
+    PullBackLayout puller;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_image);
         ButterKnife.bind(this);
+        puller.setCallback(this);
         String url = getIntent().getStringExtra(keyShowImage);
         if (url != null) {
             Glide.with(this).load(url).listener(new RequestListener<String, GlideDrawable>() {
@@ -58,5 +58,27 @@ public class ShowImageActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+
+    //pull
+    @Override
+    public void onPullStart() {
+
+    }
+
+    @Override
+    public void onPull(float v) {
+
+    }
+
+    @Override
+    public void onPullCancel() {
+
+    }
+
+    @Override
+    public void onPullComplete() {
+        supportFinishAfterTransition();
     }
 }
