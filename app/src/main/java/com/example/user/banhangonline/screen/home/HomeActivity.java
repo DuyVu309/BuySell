@@ -290,8 +290,11 @@ public class HomeActivity extends BaseActivity implements
 
     private void disableSelected(View... views) {
         for (View view : views) {
-            view.setSelected(false);
-            view.setBackgroundColor(getResources().getColor(R.color.white));
+            if (view.isSelected()) {
+                view.setSelected(false);
+                view.setBackgroundColor(getResources().getColor(R.color.white));
+            }
+
         }
     }
 
