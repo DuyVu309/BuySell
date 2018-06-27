@@ -61,6 +61,7 @@ public class ForgotActivity extends BaseActivity implements ForgotContact.View {
             mPresenter.sendPasswordResetEmail(edtEmailForgot.getText().toString().trim());
         } else {
             edtEmailForgot.setError(getResources().getString(R.string.email_khong_hop_le));
+            dismissDialog();
         }
     }
 

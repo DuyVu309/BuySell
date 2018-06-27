@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.model.Part;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,6 +41,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public class HomeViewholder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.lnImage)
+        LinearLayout lnImage;
+
         @BindView(R.id.img_pay)
         ImageView imgPay;
 
@@ -48,7 +53,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public HomeViewholder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            imgPay.setOnClickListener(new View.OnClickListener() {
+            lnImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     mListener.onClickItemPay(mlist.get(getAdapterPosition()));

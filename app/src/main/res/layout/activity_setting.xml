@@ -37,6 +37,7 @@
         android:textSize="@dimen/default_text_size" />
 
     <Switch
+
         android:id="@+id/sw_mua_hang"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,7 +45,7 @@
         android:layout_marginRight="@dimen/pading_small"
         android:layout_marginTop="@dimen/pading_small"
         android:checked="false"
-        android:singleLine="true"
+        android:thumbTint="@color/blue"
         android:text="@string/quang_duong_mua_hang" />
 
     <Switch
@@ -56,6 +57,7 @@
         android:layout_marginTop="@dimen/pading_small"
         android:singleLine="true"
         android:checked="false"
+        android:thumbTint="@color/blue"
         android:text="@string/quang_duong_gio_hang" />
 
 
