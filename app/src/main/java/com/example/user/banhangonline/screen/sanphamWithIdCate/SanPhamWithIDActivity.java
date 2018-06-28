@@ -1,8 +1,11 @@
 package com.example.user.banhangonline.screen.sanphamWithIdCate;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,15 +21,16 @@ import com.example.user.banhangonline.base.BaseActivity;
 import com.example.user.banhangonline.model.Part;
 import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.model.search.SearchSP;
-import com.example.user.banhangonline.screen.search.allSanPham.AllSanPhamSearchedActivity;
 import com.example.user.banhangonline.screen.detail.SanPhamDetailActivity;
 import com.example.user.banhangonline.screen.home.fragment.adapter.SanPhamAdapter;
 import com.example.user.banhangonline.screen.sanphamWithIdCate.adapter.SearchAdapter;
+import com.example.user.banhangonline.screen.search.allSanPham.AllSanPhamSearchedActivity;
 import com.example.user.banhangonline.utils.NetworkUtils;
 import com.example.user.banhangonline.utils.SortPlacesUtils;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Collections;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,6 +72,7 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
         return false;
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +80,7 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
         ButterKnife.bind(this);
         mPresenter = new SanPhamWithIdPresenter();
         mPresenter.attachView(this);
+
         part = (Part) getIntent().getSerializableExtra(keyIdSanPham);
         if (part != null) {
             if (part.getIDCategory().equals(keyIdCateThoiTrang)) {
@@ -84,6 +90,7 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
             }
             initData();
         }
+
     }
 
     private void initData() {

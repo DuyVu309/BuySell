@@ -167,6 +167,8 @@
         android:backgroundTint="@color/transparent"
         android:drawablePadding="@dimen/pading_normal"
         android:hint="@string/nhap_mota"
+        android:maxLines="4"
+        android:ellipsize="end"
         android:textColor="@color/black"
         android:textSize="@dimen/default_text_size" />
 

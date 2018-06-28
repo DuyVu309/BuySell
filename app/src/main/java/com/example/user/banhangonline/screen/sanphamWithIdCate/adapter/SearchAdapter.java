@@ -15,6 +15,7 @@ import com.example.user.banhangonline.model.search.SearchAccount;
 import com.example.user.banhangonline.model.search.SearchSP;
 
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -117,7 +118,11 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return mList != null ? mList.size() : 0;
+        if (mList != null && mList.size() > 100) {
+            return 100;
+        } else {
+            return mList != null ? mList.size() : 0;
+        }
     }
 
     public interface IOnClickSearch {

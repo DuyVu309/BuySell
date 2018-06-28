@@ -86,7 +86,7 @@
                 android:id="@+id/btn_mua_hang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_back_activity"
+                android:background="@drawable/bg_mua_hang"
                 android:text="@string/mua_hang"
                 android:textColor="@color/red"
                 android:textSize="@dimen/default_text_size"
@@ -107,9 +107,11 @@
                 android:backgroundTint="@color/transparent"
                 android:drawablePadding="@dimen/pading_normal"
                 android:lineSpacingExtra="5dp"
+                android:singleLine="true"
+                android:layout_marginLeft="@dimen/pading_small"
                 android:textColor="@color/blue"
                 android:textColorHint="@color/grey_divider"
-                android:textSize="@dimen/default_text_size" />
+                android:textSize="@dimen/medium_text_size" />
 
             <TextView
                 android:id="@+id/tv_mota"
@@ -118,7 +120,9 @@
                 android:layout_margin="@dimen/pading_small"
                 android:backgroundTint="@color/transparent"
                 android:drawablePadding="@dimen/pading_normal"
-                android:lineSpacingExtra="5dp"
+                android:lineSpacingExtra="3dp"
+                android:maxLines="4"
+                android:ellipsize="end"
                 android:textColor="@color/black"
                 android:textColorHint="@color/grey_divider"
                 android:textSize="@dimen/default_text_size" />

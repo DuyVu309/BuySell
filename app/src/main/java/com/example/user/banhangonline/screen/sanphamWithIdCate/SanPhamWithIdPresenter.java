@@ -1,5 +1,8 @@
 package com.example.user.banhangonline.screen.sanphamWithIdCate;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModel;
 import android.location.Location;
 import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.model.search.SearchSP;
@@ -14,7 +17,7 @@ import java.util.List;
 
 import static com.example.user.banhangonline.utils.KeyUntils.keySanPham;
 
-public class SanPhamWithIdPresenter implements SanPhamWithIdContact.Presenter {
+public class SanPhamWithIdPresenter extends ViewModel implements SanPhamWithIdContact.Presenter {
     private List<SanPham> recentSpList;
     private List<SanPham> sanPhamList;
     private List<String> keyList;
@@ -24,19 +27,19 @@ public class SanPhamWithIdPresenter implements SanPhamWithIdContact.Presenter {
     private int total = 0;
 
     public List<SanPham> getRecentSpList() {
-        return recentSpList;
+        return  recentSpList;
     }
 
     public List<SanPham> getSanPhamList() {
-        return sanPhamList;
+        return  sanPhamList;
     }
 
     public List<String> getKeyList() {
-        return keyList;
+        return  keyList;
     }
 
     public List<Object> getSearchList() {
-        return searchList;
+        return  searchList;
     }
 
     public int getTotal() {
