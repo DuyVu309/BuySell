@@ -1,9 +1,8 @@
 package com.example.user.banhangonline.screen.sanphamWithIdCate;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.location.Location;
+
 import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.model.search.SearchSP;
 import com.google.firebase.database.ChildEventListener;
@@ -18,7 +17,6 @@ import java.util.List;
 import static com.example.user.banhangonline.utils.KeyUntils.keySanPham;
 
 public class SanPhamWithIdPresenter extends ViewModel implements SanPhamWithIdContact.Presenter {
-    private List<SanPham> recentSpList;
     private List<SanPham> sanPhamList;
     private List<String> keyList;
     private List<Object> searchList;
@@ -26,20 +24,16 @@ public class SanPhamWithIdPresenter extends ViewModel implements SanPhamWithIdCo
     private SanPhamWithIdContact.View mView;
     private int total = 0;
 
-    public List<SanPham> getRecentSpList() {
-        return  recentSpList;
-    }
-
     public List<SanPham> getSanPhamList() {
-        return  sanPhamList;
+        return sanPhamList;
     }
 
     public List<String> getKeyList() {
-        return  keyList;
+        return keyList;
     }
 
     public List<Object> getSearchList() {
-        return  searchList;
+        return searchList;
     }
 
     public int getTotal() {
@@ -53,7 +47,6 @@ public class SanPhamWithIdPresenter extends ViewModel implements SanPhamWithIdCo
     @Override
     public void attachView(SanPhamWithIdContact.View View) {
         mView = View;
-        recentSpList = new ArrayList<>();
         sanPhamList = new ArrayList<>();
         keyList = new ArrayList<>();
         searchList = new ArrayList<>();
@@ -109,6 +102,65 @@ public class SanPhamWithIdPresenter extends ViewModel implements SanPhamWithIdCo
     }
 
     @Override
+    public void getListSearchFromFirebase(DatabaseReference databaseReference, final String filter, final String idCate, final String idPart) {
+        if (!isViewAttached()) return;
+        searchList.clear();
+        databaseReference.child(keySanPham).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                SanPham sanPham = dataSnapshot.getValue(SanPham.class);
+                if (sanPham != null) {
+                    if (idPart != null && sanPham.getIdPart() != null) {
+                        if (sanPham.getIdCategory().equals(idCate)) {
+                            if (sanPham.getIdPart().equals(idPart)) {
+                                if (sanPham.getHeader().toLowerCase().contains(filter.toLowerCase())) {
+                                    searchList.add(new SearchSP(sanPham.getIdSanPham(), sanPham.getHeader()));
+                                }
+                            }
+                        }
+                    } else {
+                        if (sanPham.getIdCategory().equals(idCate)) {
+                            if (sanPham.getHeader().toLowerCase().contains(filter.toLowerCase())) {
+                                searchList.add(new SearchSP(sanPham.getIdSanPham(), sanPham.getHeader()));
+                            }
+                        }
+                    }
+                }
+
+                if (searchList != null && searchList.size() < keyList.size()) {
+                    if (mView != null) {
+                        mView.getSearchSuccess(sanPham);
+                    }
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                if (mView != null) {
+                    mView.getSearchError();
+                }
+            }
+        });
+
+
+    }
+
+    @Override
     public void getSanPhamFromFirebase(final DatabaseReference databaseReference, final String idCate, final String idPart) {
         if (!isViewAttached()) return;
         if (keyList.size() >= total + 10) {
@@ -121,18 +173,18 @@ public class SanPhamWithIdPresenter extends ViewModel implements SanPhamWithIdCo
                             if (sanPham.getIdCategory().equals(idCate)) {
                                 if (sanPham.getIdPart().equals(idPart)) {
                                     sanPhamList.add(sanPham);
+                                    if (mView != null) {
+                                        mView.getSpSuccess(sanPham);
+                                    }
                                 }
                             }
                         } else {
                             if (sanPham.getIdCategory().equals(idCate)) {
                                 sanPhamList.add(sanPham);
+                                if (mView != null) {
+                                    mView.getSpSuccess(sanPham);
+                                }
                             }
-                        }
-                    }
-
-                    if (sanPhamList != null) {
-                        if (mView != null) {
-                            mView.getSpSuccess();
                         }
                     }
                 }
@@ -172,19 +224,21 @@ public class SanPhamWithIdPresenter extends ViewModel implements SanPhamWithIdCo
                                     if (sanPham.getIdCategory().equals(idCate)) {
                                         if (sanPham.getIdPart().equals(idPart)) {
                                             sanPhamList.add(sanPham);
+                                            if (mView != null) {
+                                                mView.getSpSuccess(sanPham);
+                                            }
                                         }
                                     }
                                 } else {
                                     if (sanPham.getIdCategory().equals(idCate)) {
                                         sanPhamList.add(sanPham);
+                                        if (mView != null) {
+                                            mView.getSpSuccess(sanPham);
+                                        }
                                     }
                                 }
                             }
-                            if (sanPhamList != null) {
-                                if (mView != null) {
-                                    mView.getSpSuccess();
-                                }
-                            }
+
                             isLoadedWithLittle = true;
                         }
 
@@ -217,114 +271,5 @@ public class SanPhamWithIdPresenter extends ViewModel implements SanPhamWithIdCo
         }
     }
 
-    @Override
-    public void getListSearchFromFirebase(DatabaseReference databaseReference, final String filter, final String idCate, final String idPart) {
-        if (!isViewAttached()) return;
-        searchList.clear();
-        databaseReference.child(keySanPham).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                SanPham sanPham = dataSnapshot.getValue(SanPham.class);
-                if (sanPham != null) {
-                    if (idPart != null && sanPham.getIdPart() != null) {
-                        if (sanPham.getIdCategory().equals(idCate)) {
-                            if (sanPham.getIdPart().equals(idPart)) {
-                                if (sanPham.getHeader().toLowerCase().contains(filter.toLowerCase())) {
-                                    searchList.add(new SearchSP(sanPham.getIdSanPham(), sanPham.getHeader()));
-                                }
-                            }
-                        }
-                    } else {
-                        if (sanPham.getIdCategory().equals(idCate)) {
-                            if (sanPham.getHeader().toLowerCase().contains(filter.toLowerCase())) {
-                                searchList.add(new SearchSP(sanPham.getIdSanPham(), sanPham.getHeader()));
-                            }
-                        }
-                    }
-                }
 
-                if (searchList != null) {
-                    if (mView != null) {
-                        mView.getSearchSuccess();
-                    }
-                }
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                if (mView != null) {
-                    mView.getSearchError();
-                }
-            }
-        });
-
-
-    }
-
-    @Override
-    public void getRecentSpFromFirebase(DatabaseReference databaseReference, final String idCate, final String idPart, Location location) {
-        if (!isViewAttached()) return;
-        recentSpList.clear();
-        databaseReference.child(keySanPham).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                SanPham sanPham = dataSnapshot.getValue(SanPham.class);
-                if (sanPham != null) {
-                    if (idPart != null && sanPham.getIdPart() != null) {
-                        if (sanPham.getIdCategory().equals(idCate)) {
-                            if (sanPham.getIdPart().equals(idPart)) {
-                                recentSpList.add(sanPham);
-                            }
-                        }
-                    } else {
-                        if (sanPham.getIdCategory().equals(idCate)) {
-                            recentSpList.add(sanPham);
-                        }
-                    }
-                }
-                if (sanPhamList != null) {
-                    if (mView != null) {
-                        mView.getRecentSpSuccess();
-                    }
-                }
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                if (mView != null) {
-                    mView.getSpError();
-                }
-            }
-        });
-    }
 }

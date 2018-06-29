@@ -122,15 +122,27 @@ public class AllSanPhamSearchPresenter implements AllSanPhamSearchedContact.Pres
                     if (idCate == null && idPart == null) { //all
                         if (sanPham.getHeader() != null && sanPham.getHeader().toLowerCase().contains(filter.toLowerCase())) {
                             sanPhamList.add(sanPham);
+                            if (mView != null) {
+                                mView.getSpSuccess(sanPham);
+                            }
                         } else if (sanPham.getNameNguoiBan() != null && sanPham.getNameNguoiBan().toLowerCase().contains(filter.toLowerCase())) {
                             sanPhamList.add(sanPham);
+                            if (mView != null) {
+                                mView.getSpSuccess(sanPham);
+                            }
                         }
                     } else if (idCate != null && idPart == null) {
                         if (sanPham.getIdCategory().equals(idCate)) { //idCate
                             if (sanPham.getHeader() != null && sanPham.getHeader().toLowerCase().contains(filter.toLowerCase())) {
                                 sanPhamList.add(sanPham);
+                                if (mView != null) {
+                                    mView.getSpSuccess(sanPham);
+                                }
                             } else if (sanPham.getNameNguoiBan() != null && sanPham.getNameNguoiBan().toLowerCase().contains(filter.toLowerCase())) {
                                 sanPhamList.add(sanPham);
+                                if (mView != null) {
+                                    mView.getSpSuccess(sanPham);
+                                }
                             }
                         }
                     } else if (idCate != null && idPart != null) { //idPart
@@ -138,18 +150,19 @@ public class AllSanPhamSearchPresenter implements AllSanPhamSearchedContact.Pres
                             if (sanPham.getIdCategory().equals(idCate) && sanPham.getIdPart().equals(idPart)) {
                                 if (sanPham.getHeader() != null && sanPham.getHeader().toLowerCase().contains(filter.toLowerCase())) {
                                     sanPhamList.add(sanPham);
+                                    if (mView != null) {
+                                        mView.getSpSuccess(sanPham);
+                                    }
                                 } else if (sanPham.getNameNguoiBan() != null && sanPham.getNameNguoiBan().toLowerCase().contains(filter.toLowerCase())) {
                                     sanPhamList.add(sanPham);
+                                    if (mView != null) {
+                                        mView.getSpSuccess(sanPham);
+                                    }
                                 }
                             }
                         }
                     }
 
-                    if (sanPhamList != null) {
-                        if (mView != null) {
-                            mView.getSpSuccess(sanPhamList);
-                        }
-                    }
                 }
 
                 @Override
@@ -184,16 +197,28 @@ public class AllSanPhamSearchPresenter implements AllSanPhamSearchedContact.Pres
                             if (idCate == null && idPart == null) { //all
                                 if (sanPham.getHeader() != null && sanPham.getHeader().toLowerCase().contains(filter.toLowerCase())) {
                                     sanPhamList.add(sanPham);
+                                    if (mView != null) {
+                                        mView.getSpSuccess(sanPham);
+                                    }
                                 } else if (sanPham.getNameNguoiBan() != null && sanPham.getNameNguoiBan().toLowerCase().contains(filter.toLowerCase())) {
                                     sanPhamList.add(sanPham);
+                                    if (mView != null) {
+                                        mView.getSpSuccess(sanPham);
+                                    }
                                 }
                                 isLoadedWithLittle = true;
                             } else if (idCate != null && idPart == null) {
                                 if (sanPham.getIdCategory().equals(idCate)) { //idCate
                                     if (sanPham.getHeader() != null && sanPham.getHeader().toLowerCase().contains(filter.toLowerCase())) {
                                         sanPhamList.add(sanPham);
+                                        if (mView != null) {
+                                            mView.getSpSuccess(sanPham);
+                                        }
                                     } else if (sanPham.getNameNguoiBan() != null && sanPham.getNameNguoiBan().toLowerCase().contains(filter.toLowerCase())) {
                                         sanPhamList.add(sanPham);
+                                        if (mView != null) {
+                                            mView.getSpSuccess(sanPham);
+                                        }
                                     }
                                     isLoadedWithLittle = true;
                                 }
@@ -202,19 +227,20 @@ public class AllSanPhamSearchPresenter implements AllSanPhamSearchedContact.Pres
                                     if (sanPham.getIdCategory().equals(idCate) && sanPham.getIdPart().equals(idPart)) {
                                         if (sanPham.getHeader() != null && sanPham.getHeader().toLowerCase().contains(filter.toLowerCase())) {
                                             sanPhamList.add(sanPham);
+                                            if (mView != null) {
+                                                mView.getSpSuccess(sanPham);
+                                            }
                                         } else if (sanPham.getNameNguoiBan() != null && sanPham.getNameNguoiBan().toLowerCase().contains(filter.toLowerCase())) {
                                             sanPhamList.add(sanPham);
+                                            if (mView != null) {
+                                                mView.getSpSuccess(sanPham);
+                                            }
                                         }
                                         isLoadedWithLittle = true;
                                     }
                                 }
                             }
 
-                            if (sanPhamList != null) {
-                                if (mView != null) {
-                                    mView.getSpSuccess(sanPhamList);
-                                }
-                            }
                         }
 
                         @Override
@@ -238,7 +264,8 @@ public class AllSanPhamSearchPresenter implements AllSanPhamSearchedContact.Pres
                             }
                         }
                     });
-                } catch (IndexOutOfBoundsException e) { }
+                } catch (IndexOutOfBoundsException e) {
+                }
             }
         }
     }

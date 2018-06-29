@@ -23,11 +23,6 @@ import com.example.user.banhangonline.screen.home.fragment.adapter.SanPhamAdapte
 import com.example.user.banhangonline.screen.sanphamWithIdCate.adapter.SearchAdapter;
 import com.example.user.banhangonline.screen.search.allSanPham.AllSanPhamSearchedActivity;
 import com.example.user.banhangonline.utils.NetworkUtils;
-import com.example.user.banhangonline.utils.SortPlacesUtils;
-import com.google.android.gms.maps.model.LatLng;
-
-import java.util.Collections;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,7 +64,6 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
         return false;
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +81,6 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
             }
             initData();
         }
-
     }
 
     private void initData() {
@@ -145,7 +138,7 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
     private void initAdapterSp() {
         manager = new GridLayoutManager(this, 2);
         recyclerViewSp.setLayoutManager(manager);
-        mAdapter = new SanPhamAdapter(recyclerViewSp, this, getMyLocation(), mPresenter.getSanPhamList(), new SanPhamAdapter.ISelectPayAdapter() {
+        mAdapter = new SanPhamAdapter(recyclerViewSp, this, getMyLocation(), new SanPhamAdapter.ISelectPayAdapter() {
             @Override
             public void onSelectedSanPham(SanPham sanPham) {
                 if (sanPham != null) {
@@ -214,9 +207,9 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
     }
 
     @Override
-    public void getSpSuccess() {
+    public void getSpSuccess(SanPham sanPham) {
         if (mAdapter != null) {
-            mAdapter.notifyDataSetChanged();
+            mAdapter.addSanPham(sanPham);
             dismissDialog();
         }
         dismissDialog();
@@ -228,7 +221,7 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
     }
 
     @Override
-    public void getSearchSuccess() {
+    public void getSearchSuccess(SanPham sanPham) {
         if (mAdapterSr != null) {
             mAdapterSr.notifyDataSetChanged();
         }
@@ -237,35 +230,6 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
     @Override
     public void getSearchError() {
         showSnackbar(getString(R.string.error));
-    }
-
-    @Override
-    public void getRecentSpSuccess() {
-        if (mAdapter != null) {
-            try {
-                Collections.sort(mPresenter.getRecentSpList(), new SortPlacesUtils(new LatLng(getMyLocation().getLatitude(), getMyLocation().getLongitude())));
-            } catch (NullPointerException e) {
-            }
-            mAdapter.notifyDataSetChanged();
-        }
-        dismissDialog();
-    }
-
-    @OnClick(R.id.tv_scan)
-    public void recentScan() {
-        showDialog();
-        mPresenter.getRecentSpFromFirebase(mDataBase, part.getIDCategory(), part.getIDPart(), getMyLocation());
-        mAdapter = new SanPhamAdapter(recyclerViewSp, this, getMyLocation(), mPresenter.getRecentSpList(), new SanPhamAdapter.ISelectPayAdapter() {
-            @Override
-            public void onSelectedSanPham(SanPham sanPham) {
-                if (sanPham != null) {
-                    Intent intent = new Intent(SanPhamWithIDActivity.this, SanPhamDetailActivity.class);
-                    intent.putExtra(keyStartDetail, sanPham);
-                    startActivity(intent);
-                }
-            }
-        });
-        recyclerViewSp.setAdapter(mAdapter);
     }
 
     @Override

@@ -42,16 +42,11 @@ public class HomePresenter extends BasePresenter implements HomeContact.Presente
     private Context context;
     private HomeContact.View mView;
     private List<Categories> listCategories;
-    private List<Pay> listPays;
-    private List<SearchSP> listSearchs;
 
     public List<Categories> getListCategories() {
         return listCategories;
     }
 
-    public List<Pay> getListPays() {
-        return listPays;
-    }
 
     private void initCategories() {
         listCategories.add(new Categories("", titleHome));
@@ -75,8 +70,6 @@ public class HomePresenter extends BasePresenter implements HomeContact.Presente
     public void onCreate() {
         listCategories = new ArrayList<>();
         initCategories();
-        listPays = new ArrayList<>();
-        listSearchs = new ArrayList<>();
     }
 
     @Override

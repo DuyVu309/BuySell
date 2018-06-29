@@ -14,7 +14,7 @@ public interface AllSanPhamSearchedContact {
 
         void getKeyError();
 
-        void getSpSuccess(List<SanPham> searchSPS);
+        void getSpSuccess(SanPham sanPham);
 
         void getSpError();
     }

@@ -3,8 +3,10 @@ package com.example.user.banhangonline.screen.home.fragment.adapter;
 import android.content.Context;
 import android.location.Location;
 import android.support.annotation.NonNull;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.util.SortedListAdapterCallback;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +35,7 @@ public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private Context context;
     private Location mLocation;
-    private List<SanPham> mList;
+    private SortedList<SanPham> mList;
     private ISelectPayAdapter mListener;
 
     boolean isLoading;
@@ -44,11 +46,11 @@ public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.mOnLoadMore = mOnLoadMore;
     }
 
-    public SanPhamAdapter(RecyclerView recyclerView, Context context, Location mLocation, List<SanPham> mList, ISelectPayAdapter mListener) {
+    public SanPhamAdapter(RecyclerView recyclerView, Context context, final Location mLocation, ISelectPayAdapter mListener) {
         this.context = context;
         this.mLocation = mLocation;
-        this.mList = mList;
         this.mListener = mListener;
+
         final GridLayoutManager linearLayoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -61,8 +63,46 @@ public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             }
         });
+
+        this.mList = new SortedList<SanPham>(SanPham.class, new SortedListAdapterCallback<SanPham>(SanPhamAdapter.this) {
+            @Override
+            public int compare(SanPham place1, SanPham place2) {
+                double lat1 = place1.getLatitude();
+                double lon1 = place1.getLongitude();
+                double lat2 = place2.getLatitude();
+                double lon2 = place2.getLongitude();
+
+                double distanceToPlace1 = distance(mLocation.getLatitude(), mLocation.getLongitude(), lat1, lon1);
+                double distanceToPlace2 = distance(mLocation.getLatitude(), mLocation.getLongitude(), lat2, lon2);
+                return (int) (distanceToPlace1 - distanceToPlace2);
+            }
+
+            @Override
+            public boolean areContentsTheSame(SanPham oldItem, SanPham newItem) {
+                return false;
+            }
+
+            @Override
+            public boolean areItemsTheSame(SanPham item1, SanPham item2) {
+                return false;
+            }
+        });
     }
 
+    public double distance(double fromLat, double fromLon, double toLat, double toLon) {
+        double radius = 6378137;   // approximate Earth radius, *in meters*
+        double deltaLat = toLat - fromLat;
+        double deltaLon = toLon - fromLon;
+        double angle = 2 * Math.asin(Math.sqrt(
+                 Math.pow(Math.sin(deltaLat / 2), 2) +
+                          Math.cos(fromLat) * Math.cos(toLat) *
+                                   Math.pow(Math.sin(deltaLon / 2), 2)));
+        return radius * angle;
+    }
+
+    public void addSanPham(SanPham sanPham) {
+            mList.add(sanPham);
+    }
     public class SanPhamViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.img_sanpham)
         ImageView imgSanPham;

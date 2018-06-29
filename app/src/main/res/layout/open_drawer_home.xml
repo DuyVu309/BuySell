@@ -49,14 +49,14 @@
                 android:id="@+id/tv_trang_chu"
                 style="@style/normalText"
                 android:layout_margin="@dimen/pading_small"
-                android:drawableLeft="@drawable/ic_home"
+                android:drawableLeft="@drawable/ic_home_selector"
                 android:text="@string/trang_chu" />
 
             <TextView
                 android:id="@+id/tv_trang_ca_nhan"
                 style="@style/normalText"
                 android:layout_margin="@dimen/pading_small"
-                android:drawableLeft="@drawable/ic_face"
+                android:drawableLeft="@drawable/ic_face_selector"
                 android:text="@string/trang_ca_nhan" />
 
             <!--<TextView-->
@@ -70,28 +70,28 @@
                 android:id="@+id/tv_cai_dat"
                 style="@style/normalText"
                 android:layout_margin="@dimen/pading_small"
-                android:drawableLeft="@drawable/ic_settings"
+                android:drawableLeft="@drawable/ic_settings_selector"
                 android:text="@string/cai_dat" />
 
             <TextView
                 android:id="@+id/tv_tinh_nang_vip"
                 style="@style/normalText"
                 android:layout_margin="@dimen/pading_small"
-                android:drawableLeft="@drawable/ic_vip"
+                android:drawableLeft="@drawable/ic_vip_selector"
                 android:text="@string/tinh_nang_vip" />
 
             <TextView
                 android:id="@+id/tv_feedback"
                 style="@style/normalText"
                 android:layout_margin="@dimen/pading_small"
-                android:drawableLeft="@drawable/ic_feedback"
+                android:drawableLeft="@drawable/ic_feedback_selector"
                 android:text="@string/phan_hoi" />
 
             <TextView
                 android:id="@+id/tv_dang_xuat"
                 style="@style/normalText"
                 android:layout_margin="@dimen/pading_small"
-                android:drawableLeft="@drawable/ic_logout"
+                android:drawableLeft="@drawable/ic_logout_selector"
                 android:text="@string/dang_xuat" />
 
             <TextView

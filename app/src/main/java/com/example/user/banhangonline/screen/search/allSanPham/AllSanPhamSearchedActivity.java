@@ -14,7 +14,6 @@ import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.screen.detail.SanPhamDetailActivity;
 import com.example.user.banhangonline.screen.home.fragment.adapter.SanPhamAdapter;
 import com.example.user.banhangonline.utils.NetworkUtils;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,7 +65,7 @@ public class AllSanPhamSearchedActivity extends BaseActivity implements AllSanPh
     private void initAdapter() {
         GridLayoutManager manager = new GridLayoutManager(this, 2);
         recyclerViewSp.setLayoutManager(manager);
-        mAdapter = new SanPhamAdapter(recyclerViewSp, this, getMyLocation(), mPresenter.getSanPhamList(), new SanPhamAdapter.ISelectPayAdapter() {
+        mAdapter = new SanPhamAdapter(recyclerViewSp, this, getMyLocation(),new SanPhamAdapter.ISelectPayAdapter() {
             @Override
             public void onSelectedSanPham(SanPham sanPham) {
                 if (sanPham != null) {
@@ -125,11 +124,8 @@ public class AllSanPhamSearchedActivity extends BaseActivity implements AllSanPh
     }
 
     @Override
-    public void getSpSuccess(List<SanPham> searchSPS) {
-        if (searchSPS.size() == 0) {
-            showSnackbar(getString(R.string.dont_have_product));
-            dismissDialog();
-        }
+    public void getSpSuccess(SanPham sanPham) {
+        mAdapter.addSanPham(sanPham);
         if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
             dismissDialog();

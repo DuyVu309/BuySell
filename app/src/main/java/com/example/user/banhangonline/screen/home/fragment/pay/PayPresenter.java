@@ -49,12 +49,9 @@ public class PayPresenter implements PayContact.Presenter {
                 if (sanPham != null && sanPham.getIdCategory() != null) {
                     if (sanPham.getIdCategory().equals(idCategory)) {
                         sanPhamList.add(sanPham);
-                    }
-                }
-
-                if (sanPhamList != null) {
-                    if (mView != null) {
-                        mView.loadSanPhamSuccess();
+                        if (mView != null) {
+                            mView.loadSanPhamSuccess(sanPham);
+                        }
                     }
                 }
             }

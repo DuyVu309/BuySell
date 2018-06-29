@@ -4,6 +4,7 @@ import android.location.Location;
 
 import com.example.user.banhangonline.base.IBasePresenter;
 import com.example.user.banhangonline.base.IBaseView;
+import com.example.user.banhangonline.model.SanPham;
 import com.google.firebase.database.DatabaseReference;
 
 public interface SanPhamWithIdContact {
@@ -14,15 +15,14 @@ public interface SanPhamWithIdContact {
 
         void getKeyError();
 
-        void getSpSuccess();
+        void getSpSuccess(SanPham sanPham);
 
         void getSpError();
 
-        void getSearchSuccess();
+        void getSearchSuccess(SanPham sanPham);
 
         void getSearchError();
 
-        void getRecentSpSuccess();
     }
 
     interface Presenter extends IBasePresenter<View> {
@@ -33,6 +33,5 @@ public interface SanPhamWithIdContact {
 
         void getListSearchFromFirebase(DatabaseReference databaseReference, String filter, String idCate, String idPart);
 
-        void getRecentSpFromFirebase(DatabaseReference databaseReference, String iDCategory, String part, Location location);
     }
 }

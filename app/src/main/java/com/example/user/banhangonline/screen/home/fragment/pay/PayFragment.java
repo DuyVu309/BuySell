@@ -27,9 +27,6 @@ import com.example.user.banhangonline.screen.home.fragment.adapter.SanPhamAdapte
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Collections;
-import java.util.Comparator;
-
 import static com.example.user.banhangonline.AppConstants.REQUEST_CODE_LOCATION;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartDetail;
 
@@ -77,7 +74,7 @@ public class PayFragment extends Fragment implements PayContact.View {
 
     private void initAdapter() {
         mPresenter.loadSanPhamFromFirebase(mDatabase, categories.getId());
-        mAdapter = new SanPhamAdapter(recyclerView, getActivity(), location, mPresenter.getSanPhamList(), new SanPhamAdapter.ISelectPayAdapter() {
+        mAdapter = new SanPhamAdapter(recyclerView, getActivity(), location, new SanPhamAdapter.ISelectPayAdapter() {
             @Override
             public void onSelectedSanPham(SanPham sanPham) {
                 Intent intent = new Intent(getActivity(), SanPhamDetailActivity.class);
@@ -102,15 +99,9 @@ public class PayFragment extends Fragment implements PayContact.View {
 
 
     @Override
-    public void loadSanPhamSuccess() {
+    public void loadSanPhamSuccess(SanPham sanPham) {
         if (mAdapter != null) {
-            Collections.sort(mPresenter.getSanPhamList(), new Comparator<SanPham>() {
-                @Override
-                public int compare(SanPham sanPham, SanPham t1) {
-                    return sanPham.getTime().compareTo(t1.getTime());
-                }
-            });
-            mAdapter.notifyDataSetChanged();
+            mAdapter.addSanPham(sanPham);
         }
     }
 
