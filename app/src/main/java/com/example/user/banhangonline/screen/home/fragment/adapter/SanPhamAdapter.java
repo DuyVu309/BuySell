@@ -63,30 +63,48 @@ public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             }
         });
+        if (mLocation != null) {
+            this.mList = new SortedList<SanPham>(SanPham.class, new SortedListAdapterCallback<SanPham>(SanPhamAdapter.this) {
+                @Override
+                public int compare(SanPham place1, SanPham place2) {
+                    double lat1 = place1.getLatitude();
+                    double lon1 = place1.getLongitude();
+                    double lat2 = place2.getLatitude();
+                    double lon2 = place2.getLongitude();
 
-        this.mList = new SortedList<SanPham>(SanPham.class, new SortedListAdapterCallback<SanPham>(SanPhamAdapter.this) {
-            @Override
-            public int compare(SanPham place1, SanPham place2) {
-                double lat1 = place1.getLatitude();
-                double lon1 = place1.getLongitude();
-                double lat2 = place2.getLatitude();
-                double lon2 = place2.getLongitude();
+                    double distanceToPlace1 = distance(mLocation.getLatitude(), mLocation.getLongitude(), lat1, lon1);
+                    double distanceToPlace2 = distance(mLocation.getLatitude(), mLocation.getLongitude(), lat2, lon2);
+                    return (int) (distanceToPlace1 - distanceToPlace2);
+                }
 
-                double distanceToPlace1 = distance(mLocation.getLatitude(), mLocation.getLongitude(), lat1, lon1);
-                double distanceToPlace2 = distance(mLocation.getLatitude(), mLocation.getLongitude(), lat2, lon2);
-                return (int) (distanceToPlace1 - distanceToPlace2);
-            }
+                @Override
+                public boolean areContentsTheSame(SanPham oldItem, SanPham newItem) {
+                    return false;
+                }
 
-            @Override
-            public boolean areContentsTheSame(SanPham oldItem, SanPham newItem) {
-                return false;
-            }
+                @Override
+                public boolean areItemsTheSame(SanPham item1, SanPham item2) {
+                    return false;
+                }
+            });
+        } else {
+            this.mList = new SortedList<SanPham>(SanPham.class, new SortedListAdapterCallback<SanPham>(SanPhamAdapter.this) {
+                @Override
+                public int compare(SanPham o1, SanPham o2) {
+                    return 0;
+                }
 
-            @Override
-            public boolean areItemsTheSame(SanPham item1, SanPham item2) {
-                return false;
-            }
-        });
+                @Override
+                public boolean areContentsTheSame(SanPham oldItem, SanPham newItem) {
+                    return false;
+                }
+
+                @Override
+                public boolean areItemsTheSame(SanPham item1, SanPham item2) {
+                    return false;
+                }
+            });
+        }
     }
 
     public double distance(double fromLat, double fromLon, double toLat, double toLon) {
@@ -101,8 +119,11 @@ public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public void addSanPham(SanPham sanPham) {
+        if (mList != null && sanPham != null) {
             mList.add(sanPham);
+        }
     }
+
     public class SanPhamViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.img_sanpham)
         ImageView imgSanPham;
