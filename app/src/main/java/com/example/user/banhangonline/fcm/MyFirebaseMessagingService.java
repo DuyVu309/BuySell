@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -35,6 +36,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                  .setContentTitle(remoteMessage.getNotification().getTitle())
                  .setContentText(remoteMessage.getNotification().getBody())
                  .setSmallIcon(R.drawable.ic_app)
+                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_app))
                  .setAutoCancel(true)
                  .setSound(defaultSoundUri)
                  .setContentIntent(pendingIntent);
@@ -42,7 +44,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(getString(R.string.default_notification_channel_id),
-                     "Channel human readable title",
+                     "Buy Sell",
                      NotificationManager.IMPORTANCE_DEFAULT);
             notificationManager.createNotificationChannel(channel);
         }
