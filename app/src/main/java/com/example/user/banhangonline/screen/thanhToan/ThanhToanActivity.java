@@ -18,6 +18,7 @@ import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.utils.DialogUntils;
 import com.example.user.banhangonline.utils.NetworkUtils;
 import com.example.user.banhangonline.utils.TimeNowUtils;
+import com.example.user.banhangonline.views.swipe.SwipeBackLayout;
 import com.example.user.banhangonline.widget.dialog.DialogChangeAddress;
 import com.example.user.banhangonline.widget.dialog.DialogChangePhoneNmber;
 import com.example.user.banhangonline.widget.dialog.DialogMethodConnect;
@@ -78,6 +79,7 @@ public class ThanhToanActivity extends BaseActivity implements ThanhToanContact.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gio_hang);
         ButterKnife.bind(this);
+        setDragEdge(SwipeBackLayout.DragEdge.LEFT);
         mPresnter = new ThanhToanPresenter();
         mPresnter.attachView(this);
         phone = getIntent().getStringExtra(keyStartPhone);

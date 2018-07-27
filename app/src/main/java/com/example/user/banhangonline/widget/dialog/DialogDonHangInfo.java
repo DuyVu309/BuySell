@@ -41,7 +41,7 @@ public class DialogDonHangInfo extends Dialog {
         TextView tvDonHang = (TextView) findViewById(R.id.tv_donhang_nguoi_mua);
         LinearLayout ln_sdt = (LinearLayout) findViewById(R.id.ln_sdt);
         TextView tvSdt = (TextView) findViewById(R.id.tv_sdt_nguoi_mua);
-        TextView tvSoLuong = (TextView) findViewById(R.id.tv_soluong);
+        TextView tvGia = (TextView) findViewById(R.id.tv_gia);
         TextView tvThoiGian = (TextView) findViewById(R.id.tv_thoi_gian);
 
         if (donHang != null) {
@@ -53,7 +53,7 @@ public class DialogDonHangInfo extends Dialog {
             } else {
                 ln_sdt.setVisibility(View.GONE);
             }
-            tvSoLuong.setText(donHang.getSoLuong());
+            tvGia.setText(donHang.getSoLuong() + " x " + "(" + donHang.getGia() + ")");
             tvThoiGian.setText(donHang.getThoiGian());
         }
     }

@@ -15,6 +15,7 @@ import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.screen.mySanPham.MySanPhamActivity;
 import com.example.user.banhangonline.screen.sell.adapter.ImageAdapter;
 import com.example.user.banhangonline.utils.NetworkUtils;
+import com.example.user.banhangonline.views.swipe.SwipeBackLayout;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -61,6 +62,7 @@ public class ChangeSanPhamActivity extends BaseActivity implements ChangeSanPham
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_san_pham);
+        setDragEdge(SwipeBackLayout.DragEdge.LEFT);
         ButterKnife.bind(this);
         mPresenter = new ChangePresenter();
         mPresenter.onCreate();

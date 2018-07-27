@@ -23,6 +23,8 @@ import com.example.user.banhangonline.screen.home.fragment.adapter.SanPhamAdapte
 import com.example.user.banhangonline.screen.sanphamWithIdCate.adapter.SearchAdapter;
 import com.example.user.banhangonline.screen.search.allSanPham.AllSanPhamSearchedActivity;
 import com.example.user.banhangonline.utils.NetworkUtils;
+import com.example.user.banhangonline.views.swipe.SwipeActivity;
+import com.example.user.banhangonline.views.swipe.SwipeBackLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

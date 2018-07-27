@@ -1,190 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.user.banhangonline.views.swipe.SwipeBackLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_toolbar"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/pading_small">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/img_arrow_back"
-            style="@style/NavIconStyle"
-            android:src="@drawable/ic_arrow_back" />
-
-        <TextView
-            android:id="@+id/tv_title_buy_sell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingLeft="10dp"
-            android:text="@string/tao_bai_dang"
-            android:textColor="@color/white"
-            android:textSize="@dimen/default_text_size" />
-
-        <Button
-            android:id="@+id/btn_dangbai"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/pading_normal"
-            android:background="@color/transparent"
-            android:text="@string/dang_bai"
-            android:textColor="@drawable/bg_change_colorbackground_blue"
-            android:textSize="@dimen/default_text_size" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/img_account"
-            android:layout_width="@dimen/nav_bar_height"
-            android:layout_height="@dimen/nav_bar_height"
-            android:layout_margin="@dimen/pading_normal"
-            android:src="@drawable/ic_product" />
-
-        <TextView
-            android:id="@+id/tv_account_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Duy Vũ"
-            android:textColor="@color/black"
-            android:textSize="@dimen/title_text_size" />
-
-        <android.support.v7.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_toolbar"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/pading_small">
+
+            <ImageView
+                android:id="@+id/img_arrow_back"
+                style="@style/NavIconStyle"
+                android:src="@drawable/ic_arrow_back" />
+
+            <TextView
+                android:id="@+id/tv_title_buy_sell"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:text="@string/tao_bai_dang"
+                android:textColor="@color/white"
+                android:textSize="@dimen/default_text_size" />
+
+            <Button
+                android:id="@+id/btn_dangbai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/pading_normal"
+                android:background="@color/transparent"
+                android:text="@string/dang_bai"
+                android:textColor="@drawable/bg_change_colorbackground_blue"
+                android:textSize="@dimen/default_text_size" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_account"
+                android:layout_width="@dimen/nav_bar_height"
+                android:layout_height="@dimen/nav_bar_height"
+                android:layout_margin="@dimen/pading_normal"
+                android:src="@drawable/ic_product" />
+
+            <TextView
+                android:id="@+id/tv_account_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Duy Vũ"
+                android:textColor="@color/black"
+                android:textSize="@dimen/title_text_size" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pading_normal"
+                android:layout_marginRight="@dimen/pading_normal"
+                app:cardCornerRadius="@dimen/card_corner_radius_normal">
+
+                <TextView
+                    android:id="@+id/tv_add_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/btn_ok_height"
+                    android:background="@color/blue"
+                    android:drawableLeft="@drawable/ic_add_image"
+                    android:drawablePadding="@dimen/pading_small"
+                    android:padding="@dimen/pading_small"
+                    android:text="@string/them_anh"
+                    android:textAllCaps="false"
+                    android:textColor="@drawable/bg_change_colorbackground_blue"
+                    android:textSize="@dimen/small_text_size" />
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ln_spiner_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
             android:layout_marginLeft="@dimen/pading_normal"
             android:layout_marginRight="@dimen/pading_normal"
-            app:cardCornerRadius="@dimen/card_corner_radius_normal">
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_add_image"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/btn_ok_height"
-                android:background="@color/blue"
-                android:drawableLeft="@drawable/ic_add_image"
-                android:drawablePadding="@dimen/pading_small"
-                android:padding="@dimen/pading_small"
-                android:text="@string/them_anh"
-                android:textAllCaps="false"
-                android:textColor="@drawable/bg_change_colorbackground_blue"
-                android:textSize="@dimen/small_text_size" />
-
-        </android.support.v7.widget.CardView>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ln_spiner_category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:layout_marginLeft="@dimen/pading_normal"
-        android:layout_marginRight="@dimen/pading_normal"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/pading_normal"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/spiner_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableRight="@drawable/ic_expand_more"
-                android:hint="@string/loai"
-                android:padding="@dimen/pading_small"
-                android:textColor="@color/blue"
-                android:textSize="@dimen/default_text_size" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycerview_cate"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone" />
+                android:layout_marginRight="@dimen/pading_normal"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/spiner_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_expand_more"
+                    android:hint="@string/loai"
+                    android:padding="@dimen/pading_small"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/default_text_size" />
 
-        <LinearLayout
-            android:id="@+id/ln_part"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/pading_normal"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:visibility="invisible">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycerview_cate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/spiner_part"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableRight="@drawable/ic_expand_more"
-                android:hint="@string/muc"
-                android:padding="@dimen/pading_small"
-                android:textColor="@color/blue"
-                android:textSize="@dimen/default_text_size" />
+            </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycerview_part"
+            <LinearLayout
+                android:id="@+id/ln_part"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone" />
+                android:layout_marginRight="@dimen/pading_normal"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:visibility="invisible">
+
+                <TextView
+                    android:id="@+id/spiner_part"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_expand_more"
+                    android:hint="@string/muc"
+                    android:padding="@dimen/pading_small"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/default_text_size" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycerview_part"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+            </LinearLayout>
         </LinearLayout>
+
+        <EditText
+            android:id="@+id/edt_thongtin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/pading_small"
+            android:backgroundTint="@color/transparent"
+            android:drawablePadding="@dimen/pading_normal"
+            android:hint="@string/nhap_tieu_de"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/default_text_size" />
+
+        <EditText
+            android:id="@+id/edt_mota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/pading_small"
+            android:backgroundTint="@color/transparent"
+            android:drawablePadding="@dimen/pading_normal"
+            android:ellipsize="end"
+            android:hint="@string/nhap_mota"
+            android:maxLines="4"
+            android:textColor="@color/black"
+            android:textSize="@dimen/default_text_size" />
+
+        <EditText
+            android:id="@+id/edt_sell_gia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/transparent"
+            android:hint="@string/gia"
+            android:textColor="@color/black"
+            android:textSize="@dimen/default_text_size" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycerview_list_bitmap"
+            android:layout_width="match_parent"
+            android:layout_height="240dp" />
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/edt_thongtin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/pading_small"
-        android:backgroundTint="@color/transparent"
-        android:drawablePadding="@dimen/pading_normal"
-        android:hint="@string/nhap_tieu_de"
-        android:singleLine="true"
-        android:textColor="@color/black"
-        android:textSize="@dimen/default_text_size" />
-
-    <EditText
-        android:id="@+id/edt_mota"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/pading_small"
-        android:backgroundTint="@color/transparent"
-        android:drawablePadding="@dimen/pading_normal"
-        android:hint="@string/nhap_mota"
-        android:maxLines="4"
-        android:ellipsize="end"
-        android:textColor="@color/black"
-        android:textSize="@dimen/default_text_size" />
-
-    <EditText
-        android:id="@+id/edt_sell_gia"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/transparent"
-        android:hint="@string/gia"
-        android:textColor="@color/black"
-        android:textSize="@dimen/default_text_size" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycerview_list_bitmap"
-        android:layout_width="match_parent"
-        android:layout_height="240dp" />
-
-
-</LinearLayout>
+</com.example.user.banhangonline.views.swipe.SwipeBackLayout>

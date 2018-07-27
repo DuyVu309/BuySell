@@ -61,4 +61,9 @@ public class BitmapUtils {
         return inSampleSize;
     }
 
+    public static Bitmap getBitmapResize(Bitmap bitmap, float degress) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degress);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+    }
 }

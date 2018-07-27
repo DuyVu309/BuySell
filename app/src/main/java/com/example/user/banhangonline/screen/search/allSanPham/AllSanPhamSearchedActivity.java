@@ -14,6 +14,7 @@ import com.example.user.banhangonline.model.SanPham;
 import com.example.user.banhangonline.screen.detail.SanPhamDetailActivity;
 import com.example.user.banhangonline.screen.home.fragment.adapter.SanPhamAdapter;
 import com.example.user.banhangonline.utils.NetworkUtils;
+import com.example.user.banhangonline.views.swipe.SwipeBackLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +47,7 @@ public class AllSanPhamSearchedActivity extends BaseActivity implements AllSanPh
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_san_pham);
+        setDragEdge(SwipeBackLayout.DragEdge.LEFT);
         ButterKnife.bind(this);
         mPresenter = new AllSanPhamSearchPresenter();
         mPresenter.attachView(this);

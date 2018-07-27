@@ -17,6 +17,7 @@ import com.example.user.banhangonline.screen.myGioHang.adapter.MyGioHangAdapter;
 import com.example.user.banhangonline.screen.spAccount.SanPhamAccountActivity;
 import com.example.user.banhangonline.utils.DialogUntils;
 import com.example.user.banhangonline.utils.NetworkUtils;
+import com.example.user.banhangonline.views.swipe.SwipeBackLayout;
 import com.example.user.banhangonline.widget.dialog.DialogPositiveNegative;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -52,6 +53,7 @@ public class MyGioHangActivity extends BaseActivity implements MyGioHangContact.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_gio_hang);
+        setDragEdge(SwipeBackLayout.DragEdge.LEFT);
         ButterKnife.bind(this);
         mPresenter = new MyGioHangPresenter();
         mPresenter.attachView(this);

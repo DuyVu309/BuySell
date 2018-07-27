@@ -20,6 +20,7 @@ import com.example.user.banhangonline.screen.detail.SanPhamDetailActivity;
 import com.example.user.banhangonline.screen.mySanPham.MySanPhamActivity;
 import com.example.user.banhangonline.screen.showImage.ShowImageActivity;
 import com.example.user.banhangonline.screen.spAccount.adapter.SanPhamAccountAdapter;
+import com.example.user.banhangonline.views.swipe.SwipeBackLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,6 +66,7 @@ public class SanPhamAccountActivity extends BaseActivity implements SanPhamAccou
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_san_pham_account);
         ButterKnife.bind(this);
+        setDragEdge(SwipeBackLayout.DragEdge.LEFT);
         mPresenter = new SanPhamAccountPresenter();
         mPresenter.attachView(this);
         mPresenter.setEmailId(getIntent().getStringExtra(keyStartSPAccount));

@@ -1,6 +1,7 @@
 package com.example.user.banhangonline.screen.library;
 
 import com.example.user.banhangonline.base.BasePresenter;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class LibraryPresenter extends BasePresenter implements LibraryContact.Pr
             if (files[i].isDirectory()) {
                 mList.addAll(getListImageFromStorage(files[i]));
             } else {
-                if (files[i].getName().endsWith(".jpg") || files[i].getName().endsWith(".png")) {
+                if (files[i].getName().endsWith(".jpg") || files[i].getName().endsWith(".png") || files[i].getName().endsWith(".jpeg")) {
                     mList.add(files[i]);
                 }
             }

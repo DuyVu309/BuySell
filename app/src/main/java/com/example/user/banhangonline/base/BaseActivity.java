@@ -17,7 +17,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -29,6 +28,8 @@ import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.screen.login.LoginActivity;
 import com.example.user.banhangonline.utils.DialogUntils;
 import com.example.user.banhangonline.utils.NetworkUtils;
+import com.example.user.banhangonline.views.swipe.SwipeActivity;
+import com.example.user.banhangonline.views.swipe.SwipeBackLayout;
 import com.example.user.banhangonline.widget.dialog.DialogOk;
 import com.example.user.banhangonline.widget.dialog.DialogPositiveNegative;
 import com.example.user.banhangonline.widget.dialog.DialogProgress;
@@ -43,13 +44,14 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.example.user.banhangonline.AppConstants.REQUEST_CODE_LOCATION;
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends SwipeActivity {
     protected FirebaseAuth mAuth;
     protected DatabaseReference mDataBase;
     protected FirebaseStorage mStorage;
     protected StorageReference mStorageReferrence;
 
     private Location location;
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -66,16 +68,18 @@ public class BaseActivity extends AppCompatActivity {
                 getWindow().setStatusBarColor(getResources().getColor(R.color.blue_window));
             }
         }
-
         mAuth = FirebaseAuth.getInstance();
         mDataBase = FirebaseDatabase.getInstance().getReference();
         mStorage = FirebaseStorage.getInstance();
         mStorageReferrence = mStorage.getReferenceFromUrl("gs://banhangonline-7058d.appspot.com");
         initFonts();
-
     }
 
-    protected String getVersionApp(){
+    public static void setSwipeBack(SwipeBackLayout.DragEdge swipeBack) {
+        setDragEdge(swipeBack);
+    }
+
+    protected String getVersionApp() {
         String version = "";
 
         try {
@@ -229,6 +233,7 @@ public class BaseActivity extends AppCompatActivity {
             view.startAnimation(animation);
         }
     }
+
     protected boolean checkPermissions(String[] permissions) {
         for (String s : permissions) {
             if (ContextCompat.checkSelfPermission(getApplicationContext(), s) != PackageManager.PERMISSION_GRANTED)

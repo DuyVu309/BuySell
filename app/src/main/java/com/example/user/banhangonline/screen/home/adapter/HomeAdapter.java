@@ -1,6 +1,8 @@
 package com.example.user.banhangonline.screen.home.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.user.banhangonline.R;
 import com.example.user.banhangonline.model.Part;
 
@@ -17,6 +20,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.example.user.banhangonline.utils.BitmapUtils.calculateInSampleSize;
 
 public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -77,7 +82,8 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (mlist.get(position).getTitle() != null) {
             viewholder.tvTitlePay.setText(mlist.get(position).getTitle());
         }
-        viewholder.imgPay.setImageDrawable(mContext.getResources().getDrawable(mlist.get(position).getUrl()));
+        Glide.with(mContext).load(mlist.get(position).getUrl()).into(viewholder.imgPay);
+//        viewholder.imgPay.setImageDrawable(mContext.getResources().getDrawable(mlist.get(position).getUrl()));
     }
 
     @Override

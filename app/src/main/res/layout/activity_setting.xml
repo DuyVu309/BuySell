@@ -1,64 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.user.banhangonline.views.swipe.SwipeBackLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_toolbar"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/pading_small">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/img_arrow_back"
-            style="@style/NavIconStyle"
-            android:src="@drawable/ic_arrow_back" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_toolbar"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/pading_small">
+
+            <ImageView
+                android:id="@+id/img_arrow_back"
+                style="@style/NavIconStyle"
+                android:src="@drawable/ic_arrow_back" />
+
+            <TextView
+                android:id="@+id/tv_title_buy_sell"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:text="@string/cai_dat"
+                android:textColor="@color/white"
+                android:textSize="@dimen/default_text_size" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_title_buy_sell"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingLeft="10dp"
-            android:text="@string/cai_dat"
-            android:textColor="@color/white"
+            android:padding="@dimen/pading_small"
+            android:text="Hiển thị quãng đường"
+            android:textColor="@color/blue"
             android:textSize="@dimen/default_text_size" />
+
+        <Switch
+            android:id="@+id/sw_mua_hang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/pading_large"
+            android:layout_marginRight="@dimen/pading_small"
+            android:layout_marginTop="@dimen/pading_small"
+            android:checked="false"
+            android:text="@string/quang_duong_mua_hang" />
+
+        <Switch
+            android:id="@+id/sw_gio_hang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/pading_large"
+            android:layout_marginRight="@dimen/pading_small"
+            android:layout_marginTop="@dimen/pading_small"
+            android:checked="false"
+            android:singleLine="true"
+            android:text="@string/quang_duong_gio_hang"/>
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/pading_small"
-        android:text="Hiển thị quãng đường"
-        android:textColor="@color/blue"
-        android:textSize="@dimen/default_text_size" />
-
-    <Switch
-
-        android:id="@+id/sw_mua_hang"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/pading_large"
-        android:layout_marginRight="@dimen/pading_small"
-        android:layout_marginTop="@dimen/pading_small"
-        android:checked="false"
-        android:thumbTint="@color/blue"
-        android:text="@string/quang_duong_mua_hang" />
-
-    <Switch
-        android:id="@+id/sw_gio_hang"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/pading_large"
-        android:layout_marginRight="@dimen/pading_small"
-        android:layout_marginTop="@dimen/pading_small"
-        android:singleLine="true"
-        android:checked="false"
-        android:thumbTint="@color/blue"
-        android:text="@string/quang_duong_gio_hang" />
-
-
-</LinearLayout>
+</com.example.user.banhangonline.views.swipe.SwipeBackLayout>

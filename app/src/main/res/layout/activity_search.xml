@@ -1,110 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.user.banhangonline.views.swipe.SwipeBackLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/blue"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_toolbar"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/pading_small"
-            app:layout_scrollFlags="scroll|enterAlways">
+            android:background="@color/blue"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/img_arrow_back"
-                style="@style/NavIconStyle"
-                android:src="@drawable/ic_arrow_back" />
-
-            <TextView
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingLeft="10dp"
-                android:text="@string/tim_kiem"
-                android:textColor="@color/white"
-                android:textSize="@dimen/default_text_size" />
+                android:background="@drawable/bg_toolbar"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/pading_small"
+                app:layout_scrollFlags="scroll|enterAlways">
 
+                <ImageView
+                    android:id="@+id/img_arrow_back"
+                    style="@style/NavIconStyle"
+                    android:src="@drawable/ic_arrow_back" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:text="@string/tim_kiem"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/default_text_size" />
+
+            </LinearLayout>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/pading_small"
+                android:layout_marginLeft="@dimen/pading_small"
+                android:layout_marginRight="@dimen/pading_small"
+                app:cardCornerRadius="3dp"
+                app:cardElevation="1dp">
+
+                <EditText
+                    android:id="@+id/edt_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/transparent"
+                    android:drawableLeft="@drawable/ic_add_shopping"
+                    android:drawablePadding="@dimen/pading_small"
+                    android:ellipsize="end"
+                    android:hint="@string/tim_kiem_san_pham"
+                    android:inputType="textFilter"
+                    android:paddingLeft="@dimen/pading_small"
+                    android:paddingRight="@dimen/nav_bar_height"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/default_text_size" />
+
+                <ImageView
+                    android:id="@+id/img_search"
+                    style="@style/NavIconStyle"
+                    android:layout_gravity="right"
+                    android:src="@drawable/ic_search" />
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/pading_small"
+                android:layout_marginLeft="@dimen/pading_small"
+                android:layout_marginRight="@dimen/pading_small"
+                app:cardCornerRadius="3dp"
+                app:cardElevation="1dp">
+
+                <EditText
+                    android:id="@+id/edt_search_account"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/transparent"
+                    android:drawableLeft="@drawable/ic_product"
+                    android:drawablePadding="@dimen/pading_small"
+                    android:ellipsize="end"
+                    android:hint="@string/tim_kiem_doanh_nghiep"
+                    android:inputType="textFilter"
+                    android:paddingLeft="@dimen/pading_small"
+                    android:paddingRight="@dimen/nav_bar_height"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/default_text_size" />
+
+                <ImageView
+                    android:id="@+id/img_search_account"
+                    style="@style/NavIconStyle"
+                    android:layout_gravity="right"
+                    android:src="@drawable/ic_search" />
+            </android.support.v7.widget.CardView>
         </LinearLayout>
 
-        <android.support.v7.widget.CardView
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_search"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/pading_small"
-            android:layout_marginLeft="@dimen/pading_small"
-            android:layout_marginRight="@dimen/pading_small"
-            app:cardCornerRadius="3dp"
-            app:cardElevation="1dp">
+            android:layout_height="match_parent" />
 
-            <EditText
-                android:id="@+id/edt_search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/transparent"
-                android:drawableLeft="@drawable/ic_add_shopping"
-                android:drawablePadding="@dimen/pading_small"
-                android:ellipsize="end"
-                android:hint="@string/tim_kiem_san_pham"
-                android:inputType="textFilter"
-                android:paddingLeft="@dimen/pading_small"
-                android:paddingRight="@dimen/nav_bar_height"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="@dimen/default_text_size" />
-
-            <ImageView
-                android:id="@+id/img_search"
-                style="@style/NavIconStyle"
-                android:layout_gravity="right"
-                android:src="@drawable/ic_search" />
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/pading_small"
-            android:layout_marginLeft="@dimen/pading_small"
-            android:layout_marginRight="@dimen/pading_small"
-            app:cardCornerRadius="3dp"
-            app:cardElevation="1dp">
-
-            <EditText
-                android:id="@+id/edt_search_account"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/transparent"
-                android:drawableLeft="@drawable/ic_product"
-                android:drawablePadding="@dimen/pading_small"
-                android:ellipsize="end"
-                android:hint="@string/tim_kiem_doanh_nghiep"
-                android:inputType="textFilter"
-                android:paddingLeft="@dimen/pading_small"
-                android:paddingRight="@dimen/nav_bar_height"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="@dimen/default_text_size" />
-
-            <ImageView
-                android:id="@+id/img_search_account"
-                style="@style/NavIconStyle"
-                android:layout_gravity="right"
-                android:src="@drawable/ic_search" />
-        </android.support.v7.widget.CardView>
     </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_search"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-</LinearLayout>
+</com.example.user.banhangonline.views.swipe.SwipeBackLayout>

@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.example.user.banhangonline.R;
+import com.example.user.banhangonline.base.BaseActivity;
+import com.example.user.banhangonline.views.swipe.SwipeBackLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class FeedBackActivity extends AppCompatActivity {
+public class FeedBackActivity extends BaseActivity {
     @BindView(R.id.edt_subject_feedback)
     EditText edtSubject;
 
@@ -20,9 +22,15 @@ public class FeedBackActivity extends AppCompatActivity {
     EditText edtBody;
 
     @Override
+    public boolean isTransparentStatusBar() {
+        return false;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_back);
+        setDragEdge(SwipeBackLayout.DragEdge.LEFT);
         ButterKnife.bind(this);
     }
 

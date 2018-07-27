@@ -1,52 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.user.banhangonline.views.swipe.SwipeBackLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_toolbar"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/pading_small">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/img_arrow_back"
-            style="@style/NavIconStyle"
-            android:src="@drawable/ic_arrow_back" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingLeft="10dp"
-            android:text="@string/san_pham"
-            android:textColor="@color/white"
-            android:textSize="@dimen/default_text_size" />
+            android:background="@drawable/bg_toolbar"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/pading_small">
+
+            <ImageView
+                android:id="@+id/img_arrow_back"
+                style="@style/NavIconStyle"
+                android:src="@drawable/ic_arrow_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:text="@string/san_pham"
+                android:textColor="@color/white"
+                android:textSize="@dimen/default_text_size" />
+
+        </LinearLayout>
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycerview_sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ProgressBar
+                android:id="@+id/pb_loading"
+                android:layout_width="@dimen/nav_bar_height_small"
+                android:layout_height="@dimen/nav_bar_height_small"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_margin="@dimen/pading_small"
+                android:indeterminateTint="@color/red"
+                android:visibility="gone" />
+        </FrameLayout>
+
 
     </LinearLayout>
-
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycerview_sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <ProgressBar
-            android:id="@+id/pb_loading"
-            android:visibility="gone"
-            android:indeterminateTint="@color/red"
-            android:layout_margin="@dimen/pading_small"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_width="@dimen/nav_bar_height_small"
-            android:layout_height="@dimen/nav_bar_height_small" />
-    </FrameLayout>
-
-
-</LinearLayout>
+</com.example.user.banhangonline.views.swipe.SwipeBackLayout>

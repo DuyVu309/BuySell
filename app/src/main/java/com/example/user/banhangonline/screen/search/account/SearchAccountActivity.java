@@ -19,6 +19,7 @@ import com.example.user.banhangonline.screen.search.account.adapter.SearchAccoun
 import com.example.user.banhangonline.screen.home.fragment.adapter.SanPhamAdapter;
 import com.example.user.banhangonline.screen.spAccount.SanPhamAccountActivity;
 import com.example.user.banhangonline.utils.NetworkUtils;
+import com.example.user.banhangonline.views.swipe.SwipeBackLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,6 +50,7 @@ public class SearchAccountActivity extends BaseActivity implements SearchAccount
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_account);
         ButterKnife.bind(this);
+        setDragEdge(SwipeBackLayout.DragEdge.LEFT);
         mPresenter = new SearchAccountPresenter();
         mPresenter.attachView(this);
         name = getIntent().getStringExtra(keyStartAccount);

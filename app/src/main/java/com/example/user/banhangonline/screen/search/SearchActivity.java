@@ -15,6 +15,7 @@ import com.example.user.banhangonline.model.search.SearchSP;
 import com.example.user.banhangonline.screen.search.account.SearchAccountActivity;
 import com.example.user.banhangonline.screen.search.allSanPham.AllSanPhamSearchedActivity;
 import com.example.user.banhangonline.screen.sanphamWithIdCate.adapter.SearchAdapter;
+import com.example.user.banhangonline.views.swipe.SwipeBackLayout;
 
 import java.util.List;
 
@@ -50,6 +51,7 @@ public class SearchActivity extends BaseActivity implements SearchContact.View {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        setDragEdge(SwipeBackLayout.DragEdge.LEFT);
         unbinder = ButterKnife.bind(this);
         mPresenter = new SearchPresenter();
         mPresenter.attachView(this);

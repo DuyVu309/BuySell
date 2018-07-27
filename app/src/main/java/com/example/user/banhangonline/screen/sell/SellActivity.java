@@ -1,7 +1,9 @@
 package com.example.user.banhangonline.screen.sell;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +30,7 @@ import com.example.user.banhangonline.screen.sell.adapter.SpinnerAdapter;
 import com.example.user.banhangonline.utils.GoogleMapUtils;
 import com.example.user.banhangonline.utils.NetworkUtils;
 import com.example.user.banhangonline.utils.TimeNowUtils;
+import com.example.user.banhangonline.views.swipe.SwipeBackLayout;
 import com.example.user.banhangonline.widget.dialog.DialogPositiveNegative;
 
 import java.io.File;
@@ -90,7 +93,9 @@ public class SellActivity extends BaseActivity implements SellContact.View {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sell);
         ButterKnife.bind(this);
+        setDragEdge(SwipeBackLayout.DragEdge.LEFT);
         mPresenter = new SellPresenter();
+        mPresenter.setContext(this);
         mPresenter.onCreate();
         mPresenter.attachView(this);
         initSpinnerAndBitmap();
@@ -327,6 +332,7 @@ public class SellActivity extends BaseActivity implements SellContact.View {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void uploadListImage() {
         showDialog();
         mPresenter.upLoadFileImageToStorage(mStorageReferrence, PreferManager.getUserID(this));

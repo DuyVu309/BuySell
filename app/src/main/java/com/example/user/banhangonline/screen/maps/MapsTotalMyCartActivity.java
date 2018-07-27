@@ -37,7 +37,6 @@ public class MapsTotalMyCartActivity extends BaseActivity implements OnMapReadyC
 
     private List<Places> listAddress = new ArrayList<>();
 
-
     @Override
     public boolean isTransparentStatusBar() {
         return false;

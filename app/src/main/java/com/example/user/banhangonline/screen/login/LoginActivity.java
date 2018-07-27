@@ -238,8 +238,6 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
                     }
                 }
             });
-
-
         } else {
             showSnackbar(getResources().getString(R.string.error_and_check));
             dismissDialog();

@@ -133,12 +133,12 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/pading_small"
                 android:layout_weight="1"
-                android:text="@string/so_luong_cart"
+                android:text="@string/gia_cart"
                 android:textColor="@color/black"
                 android:textSize="@dimen/default_text_size" />
 
             <TextView
-                android:id="@+id/tv_soluong"
+                android:id="@+id/tv_gia"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"

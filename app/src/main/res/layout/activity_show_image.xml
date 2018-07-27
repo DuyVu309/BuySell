@@ -16,7 +16,6 @@
 
     </com.example.user.banhangonline.views.PullBackLayout>
 
-
     <ProgressBar
         android:id="@+id/pg_loading"
         android:layout_width="@dimen/nav_bar_height_small"

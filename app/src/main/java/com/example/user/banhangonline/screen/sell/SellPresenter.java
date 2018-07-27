@@ -1,7 +1,15 @@
 package com.example.user.banhangonline.screen.sell;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.util.Log;
 
 import com.example.user.banhangonline.base.BasePresenter;
 import com.example.user.banhangonline.model.Categories;
@@ -16,11 +24,15 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import static com.example.user.banhangonline.utils.BitmapUtils.calculateInSampleSize;
+import static com.example.user.banhangonline.utils.BitmapUtils.getBitmapResize;
 import static com.example.user.banhangonline.utils.KeyUntils.keyDoNguNoiY;
 import static com.example.user.banhangonline.utils.KeyUntils.keyIdCateCongNghe;
 import static com.example.user.banhangonline.utils.KeyUntils.keyIdCateDoAn;
@@ -64,7 +76,7 @@ import static com.example.user.banhangonline.utils.TextUntils.tuiSachNam;
 import static com.example.user.banhangonline.utils.TextUntils.tuiSachNu;
 
 public class SellPresenter extends BasePresenter implements SellContact.Presenterr {
-
+    Context context;
     private SellContact.View mView;
     private List<Object> listCategories;
     private List<Object> listPart;
@@ -72,6 +84,10 @@ public class SellPresenter extends BasePresenter implements SellContact.Presente
     private List<String> listImages;
     private List<String> listNameImages;
     private String idCate, titleCate, idPart, titlePart;
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
 
     public List<Object> getListCategory() {
         listCategories.add(new Categories(keyIdCateDoAn, titleDoAn));
@@ -204,17 +220,53 @@ public class SellPresenter extends BasePresenter implements SellContact.Presente
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void upLoadFileImageToStorage(StorageReference storageReference, String nameImage) {
         if (!isViewAttached()) {
             return;
         }
         for (int i = 0; i < listFiles.size(); i++) {
-            Uri file = Uri.fromFile(new File(listFiles.get(i).toString()));
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            BitmapFactory.decodeFile(listFiles.get(i).toString(), options);
+
+            options.inSampleSize = calculateInSampleSize(options, 300, 300); //scale
+            options.inJustDecodeBounds = false;
+            Bitmap bitmap = BitmapFactory.decodeFile(listFiles.get(i).toString(), options);
+
+            float degrees = 0f;
+            try {
+                ExifInterface exifInterface = new ExifInterface(listFiles.get(i).toString());
+                int exifOrientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                switch (exifOrientation) {
+                    case ExifInterface.ORIENTATION_ROTATE_90:
+                        degrees = 90f;
+                        break;
+                    case ExifInterface.ORIENTATION_ROTATE_180:
+                        degrees = 180f;
+                        break;
+                    case ExifInterface.ORIENTATION_ROTATE_270:
+                        degrees = 270f;
+                        break;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Bitmap resultBitmap = getBitmapResize(bitmap, degrees);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            resultBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            try {
+                bos.flush();
+                bos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            byte[] bitmapData = bos.toByteArray();
+
             String date = String.valueOf(Calendar.getInstance().getTimeInMillis());
             listNameImages.add(nameImage + date);
             StorageReference riversRef = storageReference.child("images/" + listNameImages.get(i));
-            UploadTask uploadTask = riversRef.putFile(file);
+            UploadTask uploadTask = riversRef.putBytes(bitmapData);
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
@@ -245,4 +297,5 @@ public class SellPresenter extends BasePresenter implements SellContact.Presente
             });
         }
     }
+
 }

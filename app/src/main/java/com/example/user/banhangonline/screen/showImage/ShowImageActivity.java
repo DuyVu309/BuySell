@@ -1,6 +1,8 @@
 package com.example.user.banhangonline.screen.showImage;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -28,6 +30,10 @@ public class ShowImageActivity extends BaseActivity implements PullBackLayout.Ca
 
     @BindView(R.id.puller)
     PullBackLayout puller;
+
+    private final String KEY_SAVE_IMAGE_ROTATION = "rotation";
+    Bitmap bitmap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +52,10 @@ public class ShowImageActivity extends BaseActivity implements PullBackLayout.Ca
                 @Override
                 public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
                     pbLoading.setVisibility(View.GONE);
+                    imgShow.buildDrawingCache();
+                    if (imgShow.getDrawingCache() != null) {
+                        bitmap = imgShow.getDrawingCache();
+                    }
                     return false;
                 }
             }).into(imgShow);
@@ -53,6 +63,16 @@ public class ShowImageActivity extends BaseActivity implements PullBackLayout.Ca
             pAttacher = new PhotoViewAttacher(imgShow);
             pAttacher.update();
         }
+
+        if (savedInstanceState != null) {
+            imgShow.setImageBitmap(bitmap);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        outState.putParcelable(KEY_SAVE_IMAGE_ROTATION, bitmap);
+        super.onSaveInstanceState(outState, outPersistentState);
     }
 
     @Override
@@ -64,17 +84,14 @@ public class ShowImageActivity extends BaseActivity implements PullBackLayout.Ca
     //pull
     @Override
     public void onPullStart() {
-
     }
 
     @Override
     public void onPull(float v) {
-
     }
 
     @Override
     public void onPullCancel() {
-
     }
 
     @Override

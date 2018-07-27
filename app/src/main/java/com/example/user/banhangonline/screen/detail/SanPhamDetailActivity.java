@@ -20,6 +20,7 @@ import com.example.user.banhangonline.screen.detail.adapter.DetailAdapter;
 import com.example.user.banhangonline.screen.thanhToan.ThanhToanActivity;
 import com.example.user.banhangonline.screen.spAccount.SanPhamAccountActivity;
 import com.example.user.banhangonline.utils.NetworkUtils;
+import com.example.user.banhangonline.views.swipe.SwipeBackLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,6 +72,7 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_san_pham_detail);
+        setDragEdge(SwipeBackLayout.DragEdge.LEFT);
         ButterKnife.bind(this);
         initToolBar();
         setSupportActionBar(toolbar);
