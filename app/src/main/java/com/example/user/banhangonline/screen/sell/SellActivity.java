@@ -1,5 +1,6 @@
 package com.example.user.banhangonline.screen.sell;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -157,7 +158,7 @@ public class SellActivity extends BaseActivity implements SellContact.View {
                 @Override
                 public void onClickImageDelete(int position) {
                     mPresenter.getListFiles().remove(position);
-                    adapterImage.notifyDataSetChanged();
+                    adapterImage.notifyItemRemoved(position);
                 }
             });
             if (mPresenter.getListFiles().size() == 1) {
@@ -295,6 +296,7 @@ public class SellActivity extends BaseActivity implements SellContact.View {
 
     }
 
+    @TargetApi(Build.VERSION_CODES.N)
     @OnClick(R.id.btn_dangbai)
     public void onClickDangBai() {
         if (NetworkUtils.isConnected(this)) {
