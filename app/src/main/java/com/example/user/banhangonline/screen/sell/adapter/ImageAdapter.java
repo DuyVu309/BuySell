@@ -48,12 +48,12 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         CircleView circleView;
 
         @BindView(R.id.check)
-        ImageView imgCheck;
+        ImageView imgRemove;
 
         public ImageSellHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            imgCheck.setOnClickListener(new View.OnClickListener() {
+            imgRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     mListener.onClickImageDelete(getAdapterPosition());
@@ -78,7 +78,7 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             ImageSellHolder holder = (ImageSellHolder) viewHolder;
             Glide.with(context).load(mList.get(position).toString()).into(holder.imgLibrary);
             holder.circleView.setColorCircle(context.getResources().getColor(R.color.transparent));
-            holder.imgCheck.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_clear));
+            holder.imgRemove.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_clear));
         }
     }
 
