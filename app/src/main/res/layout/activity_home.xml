@@ -7,103 +7,111 @@
     android:layout_height="match_parent"
     tools:openDrawer="start">
 
-    <android.support.design.widget.CoordinatorLayout
+    <com.example.user.banhangonline.views.DrawerContent
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/scene_open_drawer">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appbar"
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/appbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_toolbar"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="@dimen/pading_small"
-                app:layout_scrollFlags="scroll|enterAlways">
+                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/img_drawer"
-                    style="@style/NavIconStyle"
-                    android:src="@drawable/ic_nav_drawer" />
-
-                <TextView
-                    android:id="@+id/tv_title_buy_sell"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingLeft="10dp"
-                    android:text="@string/app_name"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/title_text_size" />
-
-                <ImageView
-                    android:id="@+id/img_sell"
-                    style="@style/NavIconStyle"
-                    android:layout_marginRight="@dimen/pading_small"
-                    android:background="@drawable/bg_click_button_blue"
-                    android:src="@drawable/ic_sell" />
-
-                <ImageView
-                    android:id="@+id/img_cart"
-                    style="@style/NavIconStyle"
-                    android:layout_marginRight="@dimen/pading_small"
-                    android:background="@drawable/bg_click_button_blue"
-                    android:src="@drawable/ic_cart" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/blue"
-                android:orientation="vertical"
-                app:layout_scrollFlags="scroll|enterAlways">
-
-                <android.support.v7.widget.CardView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/pading_small"
-                    android:layout_marginLeft="@dimen/pading_small"
-                    android:layout_marginRight="@dimen/pading_small"
-                    app:cardCornerRadius="3dp"
-                    app:cardElevation="1dp">
+                    android:background="@drawable/bg_toolbar"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/pading_small"
+                    app:layout_scrollFlags="scroll|enterAlways">
+
+                    <ImageView
+                        android:id="@+id/img_drawer"
+                        style="@style/NavIconStyle"
+                        android:src="@drawable/ic_nav_drawer" />
 
                     <TextView
-                        android:id="@+id/edt_search"
+                        android:id="@+id/tv_title_buy_sell"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="10dp"
+                        android:text="@string/app_name"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/title_text_size" />
+
+                    <ImageView
+                        android:id="@+id/img_sell"
+                        style="@style/NavIconStyle"
+                        android:layout_marginRight="@dimen/pading_small"
+                        android:background="@drawable/bg_click_button_blue"
+                        android:src="@drawable/ic_sell" />
+
+                    <ImageView
+                        android:id="@+id/img_cart"
+                        style="@style/NavIconStyle"
+                        android:layout_marginRight="@dimen/pading_small"
+                        android:background="@drawable/bg_click_button_blue"
+                        android:src="@drawable/ic_cart" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/blue"
+                    android:orientation="vertical"
+                    app:layout_scrollFlags="scroll|enterAlways">
+
+                    <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_selected_search"
-                        android:hint="Tìm kiếm"
-                        android:inputType="textFilter"
-                        android:padding="@dimen/pading_small"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/default_text_size" />
-                </android.support.v7.widget.CardView>
-            </LinearLayout>
+                        android:layout_marginBottom="@dimen/pading_small"
+                        android:layout_marginLeft="@dimen/pading_small"
+                        android:layout_marginRight="@dimen/pading_small"
+                        app:cardCornerRadius="3dp"
+                        app:cardElevation="1dp">
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tl_home"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                app:tabGravity="fill"
-                app:tabMode="scrollable"
-                app:tabSelectedTextColor="@color/red"
-                app:tabIndicatorColor="@color/transparent"
-                app:tabTextColor="@color/blue" />
+                        <TextView
+                            android:id="@+id/edt_search"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_selected_search"
+                            android:hint="Tìm kiếm"
+                            android:inputType="textFilter"
+                            android:padding="@dimen/pading_small"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/default_text_size" />
+                    </android.support.v7.widget.CardView>
+                </LinearLayout>
 
-        </android.support.design.widget.AppBarLayout>
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tl_home"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="@color/transparent"
+                    app:tabMode="scrollable"
+                    app:tabSelectedTextColor="@color/red"
+                    app:tabTextColor="@color/blue" />
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-    </android.support.design.widget.CoordinatorLayout>
+            </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/open_drawer_home" />
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        </android.support.design.widget.CoordinatorLayout>
+
+    </com.example.user.banhangonline.views.DrawerContent>
+
+    <include layout="@layout/open_draw_layout" />
 
 </android.support.v4.widget.DrawerLayout>

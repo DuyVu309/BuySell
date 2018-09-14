@@ -12,6 +12,7 @@ import com.afollestad.dragselectrecyclerview.DragSelectRecyclerView;
 import com.afollestad.dragselectrecyclerview.DragSelectRecyclerViewAdapter;
 import com.bumptech.glide.Glide;
 import com.example.user.banhangonline.R;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,18 @@ public class PhotoAdapter extends DragSelectRecyclerViewAdapter<DragSelectRecycl
         return mList.get(position) instanceof File ? VIEW_TYPE_IMAGE : 0;
     }
 
-    public List<File> getSelectedPhotos()  {
+    public void setSelectedPhotos(List<File> list) {
+        if (list == null || list.isEmpty()) return;
+        for (int i = 0; i < mList.size(); i++) {
+            for (int j = 0; j < list.size(); j++) {
+                if (list.get(j).equals(mList.get(i))) {
+                    toggleSelected(i);
+                }
+            }
+        }
+    }
+
+    public List<File> getSelectedPhotos() {
         Integer[] indicator = getSelectedIndices();
         List<File> selected = new ArrayList<>();
         for (Integer index : indicator) {

@@ -9,15 +9,12 @@ import com.example.user.banhangonline.R;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyEmail;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyShowDistanceCart;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyShowDistanceSell;
-import static com.example.user.banhangonline.utils.KeyPreferUntils.keyTextGia;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyUserID;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyIDBuySell;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyIsLogin;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyNamelID;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyPhoneNumberlID;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyTextAddress;
-import static com.example.user.banhangonline.utils.KeyPreferUntils.keyTextHeader;
-import static com.example.user.banhangonline.utils.KeyPreferUntils.keyTextMota;
 
 
 public class PreferManager {
@@ -87,39 +84,6 @@ public class PreferManager {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putString(keyPhoneNumberlID, phone);
         editor.apply();
-    }
-
-    public static void setTextHeader(Context context, String header) {
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        editor.putString(keyTextHeader, header);
-        editor.apply();
-    }
-
-    public static String getTextHeader(Context context) {
-        String header = PreferenceManager.getDefaultSharedPreferences(context).getString(keyTextHeader, "");
-        return header;
-    }
-
-    public static void setTextMota(Context context, String mota) {
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        editor.putString(keyTextMota, mota);
-        editor.apply();
-    }
-
-    public static String getTextMota(Context context) {
-        String header = PreferenceManager.getDefaultSharedPreferences(context).getString(keyTextMota, "");
-        return header;
-    }
-
-    public static void setTextGia(Context context, String gia) {
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        editor.putString(keyTextGia, gia);
-        editor.apply();
-    }
-
-    public static String getTextGia(Context context) {
-        String header = PreferenceManager.getDefaultSharedPreferences(context).getString(keyTextGia, "");
-        return header;
     }
 
     public static void setMyAddress(Context context, String address) {

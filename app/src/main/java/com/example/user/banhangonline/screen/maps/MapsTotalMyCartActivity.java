@@ -65,8 +65,9 @@ public class MapsTotalMyCartActivity extends BaseActivity implements OnMapReadyC
                             @Override
                             public void onDirectionSuccess(List<Route> routes) {
                                 for (Route route : routes) {
-                                    mMap.addMarker(new MarkerOptions().position(route.endLocation).title(route.endAddress));
-
+                                    mMap.addMarker(new MarkerOptions()
+                                             .position(route.endLocation)
+                                             .title(route.endAddress));
                                 }
                             }
                         }).execute();

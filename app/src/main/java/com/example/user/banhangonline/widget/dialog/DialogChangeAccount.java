@@ -92,9 +92,7 @@ public class DialogChangeAccount extends Dialog {
                     }
                     GetPlaces task = new GetPlaces();
                     String check = edtAddress.getText().toString();
-                    if (check.trim().isEmpty()) {
-
-                    } else {
+                    if (!check.trim().isEmpty()) {
                         task.execute(check);
                         listView.setVisibility(View.VISIBLE);
                     }
@@ -122,12 +120,14 @@ public class DialogChangeAccount extends Dialog {
             @Override
             public void onClick(View view) {
                 dismiss();
+                hideKeyboard();
             }
         });
         btnHuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dismiss();
+                hideKeyboard();
             }
         });
 
@@ -138,6 +138,7 @@ public class DialogChangeAccount extends Dialog {
                          edtPhone.getText().toString().trim(),
                          edtAddress.getText().toString().trim());
                 dismiss();
+                hideKeyboard();
             }
         });
     }
@@ -213,5 +214,6 @@ public class DialogChangeAccount extends Dialog {
     @Override
     public void onBackPressed() {
         dismiss();
+        hideKeyboard();
     }
 }

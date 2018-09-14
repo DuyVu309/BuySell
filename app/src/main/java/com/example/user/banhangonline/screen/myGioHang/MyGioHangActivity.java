@@ -1,6 +1,7 @@
 package com.example.user.banhangonline.screen.myGioHang;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -71,7 +72,6 @@ public class MyGioHangActivity extends BaseActivity implements MyGioHangContact.
                 tvTitle.setText(getString(R.string.don_hang_cua_ban) + " (" + mPresenter.getmList().size() + ")");
             }
         }
-
     }
 
     private void initAdapter() {

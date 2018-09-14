@@ -165,5 +165,6 @@
     <string name="thoi_gian_cart">Thời gian:</string>
     <string name="quang_duong_mua_hang">Quãng đường khi mua hàng</string>
     <string name="quang_duong_gio_hang">Quãng đường trong giỏ hàng</string>
+    <string name="todo">TODO</string>
 
 </resources>

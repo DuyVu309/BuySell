@@ -27,6 +27,7 @@ import com.example.user.banhangonline.screen.search.SearchActivity;
 import com.example.user.banhangonline.screen.sell.SellActivity;
 import com.example.user.banhangonline.screen.setting.SettingActivity;
 import com.example.user.banhangonline.utils.NetworkUtils;
+import com.example.user.banhangonline.views.DrawerContent;
 import com.example.user.banhangonline.widget.dialog.DialogPositiveNegative;
 
 import butterknife.BindView;
@@ -56,7 +57,7 @@ public class HomeActivity extends BaseActivity implements
 
     //open drawer
     @BindView(R.id.ln_open_drawer)
-    LinearLayout lnOpenDrawer;
+    DrawerContent lnOpenDrawer;
 
     @BindView(R.id.img_account)
     ImageView imgAccount;

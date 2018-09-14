@@ -1,145 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.user.banhangonline.views.swipe.SwipeBackLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.motion.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#fff"
+    app:layoutDescription="@xml/scene_detail">
 
-    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.constraint.motion.MotionLayout
+        android:id="@+id/motionLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@color/blue"
+        app:layoutDescription="@xml/scene_header_detail">
 
-        <android.support.design.widget.AppBarLayout
+        <ImageView
+            android:id="@+id/img_lanscape"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:contentDescription="@string/todo"
+            android:scaleType="centerCrop" />
+
+
+        <ImageView
+            android:id="@+id/img_account"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@drawable/bg_border_circle"
+            android:contentDescription="@string/todo"
+            android:padding="@dimen/nav_bar_icon_padding"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toTopOf="@+id/tv_account_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_account_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white">
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/app_name"
+            android:textColor="#FFF"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView"
+            tools:ignore="UnusedAttribute"
+            tools:layout_editor_absoluteX="74dp" />
+    </android.support.constraint.motion.MotionLayout>
 
-            <android.support.design.widget.CollapsingToolbarLayout
-                android:id="@+id/collapsing_toolbar_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:contentScrim="@color/blue"
-                app:layout_collapseMode="parallax"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+    <LinearLayout
+        android:id="@+id/layout_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/motionLayout">
 
-                <ImageView
-                    android:id="@+id/img_lanscape"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:scaleType="centerCrop"
-                    app:layout_scrollFlags="scroll|enterAlways" />
+        <TextView
+            android:id="@+id/tv_gia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/transparent"
+            android:lineSpacingExtra="5dp"
+            android:padding="8dp"
+            android:singleLine="true"
+            android:textColor="@color/blue"
+            android:textColorHint="@color/grey_divider"
+            android:textSize="@dimen/medium_text_size"
+            android:textStyle="bold" />
 
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin"
-                    app:titleTextColor="@color/white" />
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/default_text_size" />
 
-            </android.support.design.widget.CollapsingToolbarLayout>
+        <TextView
+            android:id="@+id/tv_mota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/pading_small"
+            android:backgroundTint="@color/transparent"
+            android:ellipsize="end"
+            android:lineSpacingExtra="3dp"
+            android:maxLines="4"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey_divider"
+            android:textSize="@dimen/default_text_size" />
+    </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/pading_small"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/layout_info">
 
-                <ImageView
-                    android:id="@+id/img_account"
-                    style="@style/NavIconStyle"
-                    android:src="@drawable/ic_product" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/pading_small"
-                    android:layout_marginRight="@dimen/pading_small"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_account_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/default_text_size"
-                        android:textStyle="bold" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tv_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                        <ImageView
-                            android:layout_width="@dimen/layout_dot"
-                            android:layout_height="@dimen/layout_dot"
-                            android:layout_marginLeft="@dimen/pading_small"
-                            android:src="@drawable/ic_dot" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/btn_mua_hang"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_mua_hang"
-                    android:text="@string/mua_hang"
-                    android:textColor="@color/red"
-                    android:textSize="@dimen/default_text_size"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/pading_small"
-                android:layout_marginRight="@dimen/pading_small"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_gia"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/pading_small"
-                    android:backgroundTint="@color/transparent"
-                    android:drawablePadding="@dimen/pading_normal"
-                    android:lineSpacingExtra="5dp"
-                    android:singleLine="true"
-                    android:textColor="@color/blue"
-                    android:textColorHint="@color/grey_divider"
-                    android:textSize="@dimen/medium_text_size" />
-
-                <TextView
-                    android:id="@+id/tv_mota"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/pading_small"
-                    android:backgroundTint="@color/transparent"
-                    android:drawablePadding="@dimen/pading_normal"
-                    android:ellipsize="end"
-                    android:lineSpacingExtra="3dp"
-                    android:maxLines="4"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/grey_divider"
-                    android:textSize="@dimen/default_text_size" />
-
-            </LinearLayout>
-        </android.support.design.widget.AppBarLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycerview_image_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:nestedScrollingEnabled="false"
+            android:padding="0dp" />
 
-    </android.support.design.widget.CoordinatorLayout>
-</com.example.user.banhangonline.views.swipe.SwipeBackLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/layout_muahang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/pading_small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btn_mua_hang"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_mua_hang"
+            android:text="@string/mua_hang"
+            android:textColor="@color/red"
+            android:textSize="@dimen/default_text_size"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</android.support.constraint.motion.MotionLayout>

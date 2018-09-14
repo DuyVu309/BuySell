@@ -31,15 +31,8 @@ import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartPhone
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyStartSPAccount;
 
 public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetailContact.View {
-
-    @BindView(R.id.collapsing_toolbar_layout)
-    CollapsingToolbarLayout collapsingToolbarLayout;
-
     @BindView(R.id.img_lanscape)
     ImageView imgLanscape;
-
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
 
     @BindView(R.id.img_account)
     ImageView imgAccount;
@@ -72,10 +65,7 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_san_pham_detail);
-        setDragEdge(SwipeBackLayout.DragEdge.LEFT);
         ButterKnife.bind(this);
-        initToolBar();
-        setSupportActionBar(toolbar);
         mPresenter = new SanPhamDetailPresenter();
         mPresenter.attachView(this);
         mPresenter.setSanPham((SanPham) getIntent().getSerializableExtra(keyStartDetail));
@@ -84,11 +74,6 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
         }
     }
 
-    private void initToolBar() {
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
-        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
-        collapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);
-    }
 
     private void initAdapter() {
         mPresenter.getInfomationWithIdAccount(mDataBase, mPresenter.getSanPham().getIdNguoiban());
@@ -96,8 +81,10 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
         tvMota.setText(mPresenter.getSanPham().getHeader() + " - " + mPresenter.getSanPham().getMota());
         tvGia.setText(mPresenter.getSanPham().getGia());
 
-        rvImageDetail.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new DetailAdapter(this, mPresenter.getSanPham().getListFiles().getListUrl());
+        rvImageDetail.setHasFixedSize(true);
+        rvImageDetail.setLayoutManager(new LinearLayoutManager(this));
+        rvImageDetail.setNestedScrollingEnabled(false);
         rvImageDetail.setAdapter(mAdapter);
     }
 
@@ -113,7 +100,6 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
         Glide.with(this).load(account.getUrlAvt()).error(R.drawable.ic_product).into(imgAccount);
         Glide.with(this).load(account.getUrlLanscape()).error(R.drawable.bg_app).into(imgLanscape);
         tvAccoutName.setText(account.getName());
-        toolbar.setTitle(account.getName());
     }
 
     @OnClick(R.id.btn_mua_hang)

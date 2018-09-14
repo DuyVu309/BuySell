@@ -102,10 +102,10 @@ public class ThanhToanActivity extends BaseActivity implements ThanhToanContact.
 
     @OnClick(R.id.btn_change_address)
     public void changeMyAddress() {
-        DialogUntils.showChangeBuyAddress(this, tvAddress.getText().toString().trim(), new DialogChangeAddress.IOnDoneChangeAddress() {
+        DialogUntils.showChangeBuyAddress(this, !tvAddress.getText().toString().isEmpty() ? tvAddress.getText().toString().trim() : getResources().getString(R.string.dont_address), new DialogChangeAddress.IOnDoneChangeAddress() {
             @Override
             public void doneChangeAddress(String address) {
-                PreferManager.setMyAddress(ThanhToanActivity.this, !address.equals("") ? address : null);
+                PreferManager.setMyAddress(ThanhToanActivity.this, address);
                 tvAddress.setText(address);
             }
         });
@@ -113,9 +113,10 @@ public class ThanhToanActivity extends BaseActivity implements ThanhToanContact.
 
     @OnClick(R.id.btn_change_sdt)
     public void changePhoneNumber() {
-        DialogUntils.showChangeBuyPhoneNumber(this, tvSdt.getText() != null ? tvSdt.getText().toString().trim() : "", new DialogChangePhoneNmber.IOnDoneChangeBuyPhoneNumber() {
+        DialogUntils.showChangeBuyPhoneNumber(this, !tvSdt.getText().toString().isEmpty() ? tvSdt.getText().toString().trim() : getResources().getString(R.string.dont_phone_number), new DialogChangePhoneNmber.IOnDoneChangeBuyPhoneNumber() {
             @Override
             public void doneChangeBuyPhoneNumber(String phoneNumber) {
+                PreferManager.setPhoneNumber(ThanhToanActivity.this, phoneNumber);
                 tvSdt.setText(phoneNumber);
             }
         });
@@ -149,8 +150,8 @@ public class ThanhToanActivity extends BaseActivity implements ThanhToanContact.
                 } else if (PreferManager.getUserID(this) != null
                          && mPresnter.getSanPham().getIdNguoiban() != null
                          && tvAddress.getText().toString().trim() != null
-                         && !tvAddress.getText().toString().trim().equals(getString(R.string.dont_address))
-                         && !tvSdt.getText().toString().trim().equals(getString(R.string.dont_phone_number))
+                         && !PreferManager.getMyAddress(ThanhToanActivity.this).equals(getString(R.string.dont_address))
+                         && !PreferManager.getPhoneNumber(ThanhToanActivity.this).equals(getString(R.string.dont_phone_number))
                          && !edtSoLuong.getText().toString().trim().equals("")) {
                     showDialog();
                     if (getMyLocation() != null) {

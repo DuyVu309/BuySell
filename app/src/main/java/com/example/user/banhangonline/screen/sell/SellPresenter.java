@@ -3,13 +3,10 @@ package com.example.user.banhangonline.screen.sell;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.media.ExifInterface;
-import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 
 import com.example.user.banhangonline.base.BasePresenter;
 import com.example.user.banhangonline.model.Categories;
@@ -76,18 +73,13 @@ import static com.example.user.banhangonline.utils.TextUntils.tuiSachNam;
 import static com.example.user.banhangonline.utils.TextUntils.tuiSachNu;
 
 public class SellPresenter extends BasePresenter implements SellContact.Presenterr {
-    Context context;
     private SellContact.View mView;
     private List<Object> listCategories;
     private List<Object> listPart;
     private List<File> listFiles;
-    private List<String> listImages;
+    private List<String> listUrlImages;
     private List<String> listNameImages;
     private String idCate, titleCate, idPart, titlePart;
-
-    public void setContext(Context context) {
-        this.context = context;
-    }
 
     public List<Object> getListCategory() {
         listCategories.add(new Categories(keyIdCateDoAn, titleDoAn));
@@ -130,8 +122,8 @@ public class SellPresenter extends BasePresenter implements SellContact.Presente
         this.listFiles = listFiles;
     }
 
-    public List<String> getListImages() {
-        return listImages;
+    public List<String> getListUrlImages() {
+        return listUrlImages;
     }
 
     public List<String> getListNameImages() {
@@ -175,7 +167,7 @@ public class SellPresenter extends BasePresenter implements SellContact.Presente
         listCategories = new ArrayList<>();
         listPart = new ArrayList<>();
         listFiles = new ArrayList<>();
-        listImages = new ArrayList<>();
+        listUrlImages = new ArrayList<>();
         listNameImages = new ArrayList<>();
     }
 
@@ -226,6 +218,8 @@ public class SellPresenter extends BasePresenter implements SellContact.Presente
         if (!isViewAttached()) {
             return;
         }
+
+        //resize bitmap
         for (int i = 0; i < listFiles.size(); i++) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             BitmapFactory.decodeFile(listFiles.get(i).toString(), options);
@@ -278,10 +272,10 @@ public class SellPresenter extends BasePresenter implements SellContact.Presente
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     String downloadUrl = taskSnapshot.getDownloadUrl().toString();
-                    listImages.add(downloadUrl);
-                    if (listImages.size() == listFiles.size()) {
+                    listUrlImages.add(downloadUrl);
+                    if (listUrlImages.size() == listFiles.size()) {
                         if (mView != null) {
-                            mView.upLoadImagesSuccess(listNameImages);
+                            mView.upLoadImagesSuccess();
                         }
                     }
                 }

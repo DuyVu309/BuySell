@@ -14,7 +14,7 @@ public interface SellContact {
 
         void upLoadToFirebaseError();
 
-        void upLoadImagesSuccess(List<String> listNames);
+        void upLoadImagesSuccess();
 
         void upLoadImagErrror();
 

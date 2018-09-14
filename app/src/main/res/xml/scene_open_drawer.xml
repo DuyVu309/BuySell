@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@+id/start"
+        motion:duration="250"
+        motion:interpolator="linear">
+
+        <ConstraintSet android:id="@+id/start">
+
+            <Constraint
+                android:id="@id/content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                motion:layout_constraintTop_toTopOf="parent"
+                motion:layout_constraintWidth_default="percent"
+                motion:layout_constraintWidth_percent="1" />
+
+            <Constraint
+                android:id="@id/ln_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:rotation="90"
+                motion:layout_constraintBottom_toTopOf="@+id/tv_trang_chu"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toTopOf="parent"
+                motion:layout_constraintVertical_chainStyle="spread" />
+
+            <Constraint
+                android:id="@id/tv_trang_chu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:rotation="90"
+                android:translationX="100dp"
+                motion:layout_constraintBottom_toTopOf="@+id/tv_cai_dat"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@+id/ln_account"
+                motion:layout_constraintVertical_chainStyle="spread" />
+
+            <Constraint
+                android:id="@id/tv_trang_ca_nhan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:rotation="90"
+                android:translationX="100dp"
+                motion:layout_constraintBottom_toTopOf="@+id/tv_cai_dat"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@+id/tv_trang_chu"
+                motion:layout_constraintVertical_chainStyle="spread" />
+
+            <Constraint
+                android:id="@id/tv_cai_dat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:rotation="90"
+                android:translationX="100dp"
+                motion:layout_constraintBottom_toTopOf="@+id/tv_tinh_nang_vip"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@+id/tv_trang_ca_nhan"
+                motion:layout_constraintVertical_chainStyle="spread" />
+
+            <Constraint
+                android:id="@id/tv_tinh_nang_vip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:rotation="90"
+                android:translationX="100dp"
+                motion:layout_constraintBottom_toTopOf="@+id/tv_feedback"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@+id/tv_cai_dat"
+                motion:layout_constraintVertical_chainStyle="spread" />
+
+            <Constraint
+                android:id="@id/tv_feedback"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:rotation="90"
+                android:translationX="100dp"
+                motion:layout_constraintBottom_toTopOf="@+id/tv_dang_xuat"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@+id/tv_tinh_nang_vip"
+                motion:layout_constraintVertical_chainStyle="spread" />
+
+            <Constraint
+                android:id="@id/tv_dang_xuat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:rotation="90"
+                android:translationX="100dp"
+                motion:layout_constraintBottom_toTopOf="@+id/tv_version_app"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@+id/tv_feedback"
+                motion:layout_constraintVertical_chainStyle="spread" />
+
+            <Constraint
+                android:id="@id/tv_version_app"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:rotation="90"
+                android:translationX="100dp"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@+id/tv_dang_xuat"
+                motion:layout_constraintVertical_chainStyle="spread" />
+
+        </ConstraintSet>
+
+        <ConstraintSet android:id="@+id/end">
+            <Constraint
+                android:id="@id/content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="250dp"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toTopOf="parent"
+                motion:layout_constraintWidth_default="percent"
+                motion:layout_constraintWidth_percent="1" />
+
+            <Constraint
+                android:id="@id/ln_account"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                motion:layout_constraintBottom_toTopOf="@+id/tv_trang_chu"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintHorizontal_bias="0.5"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toTopOf="parent"
+                motion:layout_constraintVertical_bias="0.0"
+                motion:layout_constraintVertical_chainStyle="packed" />
+
+            <Constraint
+                android:id="@id/tv_trang_chu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                motion:layout_constraintBottom_toTopOf="@+id/tv_trang_ca_nhan"
+                motion:layout_constraintHorizontal_bias="0.5"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@+id/ln_account"
+                motion:layout_constraintVertical_bias="0.0"
+                motion:layout_constraintVertical_chainStyle="packed" />
+
+            <Constraint
+                android:id="@id/tv_trang_ca_nhan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                motion:layout_constraintBottom_toTopOf="@+id/tv_cai_dat"
+                motion:layout_constraintHorizontal_bias="0.5"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@+id/tv_trang_chu"
+                motion:layout_constraintVertical_bias="0.0"
+                motion:layout_constraintVertical_chainStyle="packed" />
+
+            <Constraint
+                android:id="@id/tv_cai_dat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                motion:layout_constraintBottom_toTopOf="@+id/tv_tinh_nang_vip"
+                motion:layout_constraintHorizontal_bias="0.5"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@+id/tv_trang_ca_nhan"
+                motion:layout_constraintVertical_bias="0.0"
+                motion:layout_constraintVertical_chainStyle="packed" />
+
+            <Constraint
+                android:id="@id/tv_tinh_nang_vip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                motion:layout_constraintBottom_toTopOf="@+id/tv_feedback"
+                motion:layout_constraintHorizontal_bias="0.5"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@+id/tv_cai_dat"
+                motion:layout_constraintVertical_bias="0.0"
+                motion:layout_constraintVertical_chainStyle="packed" />
+
+            <Constraint
+                android:id="@id/tv_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                motion:layout_constraintBottom_toTopOf="@+id/tv_version_app"
+                motion:layout_constraintHorizontal_bias="0.5"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@+id/tv_tinh_nang_vip"
+                motion:layout_constraintVertical_bias="0.0"
+                motion:layout_constraintVertical_chainStyle="packed" />
+
+            <Constraint
+                android:id="@id/tv_version_app"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                motion:layout_constraintBottom_toBottomOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintVertical_chainStyle="packed" />
+
+        </ConstraintSet>
+    </Transition>
+</MotionScene>

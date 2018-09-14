@@ -73,7 +73,6 @@ public class SanPhamWithIDActivity extends BaseActivity implements SanPhamWithId
         ButterKnife.bind(this);
         mPresenter = new SanPhamWithIdPresenter();
         mPresenter.attachView(this);
-
         part = (Part) getIntent().getSerializableExtra(keyIdSanPham);
         if (part != null) {
             if (part.getIDCategory().equals(keyIdCateThoiTrang)) {

@@ -2,10 +2,10 @@ package com.example.user.banhangonline.screen.library;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,7 +19,10 @@ import com.example.user.banhangonline.base.BaseActivity;
 import com.example.user.banhangonline.screen.library.adapter.PhotoAdapter;
 import com.example.user.banhangonline.screen.sell.SellActivity;
 
+import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +31,9 @@ import butterknife.Unbinder;
 
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyIDCategory;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyIDPart;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyTextGia;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyTextHeader;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyTextMota;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyTitleCategory;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyTitlePart;
 import static com.example.user.banhangonline.utils.KeyUntils.keyListImage;
@@ -54,6 +60,7 @@ public class LibraryActivity extends BaseActivity implements LibraryContact.View
     private Unbinder unbinder;
     private LibraryPresenter mPresenter;
     private String idCate, titleCate, idPart, titlePart;
+    private List<File> listFile = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +70,8 @@ public class LibraryActivity extends BaseActivity implements LibraryContact.View
         mPresenter = new LibraryPresenter();
         mPresenter.onCreate();
         mPresenter.attachView(this);
+        initDataSpinnerSell();
+
         try {
             String s[] = {android.Manifest.permission.READ_EXTERNAL_STORAGE};
             if (checkPermissions(s)) {
@@ -73,7 +82,6 @@ public class LibraryActivity extends BaseActivity implements LibraryContact.View
         } catch (Exception e) {
             e.printStackTrace();
         }
-        initDataSpinnerSell();
     }
 
     private void initDataSpinnerSell() {
@@ -81,6 +89,7 @@ public class LibraryActivity extends BaseActivity implements LibraryContact.View
         titleCate = getIntent().getStringExtra(keyTitleCategory);
         idPart = getIntent().getStringExtra(keyIDPart);
         titlePart = getIntent().getStringExtra(keyTitlePart);
+        listFile = (List<File>) getIntent().getSerializableExtra(keyListImage);
     }
 
     private void initAdapter() {
@@ -98,6 +107,7 @@ public class LibraryActivity extends BaseActivity implements LibraryContact.View
 
         });
         photoAdapter.setSelectionListener(this);
+        photoAdapter.setSelectedPhotos(listFile);
         LinearLayoutManager layoutManager = new GridLayoutManager(this, getResources().getInteger(R.integer.grid_width));
         recyclerViewLibrary.setLayoutManager(layoutManager);
         recyclerViewLibrary.setAdapter(photoAdapter);
@@ -121,7 +131,6 @@ public class LibraryActivity extends BaseActivity implements LibraryContact.View
 
     @OnClick(R.id.img_back)
     public void backActivity() {
-        startActivity(new Intent(LibraryActivity.this, SellActivity.class));
         finish();
     }
 
@@ -160,6 +169,9 @@ public class LibraryActivity extends BaseActivity implements LibraryContact.View
                     intent.putExtra(keyIDPart, idPart);
                     intent.putExtra(keyTitlePart, titlePart);
                 }
+                intent.putExtra(keyTextHeader, getIntent().getStringExtra(keyTextHeader));
+                intent.putExtra(keyTextMota, getIntent().getStringExtra(keyTextMota));
+                intent.putExtra(keyTextGia, getIntent().getStringExtra(keyTextGia));
 
                 startActivity(intent);
                 finish();

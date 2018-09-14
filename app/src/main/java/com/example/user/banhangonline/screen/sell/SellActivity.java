@@ -8,8 +8,6 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -35,6 +33,7 @@ import com.example.user.banhangonline.views.swipe.SwipeBackLayout;
 import com.example.user.banhangonline.widget.dialog.DialogPositiveNegative;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 
@@ -44,6 +43,9 @@ import butterknife.OnClick;
 
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyIDCategory;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyIDPart;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyTextGia;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyTextHeader;
+import static com.example.user.banhangonline.utils.KeyPreferUntils.keyTextMota;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyTitleCategory;
 import static com.example.user.banhangonline.utils.KeyPreferUntils.keyTitlePart;
 import static com.example.user.banhangonline.utils.KeyUntils.keyIdCateThoiTrang;
@@ -96,7 +98,6 @@ public class SellActivity extends BaseActivity implements SellContact.View {
         ButterKnife.bind(this);
         setDragEdge(SwipeBackLayout.DragEdge.LEFT);
         mPresenter = new SellPresenter();
-        mPresenter.setContext(this);
         mPresenter.onCreate();
         mPresenter.attachView(this);
         initSpinnerAndBitmap();
@@ -159,6 +160,7 @@ public class SellActivity extends BaseActivity implements SellContact.View {
                 public void onClickImageDelete(int position) {
                     mPresenter.getListFiles().remove(position);
                     adapterImage.notifyItemRemoved(position);
+                    adapterImage.notifyItemRangeChanged(position, mPresenter.getListFiles().size());
                 }
             });
             if (mPresenter.getListFiles().size() == 1) {
@@ -186,61 +188,10 @@ public class SellActivity extends BaseActivity implements SellContact.View {
             spnPart.setText(titlePart);
             lnPart.setVisibility(View.VISIBLE);
         }
-        edtHeader.setText(PreferManager.getTextHeader(this));
-        edtHeader.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                PreferManager.setTextHeader(SellActivity.this, editable.toString());
-            }
-        });
-
-        edtMota.setText(PreferManager.getTextMota(this));
-        edtMota.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                PreferManager.setTextMota(SellActivity.this, editable.toString());
-            }
-        });
-
-        edtSellGia.setText(PreferManager.getTextGia(this));
-        edtSellGia.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                PreferManager.setTextGia(SellActivity.this, editable.toString());
-
-            }
-        });
-
+        edtHeader.setText(getIntent().getStringExtra(keyTextHeader));
+        edtMota.setText(getIntent().getStringExtra(keyTextMota));
+        edtSellGia.setText(getIntent().getStringExtra(keyTextGia));
     }
 
     @OnClick(R.id.spiner_category)
@@ -305,7 +256,7 @@ public class SellActivity extends BaseActivity implements SellContact.View {
                 return;
             }
             if (!edtHeader.getText().toString().equals("") &&
-                     mPresenter.getListFiles() != null &&
+                     !mPresenter.getListFiles().isEmpty() &&
                      mPresenter.getIdCate() != null &&
                      !edtSellGia.getText().toString().equals("")) {
                 if (mPresenter.getIdCate().equals(keyIdCateThoiTrang)) {
@@ -352,7 +303,7 @@ public class SellActivity extends BaseActivity implements SellContact.View {
                               edtHeader.getText().toString().trim(),
                               edtMota.getText().toString().trim(),
                               TimeNowUtils.getTimeNow(),
-                              new ListFileImages().getContructor(mPresenter.getListImages(), mPresenter.getListNameImages()),
+                              new ListFileImages().getContructor(mPresenter.getListUrlImages(), mPresenter.getListNameImages()),
                               edtSellGia.getText().toString().trim(),
                               PreferManager.getMyAddress(this),
                               getMyLocation().getLatitude(),
@@ -367,7 +318,7 @@ public class SellActivity extends BaseActivity implements SellContact.View {
                               edtHeader.getText().toString().trim(),
                               edtMota.getText().toString().trim(),
                               TimeNowUtils.getTimeNow(),
-                              new ListFileImages().getContructor(mPresenter.getListImages(), mPresenter.getListNameImages()),
+                              new ListFileImages().getContructor(mPresenter.getListUrlImages(), mPresenter.getListNameImages()),
                               edtSellGia.getText().toString().trim(),
                               PreferManager.getMyAddress(this),
                               GoogleMapUtils.getLatLong().latitude,
@@ -390,8 +341,11 @@ public class SellActivity extends BaseActivity implements SellContact.View {
             intent.putExtra(keyIDPart, mPresenter.getIdPart());
             intent.putExtra(keyTitlePart, mPresenter.getTitlePart());
         }
+        intent.putExtra(keyListImage, (Serializable) mPresenter.getListFiles());
+        intent.putExtra(keyTextHeader, edtHeader.getText() != null ? edtHeader.getText().toString().trim() : "");
+        intent.putExtra(keyTextMota, edtMota.getText() != null ? edtMota.getText().toString().trim() : "");
+        intent.putExtra(keyTextGia, edtSellGia.getText() != null ? edtSellGia.getText().toString().trim() : "");
         startActivity(intent);
-        finish();
         dismissDialog();
     }
 
@@ -405,9 +359,6 @@ public class SellActivity extends BaseActivity implements SellContact.View {
     @Override
     public void upLoadToFirebaseSuccess() {
         Toast.makeText(this, getString(R.string.thanh_cong), Toast.LENGTH_SHORT).show();
-        PreferManager.setTextHeader(this, "");
-        PreferManager.setTextMota(this, "");
-        PreferManager.setTextGia(this, "");
         startActivity(new Intent(SellActivity.this, HomeActivity.class));
         finish();
         dismissDialog();
@@ -419,8 +370,8 @@ public class SellActivity extends BaseActivity implements SellContact.View {
     }
 
     @Override
-    public void upLoadImagesSuccess(List<String> listNames) {
-        if (mPresenter.getListImages().size() == mPresenter.getListFiles().size()) {
+    public void upLoadImagesSuccess() {
+        if (mPresenter.getListUrlImages().size() == mPresenter.getListFiles().size()) {
             if (lnPart.getVisibility() != View.VISIBLE) {
                 if (PreferManager.getMyAddress(this).equals(getString(R.string.dont_address))) {
                     showDialogInitAddress();

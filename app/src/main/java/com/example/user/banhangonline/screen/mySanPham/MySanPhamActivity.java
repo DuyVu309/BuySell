@@ -29,7 +29,6 @@ import com.example.user.banhangonline.screen.mySanPham.adapter.SanPhamMyAccountA
 import com.example.user.banhangonline.screen.showImage.ShowImageActivity;
 import com.example.user.banhangonline.utils.DialogUntils;
 import com.example.user.banhangonline.utils.FileUtils;
-import com.example.user.banhangonline.views.swipe.SwipeBackLayout;
 import com.example.user.banhangonline.widget.dialog.DialogChangeAccount;
 
 import java.io.File;
