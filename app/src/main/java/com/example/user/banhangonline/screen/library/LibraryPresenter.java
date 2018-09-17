@@ -9,6 +9,7 @@ import java.util.List;
 public class LibraryPresenter extends BasePresenter implements LibraryContact.Presenter {
 
     LibraryContact.View mView;
+    List<File> mList = new ArrayList<>();
 
     @Override
     public void onCreate() {
@@ -37,14 +38,13 @@ public class LibraryPresenter extends BasePresenter implements LibraryContact.Pr
 
     @Override
     public List<File> getListImageFromStorage(File file) {
-        List<File> mList = new ArrayList<>();
         File[] files = file.listFiles();
         for (int i = 0; i < files.length; i++) {
             if (files[i].isDirectory()) {
-                mList.addAll(getListImageFromStorage(files[i]));
+                mView.addAllFileImage(getListImageFromStorage(files[i]));
             } else {
                 if (files[i].getName().endsWith(".jpg") || files[i].getName().endsWith(".png") || files[i].getName().endsWith(".jpeg")) {
-                    mList.add(files[i]);
+                    mView.addFileImage(files[i]);
                 }
             }
         }

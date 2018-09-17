@@ -143,4 +143,10 @@ public class SanPhamDetailActivity extends BaseActivity implements SanPhamDetail
     public void getInfomationError() {
         showSnackbar(getString(R.string.error));
     }
+
+
+    @OnClick(R.id.img_arrow_back)
+    public void backActivity() {
+        finish();
+    }
 }

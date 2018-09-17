@@ -22,17 +22,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@color/blue"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/pading_small">
 
             <Button
                 android:id="@+id/btn_thanh_toan"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_back_activity"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_mua_hang"
                 android:text="@string/thong_bao_mua_hang"
                 android:textColor="@color/white"
-                android:textSize="@dimen/default_text_size" />
+                android:textSize="@dimen/default_text_size"
+                android:textStyle="bold" />
         </LinearLayout>
 
     </FrameLayout>

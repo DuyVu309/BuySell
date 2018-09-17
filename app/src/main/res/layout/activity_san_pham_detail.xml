@@ -21,6 +21,14 @@
             android:contentDescription="@string/todo"
             android:scaleType="centerCrop" />
 
+        <ImageView
+            android:id="@+id/img_arrow_back"
+            style="@style/NavIconStyle"
+            android:contentDescription="@string/todo"
+            android:layout_marginStart="@dimen/pading_small"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/img_account"
@@ -128,7 +136,7 @@
             android:layout_height="40dp"
             android:background="@drawable/bg_mua_hang"
             android:text="@string/mua_hang"
-            android:textColor="@color/red"
+            android:textColor="@color/white"
             android:textSize="@dimen/default_text_size"
             android:textStyle="bold" />
 

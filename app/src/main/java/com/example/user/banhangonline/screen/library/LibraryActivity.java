@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -21,7 +22,9 @@ import com.example.user.banhangonline.screen.sell.SellActivity;
 
 import java.io.File;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -66,6 +69,7 @@ public class LibraryActivity extends BaseActivity implements LibraryContact.View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library);
+        showDialog();
         unbinder = ButterKnife.bind(this);
         mPresenter = new LibraryPresenter();
         mPresenter.onCreate();
@@ -93,11 +97,12 @@ public class LibraryActivity extends BaseActivity implements LibraryContact.View
     }
 
     private void initAdapter() {
-        showDialog();
-        photoAdapter = new PhotoAdapter(LibraryActivity.this, mPresenter.getListImageFromStorage(Environment.getExternalStorageDirectory()), new PhotoAdapter.OnLickListenerPhoto() {
+        photoAdapter = new PhotoAdapter(LibraryActivity.this, new PhotoAdapter.OnLickListenerPhoto() {
             @Override
-            public void onClickSelected(int position) {
+            public void onClickSelected(File file, int position) {
                 onDragSelectionChanged(position);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                Log.d("TAG file", String.valueOf(dateFormat.format(new Date(file.lastModified()).getTime())));
             }
 
             @Override
@@ -106,6 +111,7 @@ public class LibraryActivity extends BaseActivity implements LibraryContact.View
             }
 
         });
+        mPresenter.getListImageFromStorage(Environment.getExternalStorageDirectory());
         photoAdapter.setSelectionListener(this);
         photoAdapter.setSelectedPhotos(listFile);
         LinearLayoutManager layoutManager = new GridLayoutManager(this, getResources().getInteger(R.integer.grid_width));
@@ -116,7 +122,6 @@ public class LibraryActivity extends BaseActivity implements LibraryContact.View
         recyclerViewLibrary.setItemAnimator(animator);
         dismissDialog();
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
@@ -181,5 +186,15 @@ public class LibraryActivity extends BaseActivity implements LibraryContact.View
                 dismissDialog();
             }
         }
+    }
+
+    @Override
+    public void addFileImage(File file) {
+        photoAdapter.addFile(file);
+    }
+
+    @Override
+    public void addAllFileImage(List<File> list) {
+        photoAdapter.addAllFile(list);
     }
 }

@@ -2,7 +2,9 @@ package com.example.user.banhangonline.screen.library.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.util.SortedListAdapterCallback;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +25,45 @@ import butterknife.ButterKnife;
 public class PhotoAdapter extends DragSelectRecyclerViewAdapter<DragSelectRecyclerView.ViewHolder> {
     private static final int VIEW_TYPE_IMAGE = 1;
     private Context context;
-    private List<File> mList;
+    private SortedList<File> mList;
     private OnLickListenerPhoto mView;
+    SortedListAdapterCallback<File> mCallback;
 
-    public PhotoAdapter(Context context, List<File> mList, OnLickListenerPhoto view) {
+    public PhotoAdapter(Context context, OnLickListenerPhoto view) {
         this.context = context;
-        this.mList = mList;
         this.mView = view;
+        mCallback = new SortedListAdapterCallback<File>(PhotoAdapter.this) {
+            @Override
+            public int compare(File file1, File file2) {
+                if (((File) file1).lastModified() > ((File) file2).lastModified()) {
+                    return -1;
+                } else if (((File) file1).lastModified() < ((File) file2).lastModified()) {
+                    return 1;
+                } else {
+                }
+                return 0;
+
+            }
+
+            @Override
+            public boolean areContentsTheSame(File oldItem, File newItem) {
+                return false;
+            }
+
+            @Override
+            public boolean areItemsTheSame(File item1, File item2) {
+                return false;
+            }
+        };
+        mList = new SortedList<File>(File.class, mCallback);
+    }
+
+    public void addAllFile(List<File> fileList) {
+        mList.addAll(fileList);
+    }
+
+    public void addFile(File file) {
+        mList.add(file);
     }
 
     @Override
@@ -113,7 +147,7 @@ public class PhotoAdapter extends DragSelectRecyclerViewAdapter<DragSelectRecycl
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mView.onClickSelected(getAdapterPosition());
+                    mView.onClickSelected(mList.get(getAdapterPosition()), getAdapterPosition());
                     toggleSelected(getAdapterPosition());
                 }
             });
@@ -129,7 +163,7 @@ public class PhotoAdapter extends DragSelectRecyclerViewAdapter<DragSelectRecycl
     }
 
     public interface OnLickListenerPhoto {
-        void onClickSelected(int position);
+        void onClickSelected(File file, int position);
 
         void onLongClickSelected(int position);
     }

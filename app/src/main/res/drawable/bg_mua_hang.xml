@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_focused="false" android:state_pressed="false">
         <shape android:innerRadiusRatio="1" android:shape="rectangle">
-            <solid android:color="@color/greyish_divider" />
+            <solid android:color="@color/red" />
             <corners android:radius="@dimen/card_corner_radius_normal" />
         </shape>
     </item>
@@ -10,7 +10,7 @@
     <!-- button pressed -->
     <item android:state_focused="false" android:state_pressed="true">
         <shape android:innerRadiusRatio="1" android:shape="rectangle">
-            <solid android:color="@color/grey_divider" />
+            <solid android:color="@color/red_opacity_50" />
             <corners android:radius="@dimen/card_corner_radius_normal" />
 
         </shape>
